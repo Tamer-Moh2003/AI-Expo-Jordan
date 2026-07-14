@@ -1,0 +1,33 @@
+services:
+  vision_engine:
+    build: ./vision
+    container_name: m1_vision
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+
+  database:
+    image: postgres:14
+    container_name: m2_postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: gam_traffic
+    ports:
+      - "5432:5432"
+
+  api_service:
+    build: ./backend
+    container_name: m2_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+
+  frontend_app:
+    build: ./frontend
+    container_name: m3_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api_service
