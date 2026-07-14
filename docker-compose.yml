@@ -28,6 +28,9 @@ services:
     build: ./frontend
     container_name: m3_frontend
     ports:
-      - "3000:3000"
+      - "8501:8501"
+    environment:
+      API_BASE: http://api_service:8000
+      MOCK_MODE: "true"
     depends_on:
       - api_service

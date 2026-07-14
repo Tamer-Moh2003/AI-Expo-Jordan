@@ -1,3 +1,5 @@
+import os
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -11,8 +13,8 @@ import requests
 # it comes from mock data or the real API -- so nothing else
 # in this file needs to change when you swap it.
 # ============================================================
-MOCK_MODE = True
-API_BASE = "http://localhost:8000"  # ask M4/M2 for the real host:port
+MOCK_MODE = os.getenv("MOCK_MODE", "true").lower() in {"1", "true", "yes"}
+API_BASE = os.getenv("API_BASE", "http://localhost:8000")
 
 
 def fetch_health():
