@@ -16,7 +16,7 @@ API_BASE = "http://localhost:8000"  # ask M4/M2 for the real host:port
 
 
 def fetch_health():
-    # Matches api_contract.json "GET /health" and schema.sql system_health table exactly.
+    # Matches api_contract.json "GET /health" exactly. Frozen contract.
     if MOCK_MODE:
         return {"ingestion_rate_fps": 30, "dropped_frames": 2, "stream_uptime_seconds": 3600}
     try:
@@ -29,65 +29,58 @@ def fetch_health():
 
 
 def fetch_recommendation():
-    # Matches api_contract.json "GET /recommendation" field-for-field.
-    # advisory_only / not_transmitted_to_controller / estimated_saving are NOT
-    # in the contract yet -- flagged to M2. Defaulted here so the UI doesn't
-    # break; remove the .get() fallback once the real fields exist.
+    # Matches api_contract.json "GET /recommendation" exactly. Frozen contract --
+    # advisory_only / not_transmitted_to_controller are computed on the fly by
+    # the backend (always true for this prototype); estimated_saving_vehicle_minutes
+    # is also computed on the fly. All three are guaranteed present now.
     if MOCK_MODE:
         return {
             "timestamp": "2026-07-14T08:12:00Z",
             "recommended_phase": 3,
             "recommended_green_duration_seconds": 45,
             "reason": "High queue volume detected",
-            "advisory_only": True,                     # TODO: confirm with M2, not yet in contract
-            "not_transmitted_to_controller": True,      # TODO: confirm with M2, not yet in contract
-            "estimated_saving_vehicle_minutes": None,   # TODO: not yet in contract
+            "estimated_saving_vehicle_minutes": 12.5,
+            "advisory_only": True,
+            "not_transmitted_to_controller": True,
         }
     r = requests.get(f"{API_BASE}/recommendation", timeout=2)
     r.raise_for_status()
-    data = r.json()
-    data.setdefault("advisory_only", True)
-    data.setdefault("not_transmitted_to_controller", True)
-    data.setdefault("estimated_saving_vehicle_minutes", None)
-    return data
+    return r.json()
 
 
 def fetch_incidents():
-    # Matches api_contract.json "GET /incidents" field-for-field.
-    # confidence / snapshot_path / clip_path / queue_estimate are NOT in the
-    # contract yet (required by plan task 25) -- flagged to M2.
+    # Matches api_contract.json "GET /incidents" exactly. Frozen contract --
+    # confidence comes from the DB schema; snapshot_path, clip_path, and
+    # queue_estimate are now stored via ALTER TABLE on M2's side. Note:
+    # confidence arrives as a 0-1 fraction (e.g. 0.95), not a percentage.
     if MOCK_MODE:
         return [
             {"timestamp": "2026-07-14T08:10:00Z", "event_type": "Stalled Vehicle", "approach": "North",
-             "confidence": 94, "snapshot_path": None, "clip_path": None, "queue_estimate": None},
+             "confidence": 0.95, "queue_estimate": 15,
+             "snapshot_path": "/media/snapshots/inc_001.jpg", "clip_path": "/media/clips/inc_001.mp4"},
             {"timestamp": "2026-07-14T08:22:00Z", "event_type": "Queue Spillback", "approach": "East",
-             "confidence": 87, "snapshot_path": None, "clip_path": None, "queue_estimate": None},
+             "confidence": 0.87, "queue_estimate": 22,
+             "snapshot_path": "/media/snapshots/inc_002.jpg", "clip_path": "/media/clips/inc_002.mp4"},
         ]
     r = requests.get(f"{API_BASE}/incidents", timeout=2)
     r.raise_for_status()
-    items = r.json()
-    for item in items:
-        item.setdefault("confidence", None)
-        item.setdefault("snapshot_path", None)
-        item.setdefault("clip_path", None)
-        item.setdefault("queue_estimate", None)
-    return items
+    return r.json()
 
 
 def fetch_forecast():
-    """Matches api_contract.json "GET /forecast": a flat list of
-    {timestamp, approach, predicted_count}. No 'observed' series and no
-    confidence band (upper/lower) yet -- both required by plan task 32/35,
-    flagged to M2. Returns arrays shaped for the chart below."""
+    """Matches api_contract.json "GET /forecast" exactly -- each row now
+    carries timestamp, approach, predicted_count, observed_count, lower,
+    upper. observed_count is joined server-side from the counts table.
+    Frozen contract, no more approximation needed here."""
     if MOCK_MODE:
         raw = [
-            {"timestamp": "08:00", "approach": "North", "predicted_count": 33},
-            {"timestamp": "08:05", "approach": "North", "predicted_count": 38},
-            {"timestamp": "08:10", "approach": "North", "predicted_count": 42},
-            {"timestamp": "08:15", "approach": "North", "predicted_count": 48},
-            {"timestamp": "08:20", "approach": "North", "predicted_count": 55},
-            {"timestamp": "08:25", "approach": "North", "predicted_count": 52},
-            {"timestamp": "08:30", "approach": "North", "predicted_count": 46},
+            {"timestamp": "08:00", "approach": "North", "predicted_count": 33, "observed_count": 32, "lower": 30, "upper": 36},
+            {"timestamp": "08:05", "approach": "North", "predicted_count": 38, "observed_count": 36, "lower": 34, "upper": 41},
+            {"timestamp": "08:10", "approach": "North", "predicted_count": 42, "observed_count": 40, "lower": 38, "upper": 46},
+            {"timestamp": "08:15", "approach": "North", "predicted_count": 48, "observed_count": 46, "lower": 43, "upper": 53},
+            {"timestamp": "08:20", "approach": "North", "predicted_count": 55, "observed_count": None, "lower": 50, "upper": 60},
+            {"timestamp": "08:25", "approach": "North", "predicted_count": 52, "observed_count": None, "lower": 47, "upper": 57},
+            {"timestamp": "08:30", "approach": "North", "predicted_count": 46, "observed_count": None, "lower": 41, "upper": 51},
         ]
     else:
         r = requests.get(f"{API_BASE}/forecast", timeout=2)
@@ -96,16 +89,9 @@ def fetch_forecast():
 
     minutes = np.arange(0, len(raw) * 5, 5)
     forecast_vals = np.array([row["predicted_count"] for row in raw], dtype=object)
-
-    # No 'observed' series in the contract yet -- reuse mock history for now
-    # so the chart still shows both lines; swap once M2 adds it.
-    observed = np.array([25, 28, 32, 35, 33, None, None], dtype=object)[: len(minutes)]
-
-    # No confidence band in the contract yet -- approximate a +/-10% band
-    # as a placeholder so the shading still renders; replace once real
-    # upper/lower bounds exist.
-    upper = np.array([v * 1.1 if v is not None else None for v in forecast_vals], dtype=object)
-    lower = np.array([v * 0.9 if v is not None else None for v in forecast_vals], dtype=object)
+    observed = np.array([row.get("observed_count") for row in raw], dtype=object)
+    upper = np.array([row.get("upper") for row in raw], dtype=object)
+    lower = np.array([row.get("lower") for row in raw], dtype=object)
 
     return minutes, observed, forecast_vals, upper, lower
 
@@ -405,14 +391,8 @@ with main_col:
         )
         st.caption(f"**Reason:** {r['reason']}")
 
-        saving = r.get("estimated_saving_vehicle_minutes")
-        if saving is not None:
-            st.caption(f"Estimated saving: **{saving} veh·min / cycle**")
-        else:
-            st.markdown(
-                "<div class='assumption-note'>Estimated saving not yet in API contract — pending M2</div>",
-                unsafe_allow_html=True,
-            )
+        saving = r["estimated_saving_vehicle_minutes"]
+        st.caption(f"Estimated saving: **{saving} veh·min / cycle**")
 
         if r.get("advisory_only") and r.get("not_transmitted_to_controller"):
             st.markdown(
@@ -428,26 +408,24 @@ with alert_col:
 
     for a in mock_alerts:
         time_short = a["timestamp"][11:16] if "T" in a["timestamp"] else a["timestamp"]
-        confidence_txt = f"{a['confidence']}%" if a.get("confidence") is not None else "N/A"
+        confidence_txt = f"{a['confidence'] * 100:.0f}%"
         st.markdown(
             f"<div class='alert-item'>"
             f"<div class='alert-thumb'>📸</div>"
             f"<div class='alert-text'><b>{time_short} — {a['event_type']}</b><br>"
-            f"<span class='alert-meta'>{a['approach']} · confidence {confidence_txt}</span></div>"
+            f"<span class='alert-meta'>{a['approach']} · confidence {confidence_txt} · "
+            f"queue ~{a['queue_estimate']}m</span></div>"
             f"</div>",
             unsafe_allow_html=True,
         )
         with st.expander(f"View evidence clip — {time_short}", expanded=False):
-            if a.get("clip_path"):
-                st.video(a["clip_path"])
-            else:
-                st.markdown(
-                    "<div class='video-shell' style='height:140px;'>"
-                    "<span style='font-size:1.4rem;'>🎬</span>"
-                    "<span style='font-size:0.72rem; margin-top:4px;'>clip_path not yet in API contract</span>"
-                    "</div>",
-                    unsafe_allow_html=True,
-                )
+            st.markdown(
+                "<div class='video-shell' style='height:140px;'>"
+                "<span style='font-size:1.4rem;'>🎬</span>"
+                f"<span style='font-size:0.72rem; margin-top:4px;'>{a['clip_path']}</span>"
+                "</div>",
+                unsafe_allow_html=True,
+            )
             b1, b2 = st.columns(2)
             b1.button("✅ Confirm", key=f"confirm_{a['timestamp']}_{a['event_type']}")
             b2.button("❌ Dismiss", key=f"dismiss_{a['timestamp']}_{a['event_type']}")
