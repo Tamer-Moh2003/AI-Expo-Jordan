@@ -130,7 +130,11 @@ st.markdown("""
 
     .stApp { background-color: var(--bg-main); }
     .block-container { padding-top: 0.8rem; padding-bottom: 0rem; max-width: 100%; }
-    .stDeployButton, #MainMenu, footer, header { visibility: hidden; }
+    .stDeployButton, #MainMenu, footer { visibility: hidden; }
+    header[data-testid="stHeader"] {
+        background: transparent;
+        height: 2.2rem;
+    }
 
     .dashboard-card {
         background-color: var(--bg-card);
