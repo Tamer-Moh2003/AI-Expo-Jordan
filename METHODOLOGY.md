@@ -23,13 +23,17 @@ Based on our intersection analysis, a full signal cycle was calculated at **220 
   * **Side Street (Westbound):** 40 seconds green + 5 seconds lost time = **45 seconds**
   * **Total Optimal Cycle Length ($C$):** 65 + 65 + 45 + 45 = **220 seconds**
 
-## 3. Vehicle Crossing Capacity (Saturation Flow)
-To calculate the exact number of vehicles that can clear the intersection during a green phase, we established a realistic reaction and movement time per vehicle.
+## 3. Vehicle Crossing Capacity & Physical Bottlenecks
+To calculate the exact number of vehicles that can clear the intersection during a green phase, we established a realistic reaction and movement time per vehicle, mapped directly to the physical geometry of the Wadi Saqra intersection.
 
 * **Headway Assumption:** We assumed that one vehicle requires exactly **2 seconds** to cross the stop line (accounting for driver reaction time and acceleration).
-* **Throughput Calculation:** Based on this headway, during a 60-second green phase on the main approach (Arar Street), the maximum throughput is calculated as:
-  $$ \text{Capacity per lane} = \frac{60 \text{ seconds}}{2 \text{ seconds/vehicle}} = 30 \text{ vehicles} $$
-* This provides a strict upper bound for our synthetic data generation, ensuring that the simulated vehicle counts never exceed the physical capacity of the intersection.
+* **Throughput per Lane:** During a 60-second green phase on the main approach, the maximum throughput is:
+  $$ \text{Capacity per lane} = \frac{60 \text{ seconds}}{2 \text{ seconds/vehicle}} = 30 \text{ vehicles/lane} $$
+* **Physical Bottleneck Modeling (Arar Street):** 
+  While most approaches at this intersection feature 4 lanes, **Arar Street is restricted to only 3 lanes**. This creates a severe structural bottleneck that our model explicitly accounts for. 
+  * Total capacity for 4-lane approaches: $30 \times 4 = 120 \text{ vehicles per green phase}$
+  * Total capacity for Arar Street (3 lanes): $30 \times 3 = 90 \text{ vehicles per green phase}$
+* This explicit geometric constraint (a 25% reduction in total throughput compared to other approaches) is heavily factored into our synthetic data generation, accurately modeling why Arar Street experiences rapid queue buildup and severe congestion during peak hours.
 
 ## 4. Probabilistic Arrival Generation
 While the maximum capacity is fixed, actual vehicle arrivals are randomized using the **Poisson Distribution Model**, a standard approach in traffic flow theory for uncongested to moderately congested states.
