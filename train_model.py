@@ -2,10 +2,11 @@ import pandas as pd
 import numpy as np
 import lightgbm as lgb
 from sklearn.metrics import mean_squared_error
+import warnings
+warnings.filterwarnings('ignore')
 
 df = pd.read_csv('feature_table.csv')
 df['timestamp'] = pd.to_datetime(df['timestamp'])
-
 df = df.sort_values(by=['detector_id', 'timestamp'])
 
 df['target_15m'] = df.groupby('detector_id')['vehicle_count'].shift(-1)
@@ -31,11 +32,16 @@ horizons = {'15m': 'target_15m', '30m': 'target_30m', '60m': 'target_60m'}
 for name, target in horizons.items():
     y_train, y_test = train_df[target], test_df[target]
     
+    # العصر العنيف: أبطأنا التعلم، زدنا عدد الأشجار لـ 1200، ورفعنا عمق التحليل
     model = lgb.LGBMRegressor(
         objective='mape',
-        n_estimators=400,
-        learning_rate=0.03,
-        num_leaves=63,
+        n_estimators=1200,
+        learning_rate=0.01,
+        num_leaves=127,
+        max_depth=10,
+        min_child_samples=10,
+        subsample=0.8,
+        colsample_bytree=0.8,
         random_state=42,
         n_jobs=-1
     )
@@ -43,6 +49,7 @@ for name, target in horizons.items():
     
     preds = model.predict(X_test)
     preds = np.maximum(preds, 0)
+    preds = np.round(preds)
     
     rmse = np.sqrt(mean_squared_error(y_test, preds))
     mape = calc_mape(y_test, preds)
