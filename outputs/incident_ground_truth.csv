@@ -1,0 +1,6 @@
+clip,event_type,start_time_seconds,end_time_seconds,status,notes
+sc1.mp4,illegal_stop,0.000,15.700,confirmed_visible,"White vehicle remains stationary in the right-side lane/roadside area; outro excluded"
+sc2.mp4,,,,needs_review,"No unambiguous incident onset or end is visible; traffic appears to flow normally"
+sc3.mp4,,,,needs_review,"No unambiguous incident onset or end is visible; traffic appears to flow normally"
+sc4.mp4,,,,needs_review,"Short trajectory/tracking example; no clearly staged incident interval is visible"
+sc5.mp4,queue_spillback,0.000,10.400,confirmed_visible,"Severe intersection gridlock/queue spillback is already present at the first frame and persists to the end"
