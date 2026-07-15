@@ -1,4 +1,6 @@
+import base64
 import os
+from pathlib import Path
 
 import streamlit as st
 import pandas as pd
@@ -15,6 +17,12 @@ import requests
 # ============================================================
 MOCK_MODE = os.getenv("MOCK_MODE", "true").lower() in {"1", "true", "yes"}
 API_BASE = os.getenv("API_BASE", "http://localhost:8000")
+LOGO_PATH = Path(__file__).parent / "assets" / "stms-logo.png"
+LOGO_DATA_URI = (
+    "data:image/png;base64," + base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
+    if LOGO_PATH.exists()
+    else ""
+)
 
 
 def fetch_health():
@@ -102,7 +110,7 @@ def fetch_forecast():
 # 1. PAGE CONFIG
 # ============================================================
 st.set_page_config(
-    page_title="STMS Console",
+    page_title="VISTA | Traffic Advisor",
     page_icon="🚦",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -116,11 +124,12 @@ st.set_page_config(
 st.markdown("""
     <style>
     :root {
-        --bg-main: #0d1117;
-        --bg-card: #161b22;
-        --border-color: #2d3748;
-        --text-primary: #e6edf3;
-        --text-muted: #8b949e;
+        --bg-main: #050b14;
+        --bg-card: #0a1422;
+        --bg-card-soft: #0d1929;
+        --border-color: rgba(148,163,184,.14);
+        --text-primary: #f8fafc;
+        --text-muted: #8494aa;
 
         --accent-alert: #ff4d4f;      /* single color for ALL alert states */
         --accent-alert-bg: rgba(255, 77, 79, 0.10);
@@ -130,52 +139,86 @@ st.markdown("""
         --accent-safe: #2ecc71;       /* used only for the advisory-only guard rail */
     }
 
-    .stApp { background-color: var(--bg-main); }
-    .block-container { padding-top: 0.8rem; padding-bottom: 0rem; max-width: 100%; }
+    .stApp {
+        background:
+            radial-gradient(circle at 16% -5%, rgba(14,165,233,.10), transparent 31rem),
+            radial-gradient(circle at 92% 18%, rgba(16,185,129,.045), transparent 24rem),
+            var(--bg-main);
+    }
+    .block-container { padding: .7rem 1.5rem 1rem; max-width: 1680px; }
     .stDeployButton, #MainMenu, footer { visibility: hidden; }
     header[data-testid="stHeader"] {
         background: transparent;
-        height: 2.2rem;
+        height: 1.8rem;
     }
+    section[data-testid="stSidebar"] { background:#07101c; border-right:1px solid var(--border-color); }
+    section[data-testid="stSidebar"] .block-container { padding-top:1.25rem; }
+    .stButton > button {
+        border-radius:9px; border:1px solid rgba(148,163,184,.18); background:#0b1726;
+        color:#d8e2ef; min-height:38px; transition:all .18s ease;
+    }
+    .stButton > button:hover { border-color:rgba(56,189,248,.55); color:#fff; transform:translateY(-1px); }
+    div[data-baseweb="select"] > div { background:#0b1726; border-color:rgba(148,163,184,.16); }
+    details { background:#081421 !important; border:1px solid var(--border-color) !important; border-radius:10px !important; }
 
     .dashboard-card {
-        background-color: var(--bg-card);
+        background: linear-gradient(145deg, rgba(12,25,42,.96), rgba(7,17,30,.96));
         border: 1px solid var(--border-color);
-        border-radius: 10px;
-        padding: 16px 18px;
-        margin-bottom: 12px;
+        border-radius: 16px;
+        padding: 18px 20px;
+        margin-bottom: 14px;
         height: 100%;
+        box-shadow: 0 16px 42px rgba(0,0,0,.22);
     }
     .card-title {
-        font-size: 0.85rem;
-        font-weight: 600;
-        letter-spacing: 0.03em;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.09em;
         text-transform: uppercase;
         color: var(--text-muted);
         margin-bottom: 10px;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid rgba(148,163,184,.10);
         padding-bottom: 8px;
     }
 
-    /* --- Demo mode banner --- */
+    /* --- Operator header --- */
+    .operator-header {
+        display:flex; align-items:center; justify-content:space-between; gap:22px;
+        background:linear-gradient(120deg,rgba(11,24,41,.96),rgba(7,16,28,.92));
+        border:1px solid var(--border-color); position:relative; overflow:hidden;
+        border-radius:16px; padding:14px 18px; margin-bottom:14px;
+        box-shadow:0 18px 45px rgba(0,0,0,.24);
+    }
+    .operator-header::after { content:''; position:absolute; right:-40px; top:-80px; width:220px; height:220px; border:1px solid rgba(56,189,248,.09); border-radius:50%; }
+    .brand-wrap { display:flex; align-items:center; gap:14px; position:relative; z-index:1; }
+    .brand-icon {
+        width:58px; height:58px; display:flex; align-items:center; justify-content:center;
+        border-radius:14px; background:#050c16; border:1px solid rgba(56,189,248,.24);
+        padding:2px; overflow:hidden; box-shadow:0 0 24px rgba(14,165,233,.13);
+    }
+    .brand-icon img { width:100%; height:100%; object-fit:cover; border-radius:12px; }
+    .brand-eyebrow { color:#38bdf8; font-size:.62rem; font-weight:750; letter-spacing:.13em; text-transform:uppercase; margin-bottom:3px; }
+    .brand-title { color:var(--text-primary); font-size:1.12rem; font-weight:720; line-height:1.2; letter-spacing:-.01em; }
+    .brand-subtitle { color:var(--text-muted); font-size:.69rem; margin-top:4px; }
+    .header-meta { display:flex; align-items:center; gap:9px; flex-wrap:wrap; justify-content:flex-end; position:relative; z-index:1; }
+    .status-pill {
+        padding:6px 9px; border-radius:999px; font-size:.68rem; font-weight:650;
+        color:#86efac; background:rgba(46,204,113,.09); border:1px solid rgba(46,204,113,.28);
+    }
+    .status-pill::before { content:'●'; margin-right:6px; }
     .demo-banner {
-        background-color: #1f2937;
-        border: 1px solid var(--border-color);
-        border-left: 4px solid var(--text-muted);
-        border-radius: 6px;
-        padding: 6px 14px;
-        font-size: 0.78rem;
-        color: var(--text-muted);
-        text-align: center;
-        margin-bottom: 10px;
+        background:rgba(245,158,11,.08); border:1px solid rgba(245,158,11,.27);
+        border-radius:999px; padding:6px 10px; font-size:.67rem; color:#fbbf24;
     }
 
     /* --- Video placeholder (no external network dependency) --- */
     .video-shell {
-        background: repeating-linear-gradient(45deg, #11151c, #11151c 10px, #161b22 10px, #161b22 20px);
+        background:
+            linear-gradient(rgba(7,17,31,.22), rgba(7,17,31,.6)),
+            repeating-linear-gradient(45deg, #0a1727, #0a1727 12px, #0d1b2d 12px, #0d1b2d 24px);
         border: 1px solid var(--border-color);
-        border-radius: 8px;
-        height: 340px;
+        border-radius: 14px;
+        height: 360px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -185,20 +228,24 @@ st.markdown("""
     }
     .video-shell .rec-dot {
         position: absolute; top: 12px; left: 14px;
-        color: var(--accent-alert); font-size: 0.75rem; font-weight: 700;
+        color: #fff; background:rgba(255,77,79,.86); padding:4px 8px;
+        border-radius:5px; font-size: 0.66rem; font-weight: 700;
     }
     .video-shell .cam-label {
-        position: absolute; bottom: 12px; left: 14px;
-        font-size: 0.72rem; color: var(--text-muted);
+        position: absolute; bottom: 13px; left: 14px; padding:5px 8px;
+        border-radius:6px; background:rgba(7,17,31,.76); font-size: 0.7rem; color: #c9d5e3;
     }
+    .video-stats { position:absolute; top:12px; right:14px; display:flex; gap:6px; }
+    .video-stat { backdrop-filter:blur(8px); background:rgba(7,17,31,.72); border:1px solid rgba(148,163,184,.18); border-radius:7px; padding:5px 8px; font-size:.61rem; color:#c9d5e3; }
+    .tracking-reticle { width:80px; height:48px; border:1px solid rgba(63,176,255,.7); position:relative; }
+    .tracking-reticle::after { content:'ID 024 · CAR'; position:absolute; left:-1px; top:-18px; color:#7dd3fc; font-size:.58rem; white-space:nowrap; }
 
     /* --- Alert feed items --- */
     .alert-item {
         background-color: var(--accent-alert-bg);
         border-left: 3px solid var(--accent-alert);
-        border-radius: 6px;
-        padding: 10px 12px;
-        margin-bottom: 8px;
+        border:1px solid rgba(255,77,79,.15); border-left:3px solid var(--accent-alert);
+        border-radius: 9px; padding: 11px 12px; margin-bottom: 9px;
         display: flex;
         gap: 10px;
         align-items: flex-start;
@@ -237,6 +284,21 @@ st.markdown("""
         text-align: center;
         margin-top: 10px;
     }
+    .timing-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin:12px 0; }
+    .timing-box { background:rgba(7,17,31,.58); border:1px solid var(--border-color); border-radius:9px; padding:10px; }
+    .timing-label { color:var(--text-muted); font-size:.65rem; text-transform:uppercase; letter-spacing:.05em; }
+    .timing-value { color:var(--text-primary); font-size:1.25rem; font-weight:750; margin-top:3px; }
+    .timing-box.recommended { border-color:rgba(63,176,255,.42); background:rgba(63,176,255,.07); }
+    .health-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:5px 0 8px; }
+    .health-item { background:linear-gradient(145deg,#0b1726,#08111e); border:1px solid var(--border-color); border-radius:12px; padding:13px 15px; box-shadow:0 10px 25px rgba(0,0,0,.14); }
+    .health-label { color:var(--text-muted); font-size:.68rem; text-transform:uppercase; letter-spacing:.04em; }
+    .health-value { color:var(--text-primary); font-size:1.05rem; font-weight:700; margin-top:3px; }
+    .health-ok { color:#4ade80; font-size:.62rem; float:right; }
+    @media (max-width: 900px) {
+        .operator-header { align-items:flex-start; flex-direction:column; }
+        .header-meta { justify-content:flex-start; }
+        .health-strip { grid-template-columns:1fr; }
+    }
     .assumption-note {
         font-size: 0.7rem;
         color: var(--text-muted);
@@ -265,13 +327,15 @@ NOW_MINUTE = 25  # vertical "now" marker — later derive this from the live clo
 # 4. HEADER
 # ============================================================
 st.markdown(
-    "<div class='demo-banner'>🛡️ Demo mode — recorded video and synthetic SCATS logs in GAM native format</div>",
-    unsafe_allow_html=True,
-)
-st.markdown(
-    "<h2 style='text-align:center; margin:0; color:#e6edf3;'>🚦 Smart Traffic Management System (STMS)</h2>"
-    "<p style='text-align:center; color:#8b949e; margin-top:2px; font-size:0.85rem;'>"
-    "Amman Municipality (GAM) — Real-Time Operator Control Console</p>",
+    "<div class='operator-header'>"
+    f"<div class='brand-wrap'><div class='brand-icon'><img src='{LOGO_DATA_URI}' alt='STMS logo'></div><div>"
+    "<div class='brand-eyebrow'>VISUAL INTELLIGENT SMART TRAFFIC ADVISOR</div>"
+    "<div class='brand-title'>VISTA</div>"
+    "<div class='brand-subtitle'>GAM · Intersection 806 · Wadi Saqra Operator Console</div>"
+    "</div></div>"
+    "<div class='header-meta'><span class='status-pill'>SYSTEM ONLINE</span>"
+    "<span class='demo-banner'>DEMO · RECORDED VIDEO & SYNTHETIC SCATS</span></div>"
+    "</div>",
     unsafe_allow_html=True,
 )
 
@@ -282,7 +346,8 @@ if "playback" not in st.session_state:
     st.session_state.playback = "paused"
 
 with st.sidebar:
-    st.markdown("### 🛠️ Control Options")
+    st.markdown("### VISTA Operations")
+    st.caption("Visual Intelligent Smart Traffic Advisor")
     st.selectbox("Select Lane Camera / Traffic Video:", ["Intersection 806 — Wadi Saqra (Live Demo)"])
 
     st.markdown("---")
@@ -309,8 +374,9 @@ with main_col:
     st.markdown(
         "<div class='video-shell'>"
         "<span class='rec-dot'>● REC</span>"
-        "<span style='font-size:2rem;'>🎥</span>"
-        "<span style='font-size:0.8rem; margin-top:6px;'>Streaming — tracking vehicles…</span>"
+        "<div class='video-stats'><span class='video-stat'>30 FPS</span><span class='video-stat'>18 VEHICLES</span><span class='video-stat'>AI ACTIVE</span></div>"
+        "<div class='tracking-reticle'></div>"
+        "<span style='font-size:0.72rem; margin-top:14px; color:#8fa3bb;'>Annotated stream awaiting vision engine</span>"
         "<span class='cam-label'>Intersection 806 · Wadi Saqra</span>"
         "</div>",
         unsafe_allow_html=True,
@@ -391,9 +457,12 @@ with main_col:
             f"{r['recommended_green_duration_seconds']}s</span></div>",
             unsafe_allow_html=True,
         )
-        st.metric(
-            label="Recommended Green Duration",
-            value=f"{r['recommended_green_duration_seconds']}s",
+        current_green = r.get("current_green_duration_seconds", 32)
+        st.markdown(
+            "<div class='timing-grid'>"
+            f"<div class='timing-box'><div class='timing-label'>Current timing</div><div class='timing-value'>{current_green}s</div></div>"
+            f"<div class='timing-box recommended'><div class='timing-label'>Recommended</div><div class='timing-value'>{r['recommended_green_duration_seconds']}s</div></div>"
+            "</div>", unsafe_allow_html=True,
         )
         st.caption(f"**Reason:** {r['reason']}")
 
@@ -446,14 +515,16 @@ with alert_col:
 # ============================================================
 # 7. Region 5 — System health strip
 # ============================================================
-st.markdown("---")
 h = mock_health
 uptime_str = "{:02d}:{:02d}:{:02d}".format(
     h["stream_uptime_seconds"] // 3600,
     (h["stream_uptime_seconds"] % 3600) // 60,
     h["stream_uptime_seconds"] % 60,
 )
-h1, h2, h3 = st.columns(3)
-h1.metric(label="🖥️ Ingestion Rate", value=f"{h['ingestion_rate_fps']} FPS")
-h2.metric(label="⚠️ Dropped Frames", value=f"{h['dropped_frames']} frames")
-h3.metric(label="⏱️ Stream Uptime", value=uptime_str)
+st.markdown(
+    "<div class='health-strip'>"
+    f"<div class='health-item'><span class='health-ok'>● HEALTHY</span><div class='health-label'>Ingestion rate</div><div class='health-value'>{h['ingestion_rate_fps']} FPS</div></div>"
+    f"<div class='health-item'><span class='health-ok'>● NOMINAL</span><div class='health-label'>Dropped frames</div><div class='health-value'>{h['dropped_frames']} frames</div></div>"
+    f"<div class='health-item'><span class='health-ok'>● CONNECTED</span><div class='health-label'>Stream uptime</div><div class='health-value'>{uptime_str}</div></div>"
+    "</div>", unsafe_allow_html=True,
+)
