@@ -11,5 +11,6 @@ outputs/tracks.csv
 outputs/bench_*/
 outputs/contact_sheets/
 outputs/day2_*/
+outputs/day2_review/
 outputs/demo/
 videos/raw/

@@ -59,6 +59,7 @@ def enrich_tracks(rows: list[dict], zones: dict, speed_window: float) -> list[di
     for row in rows:
         row["approach"] = approach_for(row, zones)
         row["speed_px_s"] = 0.0
+        row["speed_valid"] = False
         row["vx_px_s"] = 0.0
         row["vy_px_s"] = 0.0
         track_history = history[row["track_id"]]
@@ -71,6 +72,7 @@ def enrich_tracks(rows: list[dict], zones: dict, speed_window: float) -> list[di
                 row["vx_px_s"] = (row["centroid_x"] - old_x) / delta_time
                 row["vy_px_s"] = (row["centroid_y"] - old_y) / delta_time
                 row["speed_px_s"] = math.hypot(row["vx_px_s"], row["vy_px_s"])
+                row["speed_valid"] = True
         track_history.append((row["timestamp"], row["centroid_x"], row["centroid_y"]))
     return rows
 
@@ -117,7 +119,7 @@ def analyse(rows: list[dict], zones: dict, cfg: dict) -> tuple[list[dict], list[
     stalled_start: dict[int, float] = {}
     spill_start: dict[str, float] = {}
     approach_speeds: dict[str, deque] = defaultdict(deque)
-    track_origins: dict[int, tuple] = {}
+    track_origins: dict[int, dict] = {}
     minute_stats: dict[tuple[int, str], dict] = {}
 
     def allowed(key: tuple, timestamp: float) -> bool:
@@ -128,6 +130,10 @@ def analyse(rows: list[dict], zones: dict, cfg: dict) -> tuple[list[dict], list[
 
     for timestamp in sorted(by_time):
         current = by_time[timestamp]
+        current_track_ids = {row["track_id"] for row in current}
+        for track_id in list(stalled_start):
+            if track_id not in current_track_ids:
+                stalled_start.pop(track_id, None)
         by_approach: dict[str, list[dict]] = defaultdict(list)
         for row in current:
             by_approach[row["approach"]].append(row)
@@ -161,6 +167,7 @@ def analyse(rows: list[dict], zones: dict, cfg: dict) -> tuple[list[dict], list[
                 current_speed = sum(recent) / len(recent)
                 drop = 100 * (baseline - current_speed) / baseline if baseline else 0
                 if (baseline >= cfg["congestion_min_baseline_speed_px_s"] and
+                        queue_by_approach[approach] >= cfg["congestion_min_queue_count"] and
                         drop >= cfg["congestion_drop_percent"] and
                         allowed(("sudden_congestion", approach), timestamp)):
                     events.append(make_event(timestamp, "sudden_congestion", approach,
@@ -185,7 +192,8 @@ def analyse(rows: list[dict], zones: dict, cfg: dict) -> tuple[list[dict], list[
             point = (row["centroid_x"], row["centroid_y"])
             spill_polygon = zones["approaches"][approach].get("spillback_zone", [])
             outside_queue = not inside(point, spill_polygon) and queue_by_approach[approach] < cfg["queue_context_vehicle_count"]
-            if row["speed_px_s"] <= cfg["stalled_speed_threshold_px_s"] and outside_queue:
+            if (row["speed_valid"] and
+                    row["speed_px_s"] <= cfg["stalled_speed_threshold_px_s"] and outside_queue):
                 stalled_start.setdefault(row["track_id"], timestamp)
                 duration = timestamp - stalled_start[row["track_id"]]
                 if (duration >= cfg["stalled_duration_seconds"] and
@@ -196,13 +204,23 @@ def analyse(rows: list[dict], zones: dict, cfg: dict) -> tuple[list[dict], list[
             else:
                 stalled_start.pop(row["track_id"], None)
 
-            origin = track_origins.setdefault(
-                row["track_id"], (timestamp, row["centroid_x"], row["centroid_y"], approach)
-            )
+            origin = track_origins.get(row["track_id"])
+            if (origin is None or origin["approach"] != approach or
+                    timestamp - origin["last_seen"] > cfg["max_track_gap_seconds"]):
+                origin = {
+                    "timestamp": timestamp,
+                    "x": row["centroid_x"],
+                    "y": row["centroid_y"],
+                    "approach": approach,
+                    "last_seen": timestamp,
+                }
+                track_origins[row["track_id"]] = origin
+            else:
+                origin["last_seen"] = timestamp
             direction = normalized_direction(zones["approaches"][approach].get("expected_direction", []))
-            if direction and origin[3] == approach:
-                dx = row["centroid_x"] - origin[1]
-                dy = row["centroid_y"] - origin[2]
+            if direction:
+                dx = row["centroid_x"] - origin["x"]
+                dy = row["centroid_y"] - origin["y"]
                 displacement = math.hypot(dx, dy)
                 cosine = (dx * direction[0] + dy * direction[1]) / displacement if displacement else 1.0
                 if (displacement >= cfg["wrong_way_min_displacement_px"] and

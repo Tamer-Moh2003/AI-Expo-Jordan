@@ -62,6 +62,7 @@ class IncidentRuleTests(unittest.TestCase):
             "centroid_y": float(y),
             "approach": "test",
             "speed_px_s": speed,
+            "speed_valid": True,
             "vx_px_s": 0.0,
             "vy_px_s": 0.0,
         }

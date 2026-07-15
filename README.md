@@ -69,3 +69,15 @@ with speed and approach, events matching the required API fields in
 The supplied `zones_dataset1.json` is an initial configuration and must be
 checked in the visual editor before evaluation. Threshold tuning and the final
 30-minute false-positive measurement require confirmed staged incident clips.
+
+For a CPU-friendly 30-minute ordinary-footage tracking pass without rendering a
+new video:
+
+```powershell
+python main.py "videos/raw/dataset5(30).mp4" `
+  --output-dir "outputs/day2_30min_tracks" `
+  --imgsz 320 --frame-stride 8 --analysis-only
+```
+
+The final ordinary-footage evaluation and its limitations are documented in
+`DAY2_REPORT.md` and `DAY2_STATUS.md`.

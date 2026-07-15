@@ -59,6 +59,17 @@ def parse_args() -> argparse.Namespace:
         help="auto, cpu, or a CUDA device number such as 0",
     )
     parser.add_argument("--max-frames", type=int, default=0, help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--frame-stride",
+        type=int,
+        default=1,
+        help="Process every Nth source frame while preserving source timestamps",
+    )
+    parser.add_argument(
+        "--analysis-only",
+        action="store_true",
+        help="Write tracks and performance only; do not render or privacy-process video",
+    )
     parser.add_argument("--no-plate-blur", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--display", action="store_true", help="Display privacy-safe frames")
     return parser.parse_args()
@@ -80,6 +91,10 @@ def source_fps_and_size(source) -> tuple[float, int, int]:
 
 
 def run(args: argparse.Namespace) -> None:
+    if args.frame_stride < 1:
+        raise ValueError("frame_stride must be at least 1")
+    if args.analysis_only and args.display:
+        raise ValueError("--display cannot be combined with --analysis-only")
     source = source_value(args.source)
     source_fps, width, height = source_fps_and_size(source)
     if not width or not height:
@@ -91,21 +106,26 @@ def run(args: argparse.Namespace) -> None:
     csv_path = output_dir / "tracks.csv"
     performance_path = output_dir / "performance.json"
 
-    writer = cv2.VideoWriter(
-        str(video_path), cv2.VideoWriter_fourcc(*"mp4v"), source_fps, (width, height)
-    )
-    if not writer.isOpened():
-        raise RuntimeError(f"Could not create output video: {video_path}")
+    writer = None
+    if not args.analysis_only:
+        writer = cv2.VideoWriter(
+            str(video_path), cv2.VideoWriter_fourcc(*"mp4v"),
+            source_fps / args.frame_stride, (width, height)
+        )
+        if not writer.isOpened():
+            raise RuntimeError(f"Could not create output video: {video_path}")
 
     vehicle_model = YOLO(args.vehicle_model)
     device = ("0" if torch.cuda.is_available() else "cpu") if args.device == "auto" else args.device
     plate_backend = "none" if args.no_plate_blur else args.plate_backend
-    privacy = PrivacyBlur(
-        args.plate_model,
-        plate_confidence=args.confidence,
-        plate_backend=plate_backend,
-        detection_scale=args.privacy_scale,
-    )
+    privacy = None
+    if not args.analysis_only:
+        privacy = PrivacyBlur(
+            args.plate_model,
+            plate_confidence=args.confidence,
+            plate_backend=plate_backend,
+            detection_scale=args.privacy_scale,
+        )
 
     start = time.perf_counter()
     frame_number = 0
@@ -126,11 +146,12 @@ def run(args: argparse.Namespace) -> None:
                 persist=True,
                 verbose=False,
                 device=device,
+                vid_stride=args.frame_stride,
             )
 
             for result in results:
                 frame_number += 1
-                timestamp = (frame_number - 1) / source_fps
+                timestamp = (frame_number - 1) * args.frame_stride / source_fps
                 boxes = result.boxes
                 privacy_vehicle_boxes = []
 
@@ -158,9 +179,11 @@ def run(args: argparse.Namespace) -> None:
                         )
                         track_rows += 1
 
-                annotated = result.plot()
-                private_frame = privacy.apply(annotated, privacy_vehicle_boxes)
-                writer.write(private_frame)
+                private_frame = None
+                if not args.analysis_only:
+                    annotated = result.plot()
+                    private_frame = privacy.apply(annotated, privacy_vehicle_boxes)
+                    writer.write(private_frame)
 
                 if args.display:
                     cv2.imshow("Privacy-safe vehicle tracking", private_frame)
@@ -169,7 +192,8 @@ def run(args: argparse.Namespace) -> None:
                 if args.max_frames and frame_number >= args.max_frames:
                     break
     finally:
-        writer.release()
+        if writer is not None:
+            writer.release()
         if args.display:
             cv2.destroyAllWindows()
 
@@ -179,6 +203,10 @@ def run(args: argparse.Namespace) -> None:
         "source": args.source,
         "source_fps": round(source_fps, 3),
         "frames_processed": frame_number,
+        "frame_stride": args.frame_stride,
+        "source_duration_covered_seconds": round(
+            frame_number * args.frame_stride / source_fps, 3
+        ),
         "track_rows": track_rows,
         "elapsed_seconds": round(elapsed, 3),
         "processing_fps": round(processing_fps, 3),
@@ -188,12 +216,17 @@ def run(args: argparse.Namespace) -> None:
         "inference_size": args.imgsz,
         "device": device,
         "privacy_detection_scale": args.privacy_scale,
-        "privacy": {"faces": True, "licence_plates": plate_backend != "none"},
+        "analysis_only": args.analysis_only,
+        "privacy": {
+            "faces": not args.analysis_only,
+            "licence_plates": not args.analysis_only and plate_backend != "none",
+        },
         "plate_backend": plate_backend,
     }
     performance_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
 
-    print(f"Video: {video_path}")
+    if not args.analysis_only:
+        print(f"Video: {video_path}")
     print(f"Tracks: {csv_path}")
     print(f"Performance: {performance_path}")
     print(f"Processing FPS: {processing_fps:.2f} ({'PASS' if processing_fps >= 12 else 'BELOW TARGET'})")
