@@ -1,0 +1,25 @@
+{
+  "source": "videos/raw/dataset5(30).mp4",
+  "source_fps": 8.0,
+  "frames_processed": 1800,
+  "frame_stride": 8,
+  "source_duration_covered_seconds": 1800.0,
+  "track_rows": 4958,
+  "elapsed_seconds": 1102.826,
+  "processing_fps": 1.632,
+  "target_fps": 12,
+  "meets_12_fps_target": false,
+  "input_size": [
+    1280,
+    960
+  ],
+  "inference_size": 320,
+  "device": "cpu",
+  "privacy_detection_scale": 0.35,
+  "analysis_only": true,
+  "privacy": {
+    "faces": false,
+    "licence_plates": false
+  },
+  "plate_backend": "haar"
+}

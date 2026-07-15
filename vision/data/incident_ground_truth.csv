@@ -1,0 +1,6 @@
+clip,event_type,start_time_seconds,end_time_seconds,status,notes
+sc1.mp4,illegal_stop,0.000,15.700,confirmed_visible,"White vehicle remains stationary in the right-side lane/roadside area; outro excluded"
+sc2.mp4,Stopped vehicle in active lane,3.000,23.000,user_labeled,"Vehicle stopped suddenly in the middle of the left lane causing a traffic obstruction"
+sc3.mp4,Improper bus stop blocking lane,17.000,27.000,user_labeled,"Bus stopped at the bus stop but remained partially in the traffic lane causing a minor obstruction"
+sc4.mp4,Blocked entrance,0.000,5.000,user_labeled,"Vehicle stopped at the entrance blocking access to the street"
+sc5.mp4,Intersection congestion causing blockage,0.000,10.000,user_labeled,"Multiple vehicles stopped irregularly at a busy intersection causing complete traffic blockage"
