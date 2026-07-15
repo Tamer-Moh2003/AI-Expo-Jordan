@@ -9,6 +9,7 @@ import time
 from pathlib import Path
 
 import cv2
+import torch
 from ultralytics import YOLO
 
 from privacy_blur import PrivacyBlur
@@ -46,6 +47,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--tracker", default="bytetrack.yaml")
     parser.add_argument("--confidence", type=float, default=0.25)
     parser.add_argument("--imgsz", type=int, default=640)
+    parser.add_argument(
+        "--privacy-scale",
+        type=float,
+        default=0.35,
+        help="Scale used for face and fast plate detection (0-1)",
+    )
+    parser.add_argument(
+        "--device",
+        default="auto",
+        help="auto, cpu, or a CUDA device number such as 0",
+    )
+    parser.add_argument("--max-frames", type=int, default=0, help=argparse.SUPPRESS)
     parser.add_argument("--no-plate-blur", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--display", action="store_true", help="Display privacy-safe frames")
     return parser.parse_args()
@@ -85,11 +98,13 @@ def run(args: argparse.Namespace) -> None:
         raise RuntimeError(f"Could not create output video: {video_path}")
 
     vehicle_model = YOLO(args.vehicle_model)
+    device = ("0" if torch.cuda.is_available() else "cpu") if args.device == "auto" else args.device
     plate_backend = "none" if args.no_plate_blur else args.plate_backend
     privacy = PrivacyBlur(
         args.plate_model,
         plate_confidence=args.confidence,
         plate_backend=plate_backend,
+        detection_scale=args.privacy_scale,
     )
 
     start = time.perf_counter()
@@ -110,17 +125,20 @@ def run(args: argparse.Namespace) -> None:
                 stream=True,
                 persist=True,
                 verbose=False,
+                device=device,
             )
 
             for result in results:
                 frame_number += 1
                 timestamp = (frame_number - 1) / source_fps
                 boxes = result.boxes
+                privacy_vehicle_boxes = []
 
                 if boxes is not None and boxes.id is not None:
                     ids = boxes.id.int().cpu().tolist()
                     classes = boxes.cls.int().cpu().tolist()
                     coordinates = boxes.xyxy.cpu().tolist()
+                    privacy_vehicle_boxes = coordinates
                     for track_id, class_id, (x1, y1, x2, y2) in zip(
                         ids, classes, coordinates
                     ):
@@ -141,13 +159,15 @@ def run(args: argparse.Namespace) -> None:
                         track_rows += 1
 
                 annotated = result.plot()
-                private_frame = privacy.apply(annotated)
+                private_frame = privacy.apply(annotated, privacy_vehicle_boxes)
                 writer.write(private_frame)
 
                 if args.display:
                     cv2.imshow("Privacy-safe vehicle tracking", private_frame)
                     if cv2.waitKey(1) & 0xFF == ord("q"):
                         break
+                if args.max_frames and frame_number >= args.max_frames:
+                    break
     finally:
         writer.release()
         if args.display:
@@ -166,6 +186,8 @@ def run(args: argparse.Namespace) -> None:
         "meets_12_fps_target": processing_fps >= 12,
         "input_size": [width, height],
         "inference_size": args.imgsz,
+        "device": device,
+        "privacy_detection_scale": args.privacy_scale,
         "privacy": {"faces": True, "licence_plates": plate_backend != "none"},
         "plate_backend": plate_backend,
     }

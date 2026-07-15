@@ -80,9 +80,31 @@ class PrivacyBlur:
                 region, (self.blur_kernel, self.blur_kernel), 0
             )
 
-    def apply(self, frame):
+    def apply(self, frame, vehicle_boxes=None):
         """Return a copy with every detected face and plate blurred."""
         private_frame = frame.copy()
+
+        # A conservative fallback protects the likely plate band of every
+        # detected vehicle, including plates missed by the lightweight cascade.
+        # Over-blurring is preferable to exposing personally identifying data.
+        if vehicle_boxes is not None:
+            for x1, y1, x2, y2 in vehicle_boxes:
+                vehicle_height = y2 - y1
+                # Protect occupants even when a small/profile face is missed.
+                self._blur_region(
+                    private_frame,
+                    int(x1),
+                    int(y1 + vehicle_height * 0.10),
+                    int(x2),
+                    int(y1 + vehicle_height * 0.52),
+                )
+                self._blur_region(
+                    private_frame,
+                    int(x1),
+                    int(y1 + vehicle_height * 0.68),
+                    int(x2),
+                    int(y1 + vehicle_height * 0.92),
+                )
 
         small = cv2.resize(
             private_frame,
