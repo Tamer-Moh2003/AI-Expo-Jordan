@@ -24,27 +24,76 @@ except ImportError:  # Installed by frontend/requirements.txt in the container.
 # ============================================================
 MOCK_MODE = os.getenv("MOCK_MODE", "true").lower() in {"1", "true", "yes"}
 API_BASE = os.getenv("API_BASE", "http://localhost:8000")
+FORECAST_API_BASE = os.getenv("FORECAST_API_BASE", "http://127.0.0.1:5000")
 EVENTS_WS_URL = os.getenv("EVENTS_WS_URL", "ws://localhost:8000/events")
 VIDEO_STREAM_URL = os.getenv("VIDEO_STREAM_URL", "")
 MEDIA_BASE_URL = os.getenv("MEDIA_BASE_URL", API_BASE).rstrip("/")
 LOGO_PATH = Path(__file__).parent / "assets" / "stms-logo.png"
 FAVICON_PATH = Path(__file__).parent / "assets" / "vista-favicon.png"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+LOCAL_DEMO_VIDEO_PATH = Path(
+    os.getenv(
+        "LOCAL_DEMO_VIDEO_PATH",
+        str(Path(__file__).parent / "assets" / "demo" / "annotated_demo.mp4"),
+    )
+)
+VISION_EVENTS_PATH = PROJECT_ROOT / "vision" / "sample_outputs" / "day2_dataset1" / "events.json"
+VISION_PREVIEW_PATH = PROJECT_ROOT / "vision" / "sample_outputs" / "day2_dataset1" / "zones_preview.jpg"
 LOGO_DATA_URI = (
     "data:image/png;base64," + base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
     if LOGO_PATH.exists()
     else ""
 )
+VISION_PREVIEW_DATA_URI = (
+    "data:image/jpeg;base64," + base64.b64encode(VISION_PREVIEW_PATH.read_bytes()).decode("ascii")
+    if VISION_PREVIEW_PATH.exists()
+    else ""
+)
 
 
-def request_json(path, fallback):
+def request_json(path, fallback, base_url=None):
     """Fetch one API resource without allowing a missing service to crash VISTA."""
     try:
-        response = requests.get(f"{API_BASE}{path}", timeout=2)
+        response = requests.get(f"{base_url or API_BASE}{path}", timeout=2)
         response.raise_for_status()
         return response.json()
     except (requests.RequestException, ValueError) as exc:
         st.session_state.setdefault("connection_errors", {})[path] = str(exc)
         return fallback
+
+
+def format_video_timestamp(value):
+    if isinstance(value, (int, float)):
+        total_seconds = int(value)
+        return f"00:{total_seconds // 60:02d}:{total_seconds % 60:02d}"
+    return str(value)
+
+
+def normalize_incident(event):
+    """Accept both the frozen API event and M1's Day 2 event shape."""
+    event_type = event.get("event_type") or event.get("type") or "Unknown Event"
+    approach = str(event.get("approach", "Unknown")).replace("_", " ").title()
+    return {
+        **event,
+        "timestamp": format_video_timestamp(event.get("timestamp", "")),
+        "event_type": str(event_type).replace("_", " ").title(),
+        "approach": approach,
+        "confidence": float(event.get("confidence", 0)),
+        "queue_estimate": event.get("queue_estimate", 0),
+        "snapshot_path": event.get("snapshot_path"),
+        "clip_path": event.get("clip_path") or event.get("short_clip_path"),
+    }
+
+
+def load_vision_sample_events():
+    """Use M1's committed Day 2 output until the live event service is ready."""
+    if not VISION_EVENTS_PATH.exists():
+        return []
+    try:
+        events = json.loads(VISION_EVENTS_PATH.read_text(encoding="utf-8"))
+        return [normalize_incident(event) for event in events[-3:]][::-1]
+    except (OSError, ValueError, TypeError):
+        return []
 
 
 def media_url(path):
@@ -115,22 +164,20 @@ def fetch_incidents():
     # queue_estimate are now stored via ALTER TABLE on M2's side. Note:
     # confidence arrives as a 0-1 fraction (e.g. 0.95), not a percentage.
     if MOCK_MODE:
-        return [
-            {"timestamp": "2026-07-14T08:10:00Z", "event_type": "Stalled Vehicle", "approach": "North",
-             "confidence": 0.95, "queue_estimate": 15,
-             "snapshot_path": "/media/snapshots/inc_001.jpg", "clip_path": "/media/clips/inc_001.mp4"},
-            {"timestamp": "2026-07-14T08:22:00Z", "event_type": "Queue Spillback", "approach": "East",
-             "confidence": 0.87, "queue_estimate": 22,
-             "snapshot_path": "/media/snapshots/inc_002.jpg", "clip_path": "/media/clips/inc_002.mp4"},
-        ]
-    return request_json("/incidents", [])
+        samples = load_vision_sample_events()
+        if samples:
+            return samples
+        return [normalize_incident({
+            "timestamp": "2026-07-14T08:10:00Z", "event_type": "Stalled Vehicle", "approach": "North",
+            "confidence": 0.95, "queue_estimate": 15,
+            "snapshot_path": "/media/snapshots/inc_001.jpg", "clip_path": "/media/clips/inc_001.mp4",
+        })]
+    return [normalize_incident(event) for event in request_json("/incidents", [])]
 
 
 def fetch_forecast():
-    """Matches api_contract.json "GET /forecast" exactly -- each row now
-    carries timestamp, approach, predicted_count, observed_count, lower,
-    upper. observed_count is joined server-side from the counts table.
-    Frozen contract, no more approximation needed here."""
+    """Support both the frozen API list and M2's 15/30/60-minute payload."""
+    baseline_mape = None
     if MOCK_MODE:
         raw = [
             {"timestamp": "08:00", "approach": "North", "predicted_count": 33, "observed_count": 32, "lower": 30, "upper": 36},
@@ -148,18 +195,27 @@ def fetch_forecast():
             {"timestamp": "09:00", "approach": "North", "predicted_count": 54, "observed_count": None, "lower": 48, "upper": 60},
         ]
     else:
-        raw = request_json("/forecast", [])
+        payload = request_json("/forecast", [], base_url=FORECAST_API_BASE)
+        if isinstance(payload, dict):
+            baseline_mape = payload.get("baseline_mape")
+            raw = payload.get("forecasts", [])
+        else:
+            raw = payload
 
     if not raw:
-        return np.array([]), np.array([]), np.array([]), np.array([]), np.array([])
+        return (np.array([]),) * 5 + (baseline_mape,)
 
-    minutes = np.arange(0, len(raw) * 5, 5)
+    is_horizon_payload = "horizon" in raw[0]
+    if is_horizon_payload:
+        minutes = np.array([int(str(row["horizon"]).rstrip("m")) for row in raw])
+    else:
+        minutes = np.arange(0, len(raw) * 5, 5)
     forecast_vals = np.array([row["predicted_count"] for row in raw], dtype=object)
     observed = np.array([row.get("observed_count") for row in raw], dtype=object)
-    upper = np.array([row.get("upper") for row in raw], dtype=object)
-    lower = np.array([row.get("lower") for row in raw], dtype=object)
+    upper = np.array([row.get("upper", row.get("upper_bound")) for row in raw], dtype=object)
+    lower = np.array([row.get("lower", row.get("lower_bound")) for row in raw], dtype=object)
 
-    return minutes, observed, forecast_vals, upper, lower
+    return minutes, observed, forecast_vals, upper, lower, baseline_mape
 
 
 # ============================================================
@@ -413,13 +469,14 @@ mock_recommendation = fetch_recommendation()
 mock_alerts = fetch_incidents()
 live_event = poll_websocket_event()
 if live_event:
-    mock_alerts = [live_event, *mock_alerts]
+    mock_alerts = [normalize_incident(live_event), *mock_alerts]
 mock_system_msgs = [
     {"time": "16:30", "text": "Connected to synthetic SCATS database successfully."},
 ]
 
-minutes, observed, forecast, forecast_upper, forecast_lower = fetch_forecast()
-NOW_MINUTE = 15  # last observed interval; derive from live timestamps after integration
+minutes, observed, forecast, forecast_upper, forecast_lower, baseline_mape = fetch_forecast()
+observed_minutes = [minutes[i] for i, value in enumerate(observed) if value is not None]
+NOW_MINUTE = max(observed_minutes, default=0)
 
 # ============================================================
 # 4. HEADER
@@ -485,13 +542,28 @@ with main_col:
             "<span class='cam-label'>Intersection 806 · Wadi Saqra</span>"
             "</div>", unsafe_allow_html=True,
         )
+    elif LOCAL_DEMO_VIDEO_PATH.exists():
+        st.video(
+            str(LOCAL_DEMO_VIDEO_PATH),
+            autoplay=st.session_state.playback in {"playing", "jumped_to_incident"},
+            loop=True,
+            muted=True,
+            width="stretch",
+        )
+        st.caption("M1 annotated demo · 1280×720 · privacy-safe recorded feed")
     else:
+        preview_image = (
+            f"<img src='{VISION_PREVIEW_DATA_URI}' alt='M1 zone configuration preview' "
+            "style='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.58;'>"
+            if VISION_PREVIEW_DATA_URI else ""
+        )
         st.markdown(
             "<div class='video-shell'>"
+            f"{preview_image}"
             "<span class='rec-dot'>● REC</span>"
             "<div class='video-stats'><span class='video-stat'>30 FPS</span><span class='video-stat'>18 VEHICLES</span><span class='video-stat'>AI ACTIVE</span></div>"
             "<div class='tracking-reticle'></div>"
-            "<span style='font-size:0.72rem; margin-top:14px; color:#8fa3bb;'>Annotated stream awaiting vision engine</span>"
+            "<span style='font-size:0.72rem; margin-top:14px; color:#c8d7eb;position:relative;'>M1 zone output · annotated stream adapter ready</span>"
             "<span class='cam-label'>Intersection 806 · Wadi Saqra</span>"
             "</div>", unsafe_allow_html=True,
         )
@@ -550,9 +622,14 @@ with main_col:
         )
         st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
 
+        if baseline_mape:
+            accuracy_text = f"Naive baseline MAPE: <b>{baseline_mape}</b> · model error pending from M2"
+        elif MOCK_MODE:
+            accuracy_text = "Demo model improvement vs naive baseline: <b>18%</b>"
+        else:
+            accuracy_text = "Forecast accuracy unavailable"
         st.markdown(
-            "<span style='font-size:0.75rem; color:#3fb0ff;'>Forecast error (last hr) vs naive baseline: "
-            "<b>-18%</b></span>",
+            f"<span style='font-size:0.75rem; color:#3fb0ff;'>{accuracy_text}</span>",
             unsafe_allow_html=True,
         )
 
