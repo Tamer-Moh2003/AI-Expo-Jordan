@@ -1,30 +1,22 @@
-import pandas as pd
+"""Build the shared approach-level forecasting feature table (Task 28)."""
 
-print("🚀 Starting Feature Engineering (Task 28)...")
+from forecasting_features import build_approach_features, build_detector_features
 
-df = pd.read_csv('counts.csv')
-df['timestamp'] = pd.to_datetime(df['timestamp'])
 
-df = df.sort_values(by=['detector_id', 'timestamp']).reset_index(drop=True)
+def main():
+    print("Starting Feature Engineering (Task 28)...")
+    detector_features = build_detector_features("counts.csv")
+    detector_features.to_csv("detector_feature_table.csv", index=False)
+    features = build_approach_features("counts.csv")
+    features.to_csv("approach_feature_table.csv", index=False)
+    # Backward-compatible name used by existing project scripts.
+    features.to_csv("feature_table.csv", index=False)
+    print(
+        f"Saved detector_feature_table.csv ({len(detector_features):,} rows) and "
+        f"approach_feature_table.csv ({len(features):,} rows, "
+        f"{features['approach'].nunique()} approaches)."
+    )
 
-df['lag_1'] = df.groupby('detector_id')['vehicle_count'].shift(1)
-df['lag_2'] = df.groupby('detector_id')['vehicle_count'].shift(2)
-df['lag_3'] = df.groupby('detector_id')['vehicle_count'].shift(3)
-df['lag_4'] = df.groupby('detector_id')['vehicle_count'].shift(4)
-df['lag_96'] = df.groupby('detector_id')['vehicle_count'].shift(96)
 
-df['rolling_mean_1h'] = df.groupby('detector_id')['vehicle_count'].transform(lambda x: x.rolling(window=4).mean())
-df['rolling_mean_4h'] = df.groupby('detector_id')['vehicle_count'].transform(lambda x: x.rolling(window=16).mean())
-
-df['hour'] = df['timestamp'].dt.hour
-df['day_of_week'] = df['timestamp'].dt.dayofweek  # الاثنين=0، الأحد=6
-
-df['is_weekend'] = df['day_of_week'].isin([4, 5]).astype(int)
-
-df['is_holiday'] = 0 
-
-df = df.dropna()
-
-df.to_csv('feature_table.csv', index=False)
-
-print("✅ Feature table successfully created and saved as 'feature_table.csv'!")
+if __name__ == "__main__":
+    main()
