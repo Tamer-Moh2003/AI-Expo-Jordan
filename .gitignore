@@ -8,4 +8,8 @@ outputs/live/
 outputs/day1_test*/
 outputs/track-*/
 outputs/tracks.csv
+outputs/bench_*/
+outputs/contact_sheets/
+outputs/day2_*/
+outputs/demo/
 videos/raw/

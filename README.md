@@ -37,3 +37,35 @@ GPU is available; use `--plate-backend none` only for controlled debugging.
 - `performance.json`: measured processing FPS and the 12 FPS pass/fail result.
 
 Raw, unblurred frames are never written or displayed by this script.
+
+## Day 2: zones and incident rules
+
+Draw the lane polygons, stop lines, spillback polygons, and expected travel
+direction arrows on a reference frame:
+
+```powershell
+python zone_tool.py "videos/raw/dataset1.mp4" --output zones_dataset1.json
+```
+
+In the editor, left-click to add points. Press `A` to change approach, `T` to
+change shape type, `S` to save the current shape, `Z` to undo, `C` to clear,
+and `Q` to finish and write JSON.
+
+Run the analytics and incident engine:
+
+```powershell
+python incident_engine.py `
+  --tracks "outputs/day1_final_balanced/tracks.csv" `
+  --zones "zones_dataset1.json" `
+  --video "outputs/day1_final_balanced/annotated_private_final.mp4" `
+  --output-dir "outputs/day2_dataset1"
+```
+
+Thresholds are explicit and tunable in `day2_config.json`. Outputs are per
+approach counts and queue estimates in `approach_metrics.csv`, enriched tracks
+with speed and approach, events matching the required API fields in
+`events.json`, and privacy-safe snapshots and short evidence clips.
+
+The supplied `zones_dataset1.json` is an initial configuration and must be
+checked in the visual editor before evaluation. Threshold tuning and the final
+30-minute false-positive measurement require confirmed staged incident clips.
