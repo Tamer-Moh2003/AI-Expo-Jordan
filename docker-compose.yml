@@ -28,6 +28,12 @@ services:
     build: ./frontend
     container_name: m3_frontend
     ports:
-      - "3000:3000"
+      - "8501:8501"
+    environment:
+      API_BASE: http://api_service:8000
+      EVENTS_WS_URL: ws://api_service:8000/events
+      MEDIA_BASE_URL: http://localhost:8000
+      VIDEO_STREAM_URL: ""
+      MOCK_MODE: "true"
     depends_on:
       - api_service
