@@ -6,6 +6,7 @@ import argparse
 import csv
 import json
 import time
+from urllib.parse import urlparse
 from pathlib import Path
 
 import cv2
@@ -13,6 +14,7 @@ import torch
 from ultralytics import YOLO
 
 from privacy_blur import PrivacyBlur
+from health_metrics import HealthMonitor
 
 
 VEHICLE_CLASSES = [2, 3, 5, 7]  # car, motorcycle, bus, truck in COCO
@@ -72,11 +74,39 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--no-plate-blur", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--display", action="store_true", help="Display privacy-safe frames")
+    parser.add_argument(
+        "--reconnect-delay",
+        type=float,
+        default=7.0,
+        help="Live-stream reconnect delay in seconds (must be 5-10)",
+    )
+    parser.add_argument(
+        "--health-output",
+        help="Health JSON path; defaults to <output-dir>/health.json",
+    )
+    parser.add_argument(
+        "--health-write-interval",
+        type=float,
+        default=1.0,
+        help="Seconds between health JSON updates",
+    )
     return parser.parse_args()
 
 
 def source_value(source: str):
     return int(source) if source.isdigit() else source
+
+
+def is_live_source(source) -> bool:
+    if isinstance(source, int):
+        return True
+    scheme = urlparse(str(source)).scheme.lower()
+    return scheme in {"rtsp", "rtsps", "http", "https", "udp", "tcp"}
+
+
+def has_valid_frame(result) -> bool:
+    original = getattr(result, "orig_img", None)
+    return original is not None and getattr(original, "size", 0) > 0
 
 
 def source_fps_and_size(source) -> tuple[float, int, int]:
@@ -95,13 +125,34 @@ def run(args: argparse.Namespace) -> None:
         raise ValueError("frame_stride must be at least 1")
     if args.analysis_only and args.display:
         raise ValueError("--display cannot be combined with --analysis-only")
+    if not 5 <= args.reconnect_delay <= 10:
+        raise ValueError("reconnect_delay must be between 5 and 10 seconds")
+    if args.health_write_interval <= 0:
+        raise ValueError("health_write_interval must be greater than zero")
     source = source_value(args.source)
-    source_fps, width, height = source_fps_and_size(source)
+    live_source = is_live_source(source)
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    health_path = Path(args.health_output) if args.health_output else output_dir / "health.json"
+    health = HealthMonitor(health_path)
+
+    while True:
+        try:
+            source_fps, width, height = source_fps_and_size(source)
+            health.set_connected(True)
+            break
+        except RuntimeError as error:
+            health.record_dropped()
+            health.set_connected(False)
+            health.write()
+            if not live_source:
+                raise
+            health.record_reconnect()
+            print(f"Stream unavailable: {error}. Retrying in {args.reconnect_delay:.1f}s")
+            time.sleep(args.reconnect_delay)
     if not width or not height:
         raise RuntimeError("The source did not report a valid frame size")
 
-    output_dir = Path(args.output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
     video_path = output_dir / "annotated_private.mp4"
     csv_path = output_dir / "tracks.csv"
     performance_path = output_dir / "performance.json"
@@ -130,72 +181,113 @@ def run(args: argparse.Namespace) -> None:
     start = time.perf_counter()
     frame_number = 0
     track_rows = 0
+    stop_requested = False
+    last_health_write = 0.0
 
     try:
         with csv_path.open("w", newline="", encoding="utf-8") as csv_file:
             csv_writer = csv.DictWriter(csv_file, fieldnames=TRACK_COLUMNS)
             csv_writer.writeheader()
 
-            results = vehicle_model.track(
-                source=source,
-                tracker=args.tracker,
-                classes=VEHICLE_CLASSES,
-                conf=args.confidence,
-                imgsz=args.imgsz,
-                stream=True,
-                persist=True,
-                verbose=False,
-                device=device,
-                vid_stride=args.frame_stride,
-            )
+            while not stop_requested:
+                try:
+                    results = vehicle_model.track(
+                        source=source,
+                        tracker=args.tracker,
+                        classes=VEHICLE_CLASSES,
+                        conf=args.confidence,
+                        imgsz=args.imgsz,
+                        stream=True,
+                        persist=True,
+                        verbose=False,
+                        device=device,
+                        vid_stride=args.frame_stride,
+                    )
 
-            for result in results:
-                frame_number += 1
-                timestamp = (frame_number - 1) * args.frame_stride / source_fps
-                boxes = result.boxes
-                privacy_vehicle_boxes = []
+                    received_in_connection = False
+                    health.set_connected(True)
+                    for result in results:
+                        received_in_connection = True
+                        if not has_valid_frame(result):
+                            health.record_dropped()
+                            print("Skipped a corrupt or empty frame")
+                            continue
+                        health.record_frame()
+                        now = time.monotonic()
+                        if now - last_health_write >= args.health_write_interval:
+                            health.write()
+                            last_health_write = now
 
-                if boxes is not None and boxes.id is not None:
-                    ids = boxes.id.int().cpu().tolist()
-                    classes = boxes.cls.int().cpu().tolist()
-                    coordinates = boxes.xyxy.cpu().tolist()
-                    privacy_vehicle_boxes = coordinates
-                    for track_id, class_id, (x1, y1, x2, y2) in zip(
-                        ids, classes, coordinates
-                    ):
-                        csv_writer.writerow(
-                            {
-                                "frame": frame_number,
-                                "timestamp": round(timestamp, 3),
-                                "track_id": track_id,
-                                "class": vehicle_model.names[class_id],
-                                "bbox_x1": round(x1, 2),
-                                "bbox_y1": round(y1, 2),
-                                "bbox_x2": round(x2, 2),
-                                "bbox_y2": round(y2, 2),
-                                "centroid_x": round((x1 + x2) / 2, 2),
-                                "centroid_y": round((y1 + y2) / 2, 2),
-                            }
-                        )
-                        track_rows += 1
+                        frame_number += 1
+                        timestamp = (frame_number - 1) * args.frame_stride / source_fps
+                        boxes = result.boxes
+                        privacy_vehicle_boxes = []
 
-                private_frame = None
-                if not args.analysis_only:
-                    annotated = result.plot()
-                    private_frame = privacy.apply(annotated, privacy_vehicle_boxes)
-                    writer.write(private_frame)
+                        if boxes is not None and boxes.id is not None:
+                            ids = boxes.id.int().cpu().tolist()
+                            classes = boxes.cls.int().cpu().tolist()
+                            coordinates = boxes.xyxy.cpu().tolist()
+                            privacy_vehicle_boxes = coordinates
+                            for track_id, class_id, (x1, y1, x2, y2) in zip(
+                                ids, classes, coordinates
+                            ):
+                                csv_writer.writerow(
+                                    {
+                                        "frame": frame_number,
+                                        "timestamp": round(timestamp, 3),
+                                        "track_id": track_id,
+                                        "class": vehicle_model.names[class_id],
+                                        "bbox_x1": round(x1, 2),
+                                        "bbox_y1": round(y1, 2),
+                                        "bbox_x2": round(x2, 2),
+                                        "bbox_y2": round(y2, 2),
+                                        "centroid_x": round((x1 + x2) / 2, 2),
+                                        "centroid_y": round((y1 + y2) / 2, 2),
+                                    }
+                                )
+                                track_rows += 1
 
-                if args.display:
-                    cv2.imshow("Privacy-safe vehicle tracking", private_frame)
-                    if cv2.waitKey(1) & 0xFF == ord("q"):
+                        private_frame = None
+                        if not args.analysis_only:
+                            annotated = result.plot()
+                            private_frame = privacy.apply(annotated, privacy_vehicle_boxes)
+                            writer.write(private_frame)
+
+                        if args.display:
+                            cv2.imshow("Privacy-safe vehicle tracking", private_frame)
+                            if cv2.waitKey(1) & 0xFF == ord("q"):
+                                stop_requested = True
+                                break
+                        if args.max_frames and frame_number >= args.max_frames:
+                            stop_requested = True
+                            break
+
+                    if stop_requested or not live_source:
                         break
-                if args.max_frames and frame_number >= args.max_frames:
-                    break
+                    health.set_connected(False)
+                    health.record_dropped()
+                    health.record_reconnect()
+                    health.write()
+                    reason = "stream ended" if received_in_connection else "no frames received"
+                    print(f"Live {reason}. Retrying in {args.reconnect_delay:.1f}s")
+                    time.sleep(args.reconnect_delay)
+                except (cv2.error, OSError, RuntimeError) as error:
+                    health.record_dropped()
+                    health.set_connected(False)
+                    health.write()
+                    if not live_source:
+                        print(f"Stopped gracefully after a corrupt frame/source error: {error}")
+                        break
+                    health.record_reconnect()
+                    print(f"Stream error: {error}. Retrying in {args.reconnect_delay:.1f}s")
+                    time.sleep(args.reconnect_delay)
     finally:
         if writer is not None:
             writer.release()
         if args.display:
             cv2.destroyAllWindows()
+        health.set_connected(False)
+        health.write()
 
     elapsed = time.perf_counter() - start
     processing_fps = frame_number / elapsed if elapsed else 0.0
@@ -229,6 +321,7 @@ def run(args: argparse.Namespace) -> None:
         print(f"Video: {video_path}")
     print(f"Tracks: {csv_path}")
     print(f"Performance: {performance_path}")
+    print(f"Health: {health_path}")
     print(f"Processing FPS: {processing_fps:.2f} ({'PASS' if processing_fps >= 12 else 'BELOW TARGET'})")
 
 

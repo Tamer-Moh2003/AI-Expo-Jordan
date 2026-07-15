@@ -1,0 +1,6 @@
+clip,event_type,start_time_seconds,end_time_seconds,label_status,m4_review,notes
+sc1.mp4,illegal_stop,0.000,15.700,confirmed_visible,pending,"Event is already active at the first frame"
+sc2.mp4,stalled_vehicle,3.000,23.000,user_labeled,pending,"Requires joint frame-level review"
+sc3.mp4,blocked_lane,17.000,27.000,user_labeled,pending,"Requires joint frame-level review"
+sc4.mp4,blocked_entrance,0.000,5.000,user_labeled,pending,"Requires joint frame-level review"
+sc5.mp4,queue_spillback,0.000,10.000,user_labeled,pending,"Event is already active at the first frame"

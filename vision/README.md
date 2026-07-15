@@ -81,3 +81,20 @@ python main.py "videos/raw/dataset5(30).mp4" `
 
 The final ordinary-footage evaluation and its limitations are documented in
 `DAY2_REPORT.md` and `DAY2_STATUS.md`.
+
+## Day 3: resilient stream and health output
+
+Live sources automatically reconnect after seven seconds by default. The delay
+can be set from five through ten seconds with `--reconnect-delay`. Corrupt or
+empty frames are skipped and counted. Health metrics are atomically written to
+`health.json` and match the frozen `GET /health` contract.
+
+```powershell
+python main.py "rtsp://camera/stream" `
+  --output-dir "outputs/live" `
+  --health-output "outputs/live/health.json" `
+  --reconnect-delay 7
+```
+
+Evidence clips now cover ten seconds before and ten seconds after every event.
+See `DAY3_HANDOVER.md` for the integration and validation handoff.
