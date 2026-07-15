@@ -39,6 +39,18 @@ python main.py "rtsp://camera/stream" `
 M2 can serve `/app/data/vision/health.json` from `GET /health`. M3 can render the
 three fields without translation because they match the frozen API contract.
 
+The shared stack now implements those two endpoints directly. With no configured
+camera, the vision container publishes zero-valued health and demo incident
+objects. Set `VISION_SOURCE` in `docker-compose.yml` to activate tracking.
+The frontend runs with `MOCK_MODE=false`, so its health and incident panels read
+these shared API outputs instead of the built-in demonstration values.
+
+Run the deterministic corrupt-frame and reconnect simulation with:
+
+```powershell
+python simulate_resilience.py --output outputs/day3_resilience_simulation.json
+```
+
 ## Contract validation
 
 ```powershell
