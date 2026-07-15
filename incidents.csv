@@ -1,0 +1,449 @@
+timestamp,event_type,approach,confidence,queue_estimate,snapshot_path,clip_path
+2026-04-15 06:30:00,Emergency Vehicle,North_Arar_St,91.26,28,/snapshots/20260415_0630_North_Arar_St_emergency.jpg,/clips/20260415_0630_North_Arar_St_emergency.mp4
+2026-04-15 06:30:00,Emergency Vehicle,South_Arar_St,98.52,28,/snapshots/20260415_0630_South_Arar_St_emergency.jpg,/clips/20260415_0630_South_Arar_St_emergency.mp4
+2026-04-15 06:30:00,Emergency Vehicle,East_Approach,91.02,22,/snapshots/20260415_0630_East_Approach_emergency.jpg,/clips/20260415_0630_East_Approach_emergency.mp4
+2026-04-15 06:30:00,Emergency Vehicle,West_Approach,96.14,22,/snapshots/20260415_0630_West_Approach_emergency.jpg,/clips/20260415_0630_West_Approach_emergency.mp4
+2026-04-15 12:45:00,Emergency Vehicle,North_Arar_St,96.31,28,/snapshots/20260415_1245_North_Arar_St_emergency.jpg,/clips/20260415_1245_North_Arar_St_emergency.mp4
+2026-04-15 12:45:00,Emergency Vehicle,South_Arar_St,92.81,28,/snapshots/20260415_1245_South_Arar_St_emergency.jpg,/clips/20260415_1245_South_Arar_St_emergency.mp4
+2026-04-15 12:45:00,Emergency Vehicle,East_Approach,92.5,22,/snapshots/20260415_1245_East_Approach_emergency.jpg,/clips/20260415_1245_East_Approach_emergency.mp4
+2026-04-15 12:45:00,Emergency Vehicle,West_Approach,94.87,22,/snapshots/20260415_1245_West_Approach_emergency.jpg,/clips/20260415_1245_West_Approach_emergency.mp4
+2026-04-16 17:15:00,Emergency Vehicle,North_Arar_St,91.35,225,/snapshots/20260416_1715_North_Arar_St_emergency.jpg,/clips/20260416_1715_North_Arar_St_emergency.mp4
+2026-04-16 17:15:00,Emergency Vehicle,South_Arar_St,93.11,225,/snapshots/20260416_1715_South_Arar_St_emergency.jpg,/clips/20260416_1715_South_Arar_St_emergency.mp4
+2026-04-16 17:15:00,Emergency Vehicle,East_Approach,96.88,180,/snapshots/20260416_1715_East_Approach_emergency.jpg,/clips/20260416_1715_East_Approach_emergency.mp4
+2026-04-16 17:15:00,Emergency Vehicle,West_Approach,93.72,180,/snapshots/20260416_1715_West_Approach_emergency.jpg,/clips/20260416_1715_West_Approach_emergency.mp4
+2026-04-17 00:00:00,Emergency Vehicle,North_Arar_St,97.42,28,/snapshots/20260417_0000_North_Arar_St_emergency.jpg,/clips/20260417_0000_North_Arar_St_emergency.mp4
+2026-04-17 00:00:00,Emergency Vehicle,South_Arar_St,98.91,28,/snapshots/20260417_0000_South_Arar_St_emergency.jpg,/clips/20260417_0000_South_Arar_St_emergency.mp4
+2026-04-17 00:00:00,Emergency Vehicle,East_Approach,92.6,22,/snapshots/20260417_0000_East_Approach_emergency.jpg,/clips/20260417_0000_East_Approach_emergency.mp4
+2026-04-17 00:00:00,Emergency Vehicle,West_Approach,95.06,22,/snapshots/20260417_0000_West_Approach_emergency.jpg,/clips/20260417_0000_West_Approach_emergency.mp4
+2026-04-17 09:00:00,Emergency Vehicle,North_Arar_St,97.51,28,/snapshots/20260417_0900_North_Arar_St_emergency.jpg,/clips/20260417_0900_North_Arar_St_emergency.mp4
+2026-04-17 09:00:00,Emergency Vehicle,South_Arar_St,91.0,28,/snapshots/20260417_0900_South_Arar_St_emergency.jpg,/clips/20260417_0900_South_Arar_St_emergency.mp4
+2026-04-17 09:00:00,Emergency Vehicle,East_Approach,94.07,22,/snapshots/20260417_0900_East_Approach_emergency.jpg,/clips/20260417_0900_East_Approach_emergency.mp4
+2026-04-17 09:00:00,Emergency Vehicle,West_Approach,90.37,22,/snapshots/20260417_0900_West_Approach_emergency.jpg,/clips/20260417_0900_West_Approach_emergency.mp4
+2026-04-17 15:15:00,Accident,North_Arar_St,86.12,140,/snapshots/20260417_1515_North_Arar_St_accident.jpg,/clips/20260417_1515_North_Arar_St_accident.mp4
+2026-04-17 15:15:00,Accident,South_Arar_St,91.81,140,/snapshots/20260417_1515_South_Arar_St_accident.jpg,/clips/20260417_1515_South_Arar_St_accident.mp4
+2026-04-18 02:15:00,Emergency Vehicle,North_Arar_St,91.49,37,/snapshots/20260418_0215_North_Arar_St_emergency.jpg,/clips/20260418_0215_North_Arar_St_emergency.mp4
+2026-04-18 02:15:00,Emergency Vehicle,South_Arar_St,96.54,37,/snapshots/20260418_0215_South_Arar_St_emergency.jpg,/clips/20260418_0215_South_Arar_St_emergency.mp4
+2026-04-18 02:15:00,Emergency Vehicle,East_Approach,96.68,30,/snapshots/20260418_0215_East_Approach_emergency.jpg,/clips/20260418_0215_East_Approach_emergency.mp4
+2026-04-18 02:15:00,Emergency Vehicle,West_Approach,94.07,30,/snapshots/20260418_0215_West_Approach_emergency.jpg,/clips/20260418_0215_West_Approach_emergency.mp4
+2026-04-18 04:00:00,Emergency Vehicle,North_Arar_St,92.03,37,/snapshots/20260418_0400_North_Arar_St_emergency.jpg,/clips/20260418_0400_North_Arar_St_emergency.mp4
+2026-04-18 04:00:00,Emergency Vehicle,South_Arar_St,94.22,37,/snapshots/20260418_0400_South_Arar_St_emergency.jpg,/clips/20260418_0400_South_Arar_St_emergency.mp4
+2026-04-18 04:00:00,Emergency Vehicle,East_Approach,95.59,30,/snapshots/20260418_0400_East_Approach_emergency.jpg,/clips/20260418_0400_East_Approach_emergency.mp4
+2026-04-18 04:00:00,Emergency Vehicle,West_Approach,92.02,30,/snapshots/20260418_0400_West_Approach_emergency.jpg,/clips/20260418_0400_West_Approach_emergency.mp4
+2026-04-18 11:00:00,Emergency Vehicle,North_Arar_St,98.73,93,/snapshots/20260418_1100_North_Arar_St_emergency.jpg,/clips/20260418_1100_North_Arar_St_emergency.mp4
+2026-04-18 11:00:00,Emergency Vehicle,South_Arar_St,96.4,93,/snapshots/20260418_1100_South_Arar_St_emergency.jpg,/clips/20260418_1100_South_Arar_St_emergency.mp4
+2026-04-18 11:00:00,Emergency Vehicle,East_Approach,96.19,75,/snapshots/20260418_1100_East_Approach_emergency.jpg,/clips/20260418_1100_East_Approach_emergency.mp4
+2026-04-18 11:00:00,Emergency Vehicle,West_Approach,96.87,75,/snapshots/20260418_1100_West_Approach_emergency.jpg,/clips/20260418_1100_West_Approach_emergency.mp4
+2026-04-19 06:00:00,Accident,North_Arar_St,87.92,46,/snapshots/20260419_0600_North_Arar_St_accident.jpg,/clips/20260419_0600_North_Arar_St_accident.mp4
+2026-04-19 06:00:00,Accident,South_Arar_St,98.61,46,/snapshots/20260419_0600_South_Arar_St_accident.jpg,/clips/20260419_0600_South_Arar_St_accident.mp4
+2026-04-19 07:45:00,Emergency Vehicle,North_Arar_St,97.9,131,/snapshots/20260419_0745_North_Arar_St_emergency.jpg,/clips/20260419_0745_North_Arar_St_emergency.mp4
+2026-04-19 07:45:00,Emergency Vehicle,South_Arar_St,97.42,131,/snapshots/20260419_0745_South_Arar_St_emergency.jpg,/clips/20260419_0745_South_Arar_St_emergency.mp4
+2026-04-19 07:45:00,Emergency Vehicle,East_Approach,94.68,105,/snapshots/20260419_0745_East_Approach_emergency.jpg,/clips/20260419_0745_East_Approach_emergency.mp4
+2026-04-19 07:45:00,Emergency Vehicle,West_Approach,98.01,105,/snapshots/20260419_0745_West_Approach_emergency.jpg,/clips/20260419_0745_West_Approach_emergency.mp4
+2026-04-19 08:45:00,Emergency Vehicle,North_Arar_St,90.96,131,/snapshots/20260419_0845_North_Arar_St_emergency.jpg,/clips/20260419_0845_North_Arar_St_emergency.mp4
+2026-04-19 08:45:00,Emergency Vehicle,South_Arar_St,96.04,131,/snapshots/20260419_0845_South_Arar_St_emergency.jpg,/clips/20260419_0845_South_Arar_St_emergency.mp4
+2026-04-19 08:45:00,Emergency Vehicle,East_Approach,97.94,105,/snapshots/20260419_0845_East_Approach_emergency.jpg,/clips/20260419_0845_East_Approach_emergency.mp4
+2026-04-19 08:45:00,Emergency Vehicle,West_Approach,96.69,105,/snapshots/20260419_0845_West_Approach_emergency.jpg,/clips/20260419_0845_West_Approach_emergency.mp4
+2026-04-21 07:45:00,Emergency Vehicle,North_Arar_St,96.48,131,/snapshots/20260421_0745_North_Arar_St_emergency.jpg,/clips/20260421_0745_North_Arar_St_emergency.mp4
+2026-04-21 07:45:00,Emergency Vehicle,South_Arar_St,96.97,131,/snapshots/20260421_0745_South_Arar_St_emergency.jpg,/clips/20260421_0745_South_Arar_St_emergency.mp4
+2026-04-21 07:45:00,Emergency Vehicle,East_Approach,94.46,105,/snapshots/20260421_0745_East_Approach_emergency.jpg,/clips/20260421_0745_East_Approach_emergency.mp4
+2026-04-21 07:45:00,Emergency Vehicle,West_Approach,91.81,105,/snapshots/20260421_0745_West_Approach_emergency.jpg,/clips/20260421_0745_West_Approach_emergency.mp4
+2026-04-21 14:00:00,Accident,North_Arar_St,92.79,46,/snapshots/20260421_1400_North_Arar_St_accident.jpg,/clips/20260421_1400_North_Arar_St_accident.mp4
+2026-04-21 14:00:00,Accident,South_Arar_St,88.13,46,/snapshots/20260421_1400_South_Arar_St_accident.jpg,/clips/20260421_1400_South_Arar_St_accident.mp4
+2026-04-22 11:45:00,Emergency Vehicle,North_Arar_St,97.54,28,/snapshots/20260422_1145_North_Arar_St_emergency.jpg,/clips/20260422_1145_North_Arar_St_emergency.mp4
+2026-04-22 11:45:00,Emergency Vehicle,South_Arar_St,97.01,28,/snapshots/20260422_1145_South_Arar_St_emergency.jpg,/clips/20260422_1145_South_Arar_St_emergency.mp4
+2026-04-22 11:45:00,Emergency Vehicle,East_Approach,91.29,22,/snapshots/20260422_1145_East_Approach_emergency.jpg,/clips/20260422_1145_East_Approach_emergency.mp4
+2026-04-22 11:45:00,Emergency Vehicle,West_Approach,96.14,22,/snapshots/20260422_1145_West_Approach_emergency.jpg,/clips/20260422_1145_West_Approach_emergency.mp4
+2026-04-22 21:45:00,Emergency Vehicle,North_Arar_St,94.62,131,/snapshots/20260422_2145_North_Arar_St_emergency.jpg,/clips/20260422_2145_North_Arar_St_emergency.mp4
+2026-04-22 21:45:00,Emergency Vehicle,South_Arar_St,92.16,131,/snapshots/20260422_2145_South_Arar_St_emergency.jpg,/clips/20260422_2145_South_Arar_St_emergency.mp4
+2026-04-22 21:45:00,Emergency Vehicle,East_Approach,96.04,105,/snapshots/20260422_2145_East_Approach_emergency.jpg,/clips/20260422_2145_East_Approach_emergency.mp4
+2026-04-22 21:45:00,Emergency Vehicle,West_Approach,97.58,105,/snapshots/20260422_2145_West_Approach_emergency.jpg,/clips/20260422_2145_West_Approach_emergency.mp4
+2026-04-23 01:15:00,Emergency Vehicle,North_Arar_St,92.77,28,/snapshots/20260423_0115_North_Arar_St_emergency.jpg,/clips/20260423_0115_North_Arar_St_emergency.mp4
+2026-04-23 01:15:00,Emergency Vehicle,South_Arar_St,90.48,28,/snapshots/20260423_0115_South_Arar_St_emergency.jpg,/clips/20260423_0115_South_Arar_St_emergency.mp4
+2026-04-23 01:15:00,Emergency Vehicle,East_Approach,99.19,22,/snapshots/20260423_0115_East_Approach_emergency.jpg,/clips/20260423_0115_East_Approach_emergency.mp4
+2026-04-23 01:15:00,Emergency Vehicle,West_Approach,99.44,22,/snapshots/20260423_0115_West_Approach_emergency.jpg,/clips/20260423_0115_West_Approach_emergency.mp4
+2026-04-23 08:15:00,Emergency Vehicle,North_Arar_St,93.99,131,/snapshots/20260423_0815_North_Arar_St_emergency.jpg,/clips/20260423_0815_North_Arar_St_emergency.mp4
+2026-04-23 08:15:00,Emergency Vehicle,South_Arar_St,90.77,131,/snapshots/20260423_0815_South_Arar_St_emergency.jpg,/clips/20260423_0815_South_Arar_St_emergency.mp4
+2026-04-23 08:15:00,Emergency Vehicle,East_Approach,92.6,105,/snapshots/20260423_0815_East_Approach_emergency.jpg,/clips/20260423_0815_East_Approach_emergency.mp4
+2026-04-23 08:15:00,Emergency Vehicle,West_Approach,97.58,105,/snapshots/20260423_0815_West_Approach_emergency.jpg,/clips/20260423_0815_West_Approach_emergency.mp4
+2026-04-23 13:30:00,Accident,North_Arar_St,91.5,46,/snapshots/20260423_1330_North_Arar_St_accident.jpg,/clips/20260423_1330_North_Arar_St_accident.mp4
+2026-04-23 13:30:00,Accident,South_Arar_St,96.56,46,/snapshots/20260423_1330_South_Arar_St_accident.jpg,/clips/20260423_1330_South_Arar_St_accident.mp4
+2026-04-24 04:15:00,Emergency Vehicle,North_Arar_St,94.49,28,/snapshots/20260424_0415_North_Arar_St_emergency.jpg,/clips/20260424_0415_North_Arar_St_emergency.mp4
+2026-04-24 04:15:00,Emergency Vehicle,South_Arar_St,96.49,28,/snapshots/20260424_0415_South_Arar_St_emergency.jpg,/clips/20260424_0415_South_Arar_St_emergency.mp4
+2026-04-24 04:15:00,Emergency Vehicle,East_Approach,91.84,22,/snapshots/20260424_0415_East_Approach_emergency.jpg,/clips/20260424_0415_East_Approach_emergency.mp4
+2026-04-24 04:15:00,Emergency Vehicle,West_Approach,94.52,22,/snapshots/20260424_0415_West_Approach_emergency.jpg,/clips/20260424_0415_West_Approach_emergency.mp4
+2026-04-25 03:00:00,Accident,North_Arar_St,94.01,62,/snapshots/20260425_0300_North_Arar_St_accident.jpg,/clips/20260425_0300_North_Arar_St_accident.mp4
+2026-04-25 03:00:00,Accident,South_Arar_St,99.27,62,/snapshots/20260425_0300_South_Arar_St_accident.jpg,/clips/20260425_0300_South_Arar_St_accident.mp4
+2026-04-25 08:00:00,Accident,North_Arar_St,85.7,62,/snapshots/20260425_0800_North_Arar_St_accident.jpg,/clips/20260425_0800_North_Arar_St_accident.mp4
+2026-04-25 08:00:00,Accident,South_Arar_St,92.04,62,/snapshots/20260425_0800_South_Arar_St_accident.jpg,/clips/20260425_0800_South_Arar_St_accident.mp4
+2026-04-25 11:00:00,Emergency Vehicle,North_Arar_St,96.9,93,/snapshots/20260425_1100_North_Arar_St_emergency.jpg,/clips/20260425_1100_North_Arar_St_emergency.mp4
+2026-04-25 11:00:00,Emergency Vehicle,South_Arar_St,90.48,93,/snapshots/20260425_1100_South_Arar_St_emergency.jpg,/clips/20260425_1100_South_Arar_St_emergency.mp4
+2026-04-25 11:00:00,Emergency Vehicle,East_Approach,98.93,75,/snapshots/20260425_1100_East_Approach_emergency.jpg,/clips/20260425_1100_East_Approach_emergency.mp4
+2026-04-25 11:00:00,Emergency Vehicle,West_Approach,93.28,75,/snapshots/20260425_1100_West_Approach_emergency.jpg,/clips/20260425_1100_West_Approach_emergency.mp4
+2026-04-27 11:00:00,Emergency Vehicle,North_Arar_St,92.82,28,/snapshots/20260427_1100_North_Arar_St_emergency.jpg,/clips/20260427_1100_North_Arar_St_emergency.mp4
+2026-04-27 11:00:00,Emergency Vehicle,South_Arar_St,91.39,28,/snapshots/20260427_1100_South_Arar_St_emergency.jpg,/clips/20260427_1100_South_Arar_St_emergency.mp4
+2026-04-27 11:00:00,Emergency Vehicle,East_Approach,99.72,22,/snapshots/20260427_1100_East_Approach_emergency.jpg,/clips/20260427_1100_East_Approach_emergency.mp4
+2026-04-27 11:00:00,Emergency Vehicle,West_Approach,98.32,22,/snapshots/20260427_1100_West_Approach_emergency.jpg,/clips/20260427_1100_West_Approach_emergency.mp4
+2026-04-28 00:45:00,Emergency Vehicle,North_Arar_St,97.17,28,/snapshots/20260428_0045_North_Arar_St_emergency.jpg,/clips/20260428_0045_North_Arar_St_emergency.mp4
+2026-04-28 00:45:00,Emergency Vehicle,South_Arar_St,92.42,28,/snapshots/20260428_0045_South_Arar_St_emergency.jpg,/clips/20260428_0045_South_Arar_St_emergency.mp4
+2026-04-28 00:45:00,Emergency Vehicle,East_Approach,97.78,22,/snapshots/20260428_0045_East_Approach_emergency.jpg,/clips/20260428_0045_East_Approach_emergency.mp4
+2026-04-28 00:45:00,Emergency Vehicle,West_Approach,95.45,22,/snapshots/20260428_0045_West_Approach_emergency.jpg,/clips/20260428_0045_West_Approach_emergency.mp4
+2026-04-28 14:30:00,Emergency Vehicle,North_Arar_St,98.68,28,/snapshots/20260428_1430_North_Arar_St_emergency.jpg,/clips/20260428_1430_North_Arar_St_emergency.mp4
+2026-04-28 14:30:00,Emergency Vehicle,South_Arar_St,91.51,28,/snapshots/20260428_1430_South_Arar_St_emergency.jpg,/clips/20260428_1430_South_Arar_St_emergency.mp4
+2026-04-28 14:30:00,Emergency Vehicle,East_Approach,90.6,22,/snapshots/20260428_1430_East_Approach_emergency.jpg,/clips/20260428_1430_East_Approach_emergency.mp4
+2026-04-28 14:30:00,Emergency Vehicle,West_Approach,92.97,22,/snapshots/20260428_1430_West_Approach_emergency.jpg,/clips/20260428_1430_West_Approach_emergency.mp4
+2026-04-29 10:30:00,Emergency Vehicle,North_Arar_St,94.4,28,/snapshots/20260429_1030_North_Arar_St_emergency.jpg,/clips/20260429_1030_North_Arar_St_emergency.mp4
+2026-04-29 10:30:00,Emergency Vehicle,South_Arar_St,91.1,28,/snapshots/20260429_1030_South_Arar_St_emergency.jpg,/clips/20260429_1030_South_Arar_St_emergency.mp4
+2026-04-29 10:30:00,Emergency Vehicle,East_Approach,96.37,22,/snapshots/20260429_1030_East_Approach_emergency.jpg,/clips/20260429_1030_East_Approach_emergency.mp4
+2026-04-29 10:30:00,Emergency Vehicle,West_Approach,91.76,22,/snapshots/20260429_1030_West_Approach_emergency.jpg,/clips/20260429_1030_West_Approach_emergency.mp4
+2026-04-29 19:45:00,Emergency Vehicle,North_Arar_St,92.57,131,/snapshots/20260429_1945_North_Arar_St_emergency.jpg,/clips/20260429_1945_North_Arar_St_emergency.mp4
+2026-04-29 19:45:00,Emergency Vehicle,South_Arar_St,92.28,131,/snapshots/20260429_1945_South_Arar_St_emergency.jpg,/clips/20260429_1945_South_Arar_St_emergency.mp4
+2026-04-29 19:45:00,Emergency Vehicle,East_Approach,94.08,105,/snapshots/20260429_1945_East_Approach_emergency.jpg,/clips/20260429_1945_East_Approach_emergency.mp4
+2026-04-29 19:45:00,Emergency Vehicle,West_Approach,96.88,105,/snapshots/20260429_1945_West_Approach_emergency.jpg,/clips/20260429_1945_West_Approach_emergency.mp4
+2026-04-30 01:45:00,Emergency Vehicle,North_Arar_St,91.47,28,/snapshots/20260430_0145_North_Arar_St_emergency.jpg,/clips/20260430_0145_North_Arar_St_emergency.mp4
+2026-04-30 01:45:00,Emergency Vehicle,South_Arar_St,92.06,28,/snapshots/20260430_0145_South_Arar_St_emergency.jpg,/clips/20260430_0145_South_Arar_St_emergency.mp4
+2026-04-30 01:45:00,Emergency Vehicle,East_Approach,95.14,22,/snapshots/20260430_0145_East_Approach_emergency.jpg,/clips/20260430_0145_East_Approach_emergency.mp4
+2026-04-30 01:45:00,Emergency Vehicle,West_Approach,93.99,22,/snapshots/20260430_0145_West_Approach_emergency.jpg,/clips/20260430_0145_West_Approach_emergency.mp4
+2026-04-30 09:00:00,Accident,North_Arar_St,91.19,218,/snapshots/20260430_0900_North_Arar_St_accident.jpg,/clips/20260430_0900_North_Arar_St_accident.mp4
+2026-04-30 09:00:00,Accident,South_Arar_St,96.61,218,/snapshots/20260430_0900_South_Arar_St_accident.jpg,/clips/20260430_0900_South_Arar_St_accident.mp4
+2026-05-01 02:30:00,Accident,North_Arar_St,89.45,46,/snapshots/20260501_0230_North_Arar_St_accident.jpg,/clips/20260501_0230_North_Arar_St_accident.mp4
+2026-05-01 02:30:00,Accident,South_Arar_St,94.37,46,/snapshots/20260501_0230_South_Arar_St_accident.jpg,/clips/20260501_0230_South_Arar_St_accident.mp4
+2026-05-01 10:30:00,Emergency Vehicle,North_Arar_St,90.18,28,/snapshots/20260501_1030_North_Arar_St_emergency.jpg,/clips/20260501_1030_North_Arar_St_emergency.mp4
+2026-05-01 10:30:00,Emergency Vehicle,South_Arar_St,95.4,28,/snapshots/20260501_1030_South_Arar_St_emergency.jpg,/clips/20260501_1030_South_Arar_St_emergency.mp4
+2026-05-01 10:30:00,Emergency Vehicle,East_Approach,92.07,22,/snapshots/20260501_1030_East_Approach_emergency.jpg,/clips/20260501_1030_East_Approach_emergency.mp4
+2026-05-01 10:30:00,Emergency Vehicle,West_Approach,97.31,22,/snapshots/20260501_1030_West_Approach_emergency.jpg,/clips/20260501_1030_West_Approach_emergency.mp4
+2026-05-02 12:00:00,Emergency Vehicle,North_Arar_St,90.94,93,/snapshots/20260502_1200_North_Arar_St_emergency.jpg,/clips/20260502_1200_North_Arar_St_emergency.mp4
+2026-05-02 12:00:00,Emergency Vehicle,South_Arar_St,94.97,93,/snapshots/20260502_1200_South_Arar_St_emergency.jpg,/clips/20260502_1200_South_Arar_St_emergency.mp4
+2026-05-02 12:00:00,Emergency Vehicle,East_Approach,99.55,75,/snapshots/20260502_1200_East_Approach_emergency.jpg,/clips/20260502_1200_East_Approach_emergency.mp4
+2026-05-02 12:00:00,Emergency Vehicle,West_Approach,90.91,75,/snapshots/20260502_1200_West_Approach_emergency.jpg,/clips/20260502_1200_West_Approach_emergency.mp4
+2026-05-02 23:00:00,Emergency Vehicle,North_Arar_St,96.53,37,/snapshots/20260502_2300_North_Arar_St_emergency.jpg,/clips/20260502_2300_North_Arar_St_emergency.mp4
+2026-05-02 23:00:00,Emergency Vehicle,South_Arar_St,91.73,37,/snapshots/20260502_2300_South_Arar_St_emergency.jpg,/clips/20260502_2300_South_Arar_St_emergency.mp4
+2026-05-02 23:00:00,Emergency Vehicle,East_Approach,93.23,30,/snapshots/20260502_2300_East_Approach_emergency.jpg,/clips/20260502_2300_East_Approach_emergency.mp4
+2026-05-02 23:00:00,Emergency Vehicle,West_Approach,95.85,30,/snapshots/20260502_2300_West_Approach_emergency.jpg,/clips/20260502_2300_West_Approach_emergency.mp4
+2026-05-04 20:15:00,Emergency Vehicle,North_Arar_St,90.49,131,/snapshots/20260504_2015_North_Arar_St_emergency.jpg,/clips/20260504_2015_North_Arar_St_emergency.mp4
+2026-05-04 20:15:00,Emergency Vehicle,South_Arar_St,96.39,131,/snapshots/20260504_2015_South_Arar_St_emergency.jpg,/clips/20260504_2015_South_Arar_St_emergency.mp4
+2026-05-04 20:15:00,Emergency Vehicle,East_Approach,96.1,105,/snapshots/20260504_2015_East_Approach_emergency.jpg,/clips/20260504_2015_East_Approach_emergency.mp4
+2026-05-04 20:15:00,Emergency Vehicle,West_Approach,94.58,105,/snapshots/20260504_2015_West_Approach_emergency.jpg,/clips/20260504_2015_West_Approach_emergency.mp4
+2026-05-06 02:00:00,Emergency Vehicle,North_Arar_St,95.74,28,/snapshots/20260506_0200_North_Arar_St_emergency.jpg,/clips/20260506_0200_North_Arar_St_emergency.mp4
+2026-05-06 02:00:00,Emergency Vehicle,South_Arar_St,96.12,28,/snapshots/20260506_0200_South_Arar_St_emergency.jpg,/clips/20260506_0200_South_Arar_St_emergency.mp4
+2026-05-06 02:00:00,Emergency Vehicle,East_Approach,97.07,22,/snapshots/20260506_0200_East_Approach_emergency.jpg,/clips/20260506_0200_East_Approach_emergency.mp4
+2026-05-06 02:00:00,Emergency Vehicle,West_Approach,96.37,22,/snapshots/20260506_0200_West_Approach_emergency.jpg,/clips/20260506_0200_West_Approach_emergency.mp4
+2026-05-06 02:30:00,Accident,North_Arar_St,91.97,46,/snapshots/20260506_0230_North_Arar_St_accident.jpg,/clips/20260506_0230_North_Arar_St_accident.mp4
+2026-05-06 02:30:00,Accident,South_Arar_St,90.36,46,/snapshots/20260506_0230_South_Arar_St_accident.jpg,/clips/20260506_0230_South_Arar_St_accident.mp4
+2026-05-06 09:00:00,Accident,North_Arar_St,86.48,218,/snapshots/20260506_0900_North_Arar_St_accident.jpg,/clips/20260506_0900_North_Arar_St_accident.mp4
+2026-05-06 09:00:00,Accident,South_Arar_St,93.69,218,/snapshots/20260506_0900_South_Arar_St_accident.jpg,/clips/20260506_0900_South_Arar_St_accident.mp4
+2026-05-06 13:30:00,Emergency Vehicle,North_Arar_St,99.54,28,/snapshots/20260506_1330_North_Arar_St_emergency.jpg,/clips/20260506_1330_North_Arar_St_emergency.mp4
+2026-05-06 13:30:00,Emergency Vehicle,South_Arar_St,95.06,28,/snapshots/20260506_1330_South_Arar_St_emergency.jpg,/clips/20260506_1330_South_Arar_St_emergency.mp4
+2026-05-06 13:30:00,Emergency Vehicle,East_Approach,97.91,22,/snapshots/20260506_1330_East_Approach_emergency.jpg,/clips/20260506_1330_East_Approach_emergency.mp4
+2026-05-06 13:30:00,Emergency Vehicle,West_Approach,95.2,22,/snapshots/20260506_1330_West_Approach_emergency.jpg,/clips/20260506_1330_West_Approach_emergency.mp4
+2026-05-07 04:00:00,Emergency Vehicle,North_Arar_St,95.43,28,/snapshots/20260507_0400_North_Arar_St_emergency.jpg,/clips/20260507_0400_North_Arar_St_emergency.mp4
+2026-05-07 04:00:00,Emergency Vehicle,South_Arar_St,98.45,28,/snapshots/20260507_0400_South_Arar_St_emergency.jpg,/clips/20260507_0400_South_Arar_St_emergency.mp4
+2026-05-07 04:00:00,Emergency Vehicle,East_Approach,96.03,22,/snapshots/20260507_0400_East_Approach_emergency.jpg,/clips/20260507_0400_East_Approach_emergency.mp4
+2026-05-07 04:00:00,Emergency Vehicle,West_Approach,92.92,22,/snapshots/20260507_0400_West_Approach_emergency.jpg,/clips/20260507_0400_West_Approach_emergency.mp4
+2026-05-07 08:00:00,Emergency Vehicle,North_Arar_St,97.47,131,/snapshots/20260507_0800_North_Arar_St_emergency.jpg,/clips/20260507_0800_North_Arar_St_emergency.mp4
+2026-05-07 08:00:00,Emergency Vehicle,South_Arar_St,92.4,131,/snapshots/20260507_0800_South_Arar_St_emergency.jpg,/clips/20260507_0800_South_Arar_St_emergency.mp4
+2026-05-07 08:00:00,Emergency Vehicle,East_Approach,91.28,105,/snapshots/20260507_0800_East_Approach_emergency.jpg,/clips/20260507_0800_East_Approach_emergency.mp4
+2026-05-07 08:00:00,Emergency Vehicle,West_Approach,97.07,105,/snapshots/20260507_0800_West_Approach_emergency.jpg,/clips/20260507_0800_West_Approach_emergency.mp4
+2026-05-07 23:00:00,Emergency Vehicle,North_Arar_St,98.03,28,/snapshots/20260507_2300_North_Arar_St_emergency.jpg,/clips/20260507_2300_North_Arar_St_emergency.mp4
+2026-05-07 23:00:00,Emergency Vehicle,South_Arar_St,97.58,28,/snapshots/20260507_2300_South_Arar_St_emergency.jpg,/clips/20260507_2300_South_Arar_St_emergency.mp4
+2026-05-07 23:00:00,Emergency Vehicle,East_Approach,95.42,22,/snapshots/20260507_2300_East_Approach_emergency.jpg,/clips/20260507_2300_East_Approach_emergency.mp4
+2026-05-07 23:00:00,Emergency Vehicle,West_Approach,91.0,22,/snapshots/20260507_2300_West_Approach_emergency.jpg,/clips/20260507_2300_West_Approach_emergency.mp4
+2026-05-10 09:15:00,Emergency Vehicle,North_Arar_St,92.11,131,/snapshots/20260510_0915_North_Arar_St_emergency.jpg,/clips/20260510_0915_North_Arar_St_emergency.mp4
+2026-05-10 09:15:00,Emergency Vehicle,South_Arar_St,94.07,131,/snapshots/20260510_0915_South_Arar_St_emergency.jpg,/clips/20260510_0915_South_Arar_St_emergency.mp4
+2026-05-10 09:15:00,Emergency Vehicle,East_Approach,98.35,105,/snapshots/20260510_0915_East_Approach_emergency.jpg,/clips/20260510_0915_East_Approach_emergency.mp4
+2026-05-10 09:15:00,Emergency Vehicle,West_Approach,91.97,105,/snapshots/20260510_0915_West_Approach_emergency.jpg,/clips/20260510_0915_West_Approach_emergency.mp4
+2026-05-11 19:45:00,Emergency Vehicle,North_Arar_St,98.91,131,/snapshots/20260511_1945_North_Arar_St_emergency.jpg,/clips/20260511_1945_North_Arar_St_emergency.mp4
+2026-05-11 19:45:00,Emergency Vehicle,South_Arar_St,90.81,131,/snapshots/20260511_1945_South_Arar_St_emergency.jpg,/clips/20260511_1945_South_Arar_St_emergency.mp4
+2026-05-11 19:45:00,Emergency Vehicle,East_Approach,91.85,105,/snapshots/20260511_1945_East_Approach_emergency.jpg,/clips/20260511_1945_East_Approach_emergency.mp4
+2026-05-11 19:45:00,Emergency Vehicle,West_Approach,96.15,105,/snapshots/20260511_1945_West_Approach_emergency.jpg,/clips/20260511_1945_West_Approach_emergency.mp4
+2026-05-12 06:30:00,Emergency Vehicle,North_Arar_St,92.41,28,/snapshots/20260512_0630_North_Arar_St_emergency.jpg,/clips/20260512_0630_North_Arar_St_emergency.mp4
+2026-05-12 06:30:00,Emergency Vehicle,South_Arar_St,93.59,28,/snapshots/20260512_0630_South_Arar_St_emergency.jpg,/clips/20260512_0630_South_Arar_St_emergency.mp4
+2026-05-12 06:30:00,Emergency Vehicle,East_Approach,97.8,22,/snapshots/20260512_0630_East_Approach_emergency.jpg,/clips/20260512_0630_East_Approach_emergency.mp4
+2026-05-12 06:30:00,Emergency Vehicle,West_Approach,94.13,22,/snapshots/20260512_0630_West_Approach_emergency.jpg,/clips/20260512_0630_West_Approach_emergency.mp4
+2026-05-14 01:15:00,Emergency Vehicle,North_Arar_St,99.6,28,/snapshots/20260514_0115_North_Arar_St_emergency.jpg,/clips/20260514_0115_North_Arar_St_emergency.mp4
+2026-05-14 01:15:00,Emergency Vehicle,South_Arar_St,92.73,28,/snapshots/20260514_0115_South_Arar_St_emergency.jpg,/clips/20260514_0115_South_Arar_St_emergency.mp4
+2026-05-14 01:15:00,Emergency Vehicle,East_Approach,98.63,22,/snapshots/20260514_0115_East_Approach_emergency.jpg,/clips/20260514_0115_East_Approach_emergency.mp4
+2026-05-14 01:15:00,Emergency Vehicle,West_Approach,96.34,22,/snapshots/20260514_0115_West_Approach_emergency.jpg,/clips/20260514_0115_West_Approach_emergency.mp4
+2026-05-15 21:30:00,Emergency Vehicle,North_Arar_St,95.41,84,/snapshots/20260515_2130_North_Arar_St_emergency.jpg,/clips/20260515_2130_North_Arar_St_emergency.mp4
+2026-05-15 21:30:00,Emergency Vehicle,South_Arar_St,98.99,84,/snapshots/20260515_2130_South_Arar_St_emergency.jpg,/clips/20260515_2130_South_Arar_St_emergency.mp4
+2026-05-15 21:30:00,Emergency Vehicle,East_Approach,98.12,67,/snapshots/20260515_2130_East_Approach_emergency.jpg,/clips/20260515_2130_East_Approach_emergency.mp4
+2026-05-15 21:30:00,Emergency Vehicle,West_Approach,91.9,67,/snapshots/20260515_2130_West_Approach_emergency.jpg,/clips/20260515_2130_West_Approach_emergency.mp4
+2026-05-17 06:15:00,Emergency Vehicle,North_Arar_St,95.57,28,/snapshots/20260517_0615_North_Arar_St_emergency.jpg,/clips/20260517_0615_North_Arar_St_emergency.mp4
+2026-05-17 06:15:00,Emergency Vehicle,South_Arar_St,95.25,28,/snapshots/20260517_0615_South_Arar_St_emergency.jpg,/clips/20260517_0615_South_Arar_St_emergency.mp4
+2026-05-17 06:15:00,Emergency Vehicle,East_Approach,90.42,22,/snapshots/20260517_0615_East_Approach_emergency.jpg,/clips/20260517_0615_East_Approach_emergency.mp4
+2026-05-17 06:15:00,Emergency Vehicle,West_Approach,94.84,22,/snapshots/20260517_0615_West_Approach_emergency.jpg,/clips/20260517_0615_West_Approach_emergency.mp4
+2026-05-17 18:00:00,Accident,North_Arar_St,88.21,375,/snapshots/20260517_1800_North_Arar_St_accident.jpg,/clips/20260517_1800_North_Arar_St_accident.mp4
+2026-05-17 18:00:00,Accident,South_Arar_St,90.87,375,/snapshots/20260517_1800_South_Arar_St_accident.jpg,/clips/20260517_1800_South_Arar_St_accident.mp4
+2026-05-22 15:15:00,Emergency Vehicle,North_Arar_St,96.42,84,/snapshots/20260522_1515_North_Arar_St_emergency.jpg,/clips/20260522_1515_North_Arar_St_emergency.mp4
+2026-05-22 15:15:00,Emergency Vehicle,South_Arar_St,97.31,84,/snapshots/20260522_1515_South_Arar_St_emergency.jpg,/clips/20260522_1515_South_Arar_St_emergency.mp4
+2026-05-22 15:15:00,Emergency Vehicle,East_Approach,93.24,67,/snapshots/20260522_1515_East_Approach_emergency.jpg,/clips/20260522_1515_East_Approach_emergency.mp4
+2026-05-22 15:15:00,Emergency Vehicle,West_Approach,92.12,67,/snapshots/20260522_1515_West_Approach_emergency.jpg,/clips/20260522_1515_West_Approach_emergency.mp4
+2026-05-23 04:15:00,Accident,North_Arar_St,93.61,62,/snapshots/20260523_0415_North_Arar_St_accident.jpg,/clips/20260523_0415_North_Arar_St_accident.mp4
+2026-05-23 04:15:00,Accident,South_Arar_St,96.47,62,/snapshots/20260523_0415_South_Arar_St_accident.jpg,/clips/20260523_0415_South_Arar_St_accident.mp4
+2026-05-23 10:00:00,Accident,North_Arar_St,96.71,156,/snapshots/20260523_1000_North_Arar_St_accident.jpg,/clips/20260523_1000_North_Arar_St_accident.mp4
+2026-05-23 10:00:00,Accident,South_Arar_St,86.1,156,/snapshots/20260523_1000_South_Arar_St_accident.jpg,/clips/20260523_1000_South_Arar_St_accident.mp4
+2026-05-23 20:30:00,Accident,North_Arar_St,95.98,156,/snapshots/20260523_2030_North_Arar_St_accident.jpg,/clips/20260523_2030_North_Arar_St_accident.mp4
+2026-05-23 20:30:00,Accident,South_Arar_St,86.41,156,/snapshots/20260523_2030_South_Arar_St_accident.jpg,/clips/20260523_2030_South_Arar_St_accident.mp4
+2026-05-25 11:45:00,Emergency Vehicle,North_Arar_St,99.37,28,/snapshots/20260525_1145_North_Arar_St_emergency.jpg,/clips/20260525_1145_North_Arar_St_emergency.mp4
+2026-05-25 11:45:00,Emergency Vehicle,South_Arar_St,95.05,28,/snapshots/20260525_1145_South_Arar_St_emergency.jpg,/clips/20260525_1145_South_Arar_St_emergency.mp4
+2026-05-25 11:45:00,Emergency Vehicle,East_Approach,95.67,22,/snapshots/20260525_1145_East_Approach_emergency.jpg,/clips/20260525_1145_East_Approach_emergency.mp4
+2026-05-25 11:45:00,Emergency Vehicle,West_Approach,95.72,22,/snapshots/20260525_1145_West_Approach_emergency.jpg,/clips/20260525_1145_West_Approach_emergency.mp4
+2026-05-25 22:45:00,Emergency Vehicle,North_Arar_St,93.87,28,/snapshots/20260525_2245_North_Arar_St_emergency.jpg,/clips/20260525_2245_North_Arar_St_emergency.mp4
+2026-05-25 22:45:00,Emergency Vehicle,South_Arar_St,94.1,28,/snapshots/20260525_2245_South_Arar_St_emergency.jpg,/clips/20260525_2245_South_Arar_St_emergency.mp4
+2026-05-25 22:45:00,Emergency Vehicle,East_Approach,99.7,22,/snapshots/20260525_2245_East_Approach_emergency.jpg,/clips/20260525_2245_East_Approach_emergency.mp4
+2026-05-25 22:45:00,Emergency Vehicle,West_Approach,96.99,22,/snapshots/20260525_2245_West_Approach_emergency.jpg,/clips/20260525_2245_West_Approach_emergency.mp4
+2026-05-26 04:00:00,Emergency Vehicle,North_Arar_St,93.11,28,/snapshots/20260526_0400_North_Arar_St_emergency.jpg,/clips/20260526_0400_North_Arar_St_emergency.mp4
+2026-05-26 04:00:00,Emergency Vehicle,South_Arar_St,98.81,28,/snapshots/20260526_0400_South_Arar_St_emergency.jpg,/clips/20260526_0400_South_Arar_St_emergency.mp4
+2026-05-26 04:00:00,Emergency Vehicle,East_Approach,93.76,22,/snapshots/20260526_0400_East_Approach_emergency.jpg,/clips/20260526_0400_East_Approach_emergency.mp4
+2026-05-26 04:00:00,Emergency Vehicle,West_Approach,93.33,22,/snapshots/20260526_0400_West_Approach_emergency.jpg,/clips/20260526_0400_West_Approach_emergency.mp4
+2026-05-26 07:00:00,Accident,North_Arar_St,93.23,218,/snapshots/20260526_0700_North_Arar_St_accident.jpg,/clips/20260526_0700_North_Arar_St_accident.mp4
+2026-05-26 07:00:00,Accident,South_Arar_St,89.41,218,/snapshots/20260526_0700_South_Arar_St_accident.jpg,/clips/20260526_0700_South_Arar_St_accident.mp4
+2026-05-26 22:45:00,Accident,North_Arar_St,86.09,46,/snapshots/20260526_2245_North_Arar_St_accident.jpg,/clips/20260526_2245_North_Arar_St_accident.mp4
+2026-05-26 22:45:00,Accident,South_Arar_St,89.29,46,/snapshots/20260526_2245_South_Arar_St_accident.jpg,/clips/20260526_2245_South_Arar_St_accident.mp4
+2026-05-28 10:00:00,Emergency Vehicle,North_Arar_St,92.87,28,/snapshots/20260528_1000_North_Arar_St_emergency.jpg,/clips/20260528_1000_North_Arar_St_emergency.mp4
+2026-05-28 10:00:00,Emergency Vehicle,South_Arar_St,90.21,28,/snapshots/20260528_1000_South_Arar_St_emergency.jpg,/clips/20260528_1000_South_Arar_St_emergency.mp4
+2026-05-28 10:00:00,Emergency Vehicle,East_Approach,95.46,22,/snapshots/20260528_1000_East_Approach_emergency.jpg,/clips/20260528_1000_East_Approach_emergency.mp4
+2026-05-28 10:00:00,Emergency Vehicle,West_Approach,90.59,22,/snapshots/20260528_1000_West_Approach_emergency.jpg,/clips/20260528_1000_West_Approach_emergency.mp4
+2026-05-29 23:30:00,Emergency Vehicle,North_Arar_St,94.86,28,/snapshots/20260529_2330_North_Arar_St_emergency.jpg,/clips/20260529_2330_North_Arar_St_emergency.mp4
+2026-05-29 23:30:00,Emergency Vehicle,South_Arar_St,93.5,28,/snapshots/20260529_2330_South_Arar_St_emergency.jpg,/clips/20260529_2330_South_Arar_St_emergency.mp4
+2026-05-29 23:30:00,Emergency Vehicle,East_Approach,96.97,22,/snapshots/20260529_2330_East_Approach_emergency.jpg,/clips/20260529_2330_East_Approach_emergency.mp4
+2026-05-29 23:30:00,Emergency Vehicle,West_Approach,99.26,22,/snapshots/20260529_2330_West_Approach_emergency.jpg,/clips/20260529_2330_West_Approach_emergency.mp4
+2026-06-01 00:30:00,Accident,North_Arar_St,97.89,46,/snapshots/20260601_0030_North_Arar_St_accident.jpg,/clips/20260601_0030_North_Arar_St_accident.mp4
+2026-06-01 00:30:00,Accident,South_Arar_St,94.22,46,/snapshots/20260601_0030_South_Arar_St_accident.jpg,/clips/20260601_0030_South_Arar_St_accident.mp4
+2026-06-01 09:15:00,Emergency Vehicle,North_Arar_St,95.38,131,/snapshots/20260601_0915_North_Arar_St_emergency.jpg,/clips/20260601_0915_North_Arar_St_emergency.mp4
+2026-06-01 09:15:00,Emergency Vehicle,South_Arar_St,91.81,131,/snapshots/20260601_0915_South_Arar_St_emergency.jpg,/clips/20260601_0915_South_Arar_St_emergency.mp4
+2026-06-01 09:15:00,Emergency Vehicle,East_Approach,94.13,105,/snapshots/20260601_0915_East_Approach_emergency.jpg,/clips/20260601_0915_East_Approach_emergency.mp4
+2026-06-01 09:15:00,Emergency Vehicle,West_Approach,90.13,105,/snapshots/20260601_0915_West_Approach_emergency.jpg,/clips/20260601_0915_West_Approach_emergency.mp4
+2026-06-01 18:45:00,Emergency Vehicle,North_Arar_St,93.73,225,/snapshots/20260601_1845_North_Arar_St_emergency.jpg,/clips/20260601_1845_North_Arar_St_emergency.mp4
+2026-06-01 18:45:00,Emergency Vehicle,South_Arar_St,91.51,225,/snapshots/20260601_1845_South_Arar_St_emergency.jpg,/clips/20260601_1845_South_Arar_St_emergency.mp4
+2026-06-01 18:45:00,Emergency Vehicle,East_Approach,98.63,180,/snapshots/20260601_1845_East_Approach_emergency.jpg,/clips/20260601_1845_East_Approach_emergency.mp4
+2026-06-01 18:45:00,Emergency Vehicle,West_Approach,94.56,180,/snapshots/20260601_1845_West_Approach_emergency.jpg,/clips/20260601_1845_West_Approach_emergency.mp4
+2026-06-02 01:45:00,Emergency Vehicle,North_Arar_St,90.21,28,/snapshots/20260602_0145_North_Arar_St_emergency.jpg,/clips/20260602_0145_North_Arar_St_emergency.mp4
+2026-06-02 01:45:00,Emergency Vehicle,South_Arar_St,94.96,28,/snapshots/20260602_0145_South_Arar_St_emergency.jpg,/clips/20260602_0145_South_Arar_St_emergency.mp4
+2026-06-02 01:45:00,Emergency Vehicle,East_Approach,97.06,22,/snapshots/20260602_0145_East_Approach_emergency.jpg,/clips/20260602_0145_East_Approach_emergency.mp4
+2026-06-02 01:45:00,Emergency Vehicle,West_Approach,96.94,22,/snapshots/20260602_0145_West_Approach_emergency.jpg,/clips/20260602_0145_West_Approach_emergency.mp4
+2026-06-02 04:15:00,Emergency Vehicle,North_Arar_St,90.31,28,/snapshots/20260602_0415_North_Arar_St_emergency.jpg,/clips/20260602_0415_North_Arar_St_emergency.mp4
+2026-06-02 04:15:00,Emergency Vehicle,South_Arar_St,96.97,28,/snapshots/20260602_0415_South_Arar_St_emergency.jpg,/clips/20260602_0415_South_Arar_St_emergency.mp4
+2026-06-02 04:15:00,Emergency Vehicle,East_Approach,93.15,22,/snapshots/20260602_0415_East_Approach_emergency.jpg,/clips/20260602_0415_East_Approach_emergency.mp4
+2026-06-02 04:15:00,Emergency Vehicle,West_Approach,92.25,22,/snapshots/20260602_0415_West_Approach_emergency.jpg,/clips/20260602_0415_West_Approach_emergency.mp4
+2026-06-03 14:00:00,Emergency Vehicle,North_Arar_St,97.45,28,/snapshots/20260603_1400_North_Arar_St_emergency.jpg,/clips/20260603_1400_North_Arar_St_emergency.mp4
+2026-06-03 14:00:00,Emergency Vehicle,South_Arar_St,97.14,28,/snapshots/20260603_1400_South_Arar_St_emergency.jpg,/clips/20260603_1400_South_Arar_St_emergency.mp4
+2026-06-03 14:00:00,Emergency Vehicle,East_Approach,91.42,22,/snapshots/20260603_1400_East_Approach_emergency.jpg,/clips/20260603_1400_East_Approach_emergency.mp4
+2026-06-03 14:00:00,Emergency Vehicle,West_Approach,94.37,22,/snapshots/20260603_1400_West_Approach_emergency.jpg,/clips/20260603_1400_West_Approach_emergency.mp4
+2026-06-04 16:00:00,Accident,North_Arar_St,93.28,375,/snapshots/20260604_1600_North_Arar_St_accident.jpg,/clips/20260604_1600_North_Arar_St_accident.mp4
+2026-06-04 16:00:00,Accident,South_Arar_St,97.36,375,/snapshots/20260604_1600_South_Arar_St_accident.jpg,/clips/20260604_1600_South_Arar_St_accident.mp4
+2026-06-06 10:15:00,Emergency Vehicle,North_Arar_St,95.44,93,/snapshots/20260606_1015_North_Arar_St_emergency.jpg,/clips/20260606_1015_North_Arar_St_emergency.mp4
+2026-06-06 10:15:00,Emergency Vehicle,South_Arar_St,97.27,93,/snapshots/20260606_1015_South_Arar_St_emergency.jpg,/clips/20260606_1015_South_Arar_St_emergency.mp4
+2026-06-06 10:15:00,Emergency Vehicle,East_Approach,96.14,75,/snapshots/20260606_1015_East_Approach_emergency.jpg,/clips/20260606_1015_East_Approach_emergency.mp4
+2026-06-06 10:15:00,Emergency Vehicle,West_Approach,98.72,75,/snapshots/20260606_1015_West_Approach_emergency.jpg,/clips/20260606_1015_West_Approach_emergency.mp4
+2026-06-06 20:00:00,Emergency Vehicle,North_Arar_St,92.36,93,/snapshots/20260606_2000_North_Arar_St_emergency.jpg,/clips/20260606_2000_North_Arar_St_emergency.mp4
+2026-06-06 20:00:00,Emergency Vehicle,South_Arar_St,95.74,93,/snapshots/20260606_2000_South_Arar_St_emergency.jpg,/clips/20260606_2000_South_Arar_St_emergency.mp4
+2026-06-06 20:00:00,Emergency Vehicle,East_Approach,94.79,75,/snapshots/20260606_2000_East_Approach_emergency.jpg,/clips/20260606_2000_East_Approach_emergency.mp4
+2026-06-06 20:00:00,Emergency Vehicle,West_Approach,98.6,75,/snapshots/20260606_2000_West_Approach_emergency.jpg,/clips/20260606_2000_West_Approach_emergency.mp4
+2026-06-06 23:15:00,Emergency Vehicle,North_Arar_St,92.29,37,/snapshots/20260606_2315_North_Arar_St_emergency.jpg,/clips/20260606_2315_North_Arar_St_emergency.mp4
+2026-06-06 23:15:00,Emergency Vehicle,South_Arar_St,93.49,37,/snapshots/20260606_2315_South_Arar_St_emergency.jpg,/clips/20260606_2315_South_Arar_St_emergency.mp4
+2026-06-06 23:15:00,Emergency Vehicle,East_Approach,90.14,30,/snapshots/20260606_2315_East_Approach_emergency.jpg,/clips/20260606_2315_East_Approach_emergency.mp4
+2026-06-06 23:15:00,Emergency Vehicle,West_Approach,97.57,30,/snapshots/20260606_2315_West_Approach_emergency.jpg,/clips/20260606_2315_West_Approach_emergency.mp4
+2026-06-07 11:30:00,Accident,North_Arar_St,90.27,46,/snapshots/20260607_1130_North_Arar_St_accident.jpg,/clips/20260607_1130_North_Arar_St_accident.mp4
+2026-06-07 11:30:00,Accident,South_Arar_St,85.16,46,/snapshots/20260607_1130_South_Arar_St_accident.jpg,/clips/20260607_1130_South_Arar_St_accident.mp4
+2026-06-07 12:30:00,Emergency Vehicle,North_Arar_St,97.0,28,/snapshots/20260607_1230_North_Arar_St_emergency.jpg,/clips/20260607_1230_North_Arar_St_emergency.mp4
+2026-06-07 12:30:00,Emergency Vehicle,South_Arar_St,92.77,28,/snapshots/20260607_1230_South_Arar_St_emergency.jpg,/clips/20260607_1230_South_Arar_St_emergency.mp4
+2026-06-07 12:30:00,Emergency Vehicle,East_Approach,97.05,22,/snapshots/20260607_1230_East_Approach_emergency.jpg,/clips/20260607_1230_East_Approach_emergency.mp4
+2026-06-07 12:30:00,Emergency Vehicle,West_Approach,95.85,22,/snapshots/20260607_1230_West_Approach_emergency.jpg,/clips/20260607_1230_West_Approach_emergency.mp4
+2026-06-07 14:15:00,Emergency Vehicle,North_Arar_St,94.69,28,/snapshots/20260607_1415_North_Arar_St_emergency.jpg,/clips/20260607_1415_North_Arar_St_emergency.mp4
+2026-06-07 14:15:00,Emergency Vehicle,South_Arar_St,93.42,28,/snapshots/20260607_1415_South_Arar_St_emergency.jpg,/clips/20260607_1415_South_Arar_St_emergency.mp4
+2026-06-07 14:15:00,Emergency Vehicle,East_Approach,91.99,22,/snapshots/20260607_1415_East_Approach_emergency.jpg,/clips/20260607_1415_East_Approach_emergency.mp4
+2026-06-07 14:15:00,Emergency Vehicle,West_Approach,91.22,22,/snapshots/20260607_1415_West_Approach_emergency.jpg,/clips/20260607_1415_West_Approach_emergency.mp4
+2026-06-07 18:45:00,Accident,North_Arar_St,87.78,375,/snapshots/20260607_1845_North_Arar_St_accident.jpg,/clips/20260607_1845_North_Arar_St_accident.mp4
+2026-06-07 18:45:00,Accident,South_Arar_St,86.63,375,/snapshots/20260607_1845_South_Arar_St_accident.jpg,/clips/20260607_1845_South_Arar_St_accident.mp4
+2026-06-07 19:00:00,Emergency Vehicle,North_Arar_St,93.27,131,/snapshots/20260607_1900_North_Arar_St_emergency.jpg,/clips/20260607_1900_North_Arar_St_emergency.mp4
+2026-06-07 19:00:00,Emergency Vehicle,South_Arar_St,92.16,131,/snapshots/20260607_1900_South_Arar_St_emergency.jpg,/clips/20260607_1900_South_Arar_St_emergency.mp4
+2026-06-07 19:00:00,Emergency Vehicle,East_Approach,98.77,105,/snapshots/20260607_1900_East_Approach_emergency.jpg,/clips/20260607_1900_East_Approach_emergency.mp4
+2026-06-07 19:00:00,Emergency Vehicle,West_Approach,94.69,105,/snapshots/20260607_1900_West_Approach_emergency.jpg,/clips/20260607_1900_West_Approach_emergency.mp4
+2026-06-08 06:00:00,Emergency Vehicle,North_Arar_St,92.44,28,/snapshots/20260608_0600_North_Arar_St_emergency.jpg,/clips/20260608_0600_North_Arar_St_emergency.mp4
+2026-06-08 06:00:00,Emergency Vehicle,South_Arar_St,94.83,28,/snapshots/20260608_0600_South_Arar_St_emergency.jpg,/clips/20260608_0600_South_Arar_St_emergency.mp4
+2026-06-08 06:00:00,Emergency Vehicle,East_Approach,99.09,22,/snapshots/20260608_0600_East_Approach_emergency.jpg,/clips/20260608_0600_East_Approach_emergency.mp4
+2026-06-08 06:00:00,Emergency Vehicle,West_Approach,93.78,22,/snapshots/20260608_0600_West_Approach_emergency.jpg,/clips/20260608_0600_West_Approach_emergency.mp4
+2026-06-08 06:30:00,Emergency Vehicle,North_Arar_St,94.93,28,/snapshots/20260608_0630_North_Arar_St_emergency.jpg,/clips/20260608_0630_North_Arar_St_emergency.mp4
+2026-06-08 06:30:00,Emergency Vehicle,South_Arar_St,95.6,28,/snapshots/20260608_0630_South_Arar_St_emergency.jpg,/clips/20260608_0630_South_Arar_St_emergency.mp4
+2026-06-08 06:30:00,Emergency Vehicle,East_Approach,91.26,22,/snapshots/20260608_0630_East_Approach_emergency.jpg,/clips/20260608_0630_East_Approach_emergency.mp4
+2026-06-08 06:30:00,Emergency Vehicle,West_Approach,98.85,22,/snapshots/20260608_0630_West_Approach_emergency.jpg,/clips/20260608_0630_West_Approach_emergency.mp4
+2026-06-08 13:30:00,Accident,North_Arar_St,99.31,46,/snapshots/20260608_1330_North_Arar_St_accident.jpg,/clips/20260608_1330_North_Arar_St_accident.mp4
+2026-06-08 13:30:00,Accident,South_Arar_St,89.05,46,/snapshots/20260608_1330_South_Arar_St_accident.jpg,/clips/20260608_1330_South_Arar_St_accident.mp4
+2026-06-09 14:15:00,Emergency Vehicle,North_Arar_St,97.86,28,/snapshots/20260609_1415_North_Arar_St_emergency.jpg,/clips/20260609_1415_North_Arar_St_emergency.mp4
+2026-06-09 14:15:00,Emergency Vehicle,South_Arar_St,99.6,28,/snapshots/20260609_1415_South_Arar_St_emergency.jpg,/clips/20260609_1415_South_Arar_St_emergency.mp4
+2026-06-09 14:15:00,Emergency Vehicle,East_Approach,90.09,22,/snapshots/20260609_1415_East_Approach_emergency.jpg,/clips/20260609_1415_East_Approach_emergency.mp4
+2026-06-09 14:15:00,Emergency Vehicle,West_Approach,97.92,22,/snapshots/20260609_1415_West_Approach_emergency.jpg,/clips/20260609_1415_West_Approach_emergency.mp4
+2026-06-09 23:45:00,Emergency Vehicle,North_Arar_St,91.54,28,/snapshots/20260609_2345_North_Arar_St_emergency.jpg,/clips/20260609_2345_North_Arar_St_emergency.mp4
+2026-06-09 23:45:00,Emergency Vehicle,South_Arar_St,94.41,28,/snapshots/20260609_2345_South_Arar_St_emergency.jpg,/clips/20260609_2345_South_Arar_St_emergency.mp4
+2026-06-09 23:45:00,Emergency Vehicle,East_Approach,98.94,22,/snapshots/20260609_2345_East_Approach_emergency.jpg,/clips/20260609_2345_East_Approach_emergency.mp4
+2026-06-09 23:45:00,Emergency Vehicle,West_Approach,99.78,22,/snapshots/20260609_2345_West_Approach_emergency.jpg,/clips/20260609_2345_West_Approach_emergency.mp4
+2026-06-10 05:45:00,Emergency Vehicle,North_Arar_St,99.73,28,/snapshots/20260610_0545_North_Arar_St_emergency.jpg,/clips/20260610_0545_North_Arar_St_emergency.mp4
+2026-06-10 05:45:00,Emergency Vehicle,South_Arar_St,96.99,28,/snapshots/20260610_0545_South_Arar_St_emergency.jpg,/clips/20260610_0545_South_Arar_St_emergency.mp4
+2026-06-10 05:45:00,Emergency Vehicle,East_Approach,97.33,22,/snapshots/20260610_0545_East_Approach_emergency.jpg,/clips/20260610_0545_East_Approach_emergency.mp4
+2026-06-10 05:45:00,Emergency Vehicle,West_Approach,90.24,22,/snapshots/20260610_0545_West_Approach_emergency.jpg,/clips/20260610_0545_West_Approach_emergency.mp4
+2026-06-11 23:30:00,Accident,North_Arar_St,85.81,46,/snapshots/20260611_2330_North_Arar_St_accident.jpg,/clips/20260611_2330_North_Arar_St_accident.mp4
+2026-06-11 23:30:00,Accident,South_Arar_St,92.04,46,/snapshots/20260611_2330_South_Arar_St_accident.jpg,/clips/20260611_2330_South_Arar_St_accident.mp4
+2026-06-12 06:00:00,Emergency Vehicle,North_Arar_St,94.94,28,/snapshots/20260612_0600_North_Arar_St_emergency.jpg,/clips/20260612_0600_North_Arar_St_emergency.mp4
+2026-06-12 06:00:00,Emergency Vehicle,South_Arar_St,92.45,28,/snapshots/20260612_0600_South_Arar_St_emergency.jpg,/clips/20260612_0600_South_Arar_St_emergency.mp4
+2026-06-12 06:00:00,Emergency Vehicle,East_Approach,98.93,22,/snapshots/20260612_0600_East_Approach_emergency.jpg,/clips/20260612_0600_East_Approach_emergency.mp4
+2026-06-12 06:00:00,Emergency Vehicle,West_Approach,92.42,22,/snapshots/20260612_0600_West_Approach_emergency.jpg,/clips/20260612_0600_West_Approach_emergency.mp4
+2026-06-12 14:00:00,Accident,North_Arar_St,86.8,140,/snapshots/20260612_1400_North_Arar_St_accident.jpg,/clips/20260612_1400_North_Arar_St_accident.mp4
+2026-06-12 14:00:00,Accident,South_Arar_St,89.2,140,/snapshots/20260612_1400_South_Arar_St_accident.jpg,/clips/20260612_1400_South_Arar_St_accident.mp4
+2026-06-13 06:00:00,Emergency Vehicle,North_Arar_St,94.97,37,/snapshots/20260613_0600_North_Arar_St_emergency.jpg,/clips/20260613_0600_North_Arar_St_emergency.mp4
+2026-06-13 06:00:00,Emergency Vehicle,South_Arar_St,94.09,37,/snapshots/20260613_0600_South_Arar_St_emergency.jpg,/clips/20260613_0600_South_Arar_St_emergency.mp4
+2026-06-13 06:00:00,Emergency Vehicle,East_Approach,98.57,30,/snapshots/20260613_0600_East_Approach_emergency.jpg,/clips/20260613_0600_East_Approach_emergency.mp4
+2026-06-13 06:00:00,Emergency Vehicle,West_Approach,93.77,30,/snapshots/20260613_0600_West_Approach_emergency.jpg,/clips/20260613_0600_West_Approach_emergency.mp4
+2026-06-13 09:00:00,Emergency Vehicle,North_Arar_St,96.11,37,/snapshots/20260613_0900_North_Arar_St_emergency.jpg,/clips/20260613_0900_North_Arar_St_emergency.mp4
+2026-06-13 09:00:00,Emergency Vehicle,South_Arar_St,95.86,37,/snapshots/20260613_0900_South_Arar_St_emergency.jpg,/clips/20260613_0900_South_Arar_St_emergency.mp4
+2026-06-13 09:00:00,Emergency Vehicle,East_Approach,99.59,30,/snapshots/20260613_0900_East_Approach_emergency.jpg,/clips/20260613_0900_East_Approach_emergency.mp4
+2026-06-13 09:00:00,Emergency Vehicle,West_Approach,96.05,30,/snapshots/20260613_0900_West_Approach_emergency.jpg,/clips/20260613_0900_West_Approach_emergency.mp4
+2026-06-14 13:00:00,Emergency Vehicle,North_Arar_St,91.87,28,/snapshots/20260614_1300_North_Arar_St_emergency.jpg,/clips/20260614_1300_North_Arar_St_emergency.mp4
+2026-06-14 13:00:00,Emergency Vehicle,South_Arar_St,96.43,28,/snapshots/20260614_1300_South_Arar_St_emergency.jpg,/clips/20260614_1300_South_Arar_St_emergency.mp4
+2026-06-14 13:00:00,Emergency Vehicle,East_Approach,99.29,22,/snapshots/20260614_1300_East_Approach_emergency.jpg,/clips/20260614_1300_East_Approach_emergency.mp4
+2026-06-14 13:00:00,Emergency Vehicle,West_Approach,90.99,22,/snapshots/20260614_1300_West_Approach_emergency.jpg,/clips/20260614_1300_West_Approach_emergency.mp4
+2026-06-14 19:00:00,Emergency Vehicle,North_Arar_St,92.9,131,/snapshots/20260614_1900_North_Arar_St_emergency.jpg,/clips/20260614_1900_North_Arar_St_emergency.mp4
+2026-06-14 19:00:00,Emergency Vehicle,South_Arar_St,98.65,131,/snapshots/20260614_1900_South_Arar_St_emergency.jpg,/clips/20260614_1900_South_Arar_St_emergency.mp4
+2026-06-14 19:00:00,Emergency Vehicle,East_Approach,93.1,105,/snapshots/20260614_1900_East_Approach_emergency.jpg,/clips/20260614_1900_East_Approach_emergency.mp4
+2026-06-14 19:00:00,Emergency Vehicle,West_Approach,99.44,105,/snapshots/20260614_1900_West_Approach_emergency.jpg,/clips/20260614_1900_West_Approach_emergency.mp4
+2026-06-16 02:00:00,Emergency Vehicle,North_Arar_St,90.14,28,/snapshots/20260616_0200_North_Arar_St_emergency.jpg,/clips/20260616_0200_North_Arar_St_emergency.mp4
+2026-06-16 02:00:00,Emergency Vehicle,South_Arar_St,93.41,28,/snapshots/20260616_0200_South_Arar_St_emergency.jpg,/clips/20260616_0200_South_Arar_St_emergency.mp4
+2026-06-16 02:00:00,Emergency Vehicle,East_Approach,97.49,22,/snapshots/20260616_0200_East_Approach_emergency.jpg,/clips/20260616_0200_East_Approach_emergency.mp4
+2026-06-16 02:00:00,Emergency Vehicle,West_Approach,99.23,22,/snapshots/20260616_0200_West_Approach_emergency.jpg,/clips/20260616_0200_West_Approach_emergency.mp4
+2026-06-17 18:45:00,Emergency Vehicle,North_Arar_St,98.42,225,/snapshots/20260617_1845_North_Arar_St_emergency.jpg,/clips/20260617_1845_North_Arar_St_emergency.mp4
+2026-06-17 18:45:00,Emergency Vehicle,South_Arar_St,96.71,225,/snapshots/20260617_1845_South_Arar_St_emergency.jpg,/clips/20260617_1845_South_Arar_St_emergency.mp4
+2026-06-17 18:45:00,Emergency Vehicle,East_Approach,94.38,180,/snapshots/20260617_1845_East_Approach_emergency.jpg,/clips/20260617_1845_East_Approach_emergency.mp4
+2026-06-17 18:45:00,Emergency Vehicle,West_Approach,98.1,180,/snapshots/20260617_1845_West_Approach_emergency.jpg,/clips/20260617_1845_West_Approach_emergency.mp4
+2026-06-20 01:00:00,Accident,North_Arar_St,90.64,62,/snapshots/20260620_0100_North_Arar_St_accident.jpg,/clips/20260620_0100_North_Arar_St_accident.mp4
+2026-06-20 01:00:00,Accident,South_Arar_St,97.82,62,/snapshots/20260620_0100_South_Arar_St_accident.jpg,/clips/20260620_0100_South_Arar_St_accident.mp4
+2026-06-20 23:45:00,Emergency Vehicle,North_Arar_St,91.94,37,/snapshots/20260620_2345_North_Arar_St_emergency.jpg,/clips/20260620_2345_North_Arar_St_emergency.mp4
+2026-06-20 23:45:00,Emergency Vehicle,South_Arar_St,90.36,37,/snapshots/20260620_2345_South_Arar_St_emergency.jpg,/clips/20260620_2345_South_Arar_St_emergency.mp4
+2026-06-20 23:45:00,Emergency Vehicle,East_Approach,93.61,30,/snapshots/20260620_2345_East_Approach_emergency.jpg,/clips/20260620_2345_East_Approach_emergency.mp4
+2026-06-20 23:45:00,Emergency Vehicle,West_Approach,93.96,30,/snapshots/20260620_2345_West_Approach_emergency.jpg,/clips/20260620_2345_West_Approach_emergency.mp4
+2026-06-21 13:15:00,Emergency Vehicle,North_Arar_St,98.06,28,/snapshots/20260621_1315_North_Arar_St_emergency.jpg,/clips/20260621_1315_North_Arar_St_emergency.mp4
+2026-06-21 13:15:00,Emergency Vehicle,South_Arar_St,99.06,28,/snapshots/20260621_1315_South_Arar_St_emergency.jpg,/clips/20260621_1315_South_Arar_St_emergency.mp4
+2026-06-21 13:15:00,Emergency Vehicle,East_Approach,92.92,22,/snapshots/20260621_1315_East_Approach_emergency.jpg,/clips/20260621_1315_East_Approach_emergency.mp4
+2026-06-21 13:15:00,Emergency Vehicle,West_Approach,95.44,22,/snapshots/20260621_1315_West_Approach_emergency.jpg,/clips/20260621_1315_West_Approach_emergency.mp4
+2026-06-22 15:45:00,Emergency Vehicle,North_Arar_St,95.66,225,/snapshots/20260622_1545_North_Arar_St_emergency.jpg,/clips/20260622_1545_North_Arar_St_emergency.mp4
+2026-06-22 15:45:00,Emergency Vehicle,South_Arar_St,90.59,225,/snapshots/20260622_1545_South_Arar_St_emergency.jpg,/clips/20260622_1545_South_Arar_St_emergency.mp4
+2026-06-22 15:45:00,Emergency Vehicle,East_Approach,90.77,180,/snapshots/20260622_1545_East_Approach_emergency.jpg,/clips/20260622_1545_East_Approach_emergency.mp4
+2026-06-22 15:45:00,Emergency Vehicle,West_Approach,95.8,180,/snapshots/20260622_1545_West_Approach_emergency.jpg,/clips/20260622_1545_West_Approach_emergency.mp4
+2026-06-24 06:30:00,Accident,North_Arar_St,87.77,46,/snapshots/20260624_0630_North_Arar_St_accident.jpg,/clips/20260624_0630_North_Arar_St_accident.mp4
+2026-06-24 06:30:00,Accident,South_Arar_St,89.76,46,/snapshots/20260624_0630_South_Arar_St_accident.jpg,/clips/20260624_0630_South_Arar_St_accident.mp4
+2026-06-24 11:45:00,Emergency Vehicle,North_Arar_St,92.91,28,/snapshots/20260624_1145_North_Arar_St_emergency.jpg,/clips/20260624_1145_North_Arar_St_emergency.mp4
+2026-06-24 11:45:00,Emergency Vehicle,South_Arar_St,94.22,28,/snapshots/20260624_1145_South_Arar_St_emergency.jpg,/clips/20260624_1145_South_Arar_St_emergency.mp4
+2026-06-24 11:45:00,Emergency Vehicle,East_Approach,92.52,22,/snapshots/20260624_1145_East_Approach_emergency.jpg,/clips/20260624_1145_East_Approach_emergency.mp4
+2026-06-24 11:45:00,Emergency Vehicle,West_Approach,98.21,22,/snapshots/20260624_1145_West_Approach_emergency.jpg,/clips/20260624_1145_West_Approach_emergency.mp4
+2026-06-25 04:15:00,Emergency Vehicle,North_Arar_St,92.86,28,/snapshots/20260625_0415_North_Arar_St_emergency.jpg,/clips/20260625_0415_North_Arar_St_emergency.mp4
+2026-06-25 04:15:00,Emergency Vehicle,South_Arar_St,92.98,28,/snapshots/20260625_0415_South_Arar_St_emergency.jpg,/clips/20260625_0415_South_Arar_St_emergency.mp4
+2026-06-25 04:15:00,Emergency Vehicle,East_Approach,94.11,22,/snapshots/20260625_0415_East_Approach_emergency.jpg,/clips/20260625_0415_East_Approach_emergency.mp4
+2026-06-25 04:15:00,Emergency Vehicle,West_Approach,90.05,22,/snapshots/20260625_0415_West_Approach_emergency.jpg,/clips/20260625_0415_West_Approach_emergency.mp4
+2026-06-26 09:00:00,Emergency Vehicle,North_Arar_St,94.84,28,/snapshots/20260626_0900_North_Arar_St_emergency.jpg,/clips/20260626_0900_North_Arar_St_emergency.mp4
+2026-06-26 09:00:00,Emergency Vehicle,South_Arar_St,90.98,28,/snapshots/20260626_0900_South_Arar_St_emergency.jpg,/clips/20260626_0900_South_Arar_St_emergency.mp4
+2026-06-26 09:00:00,Emergency Vehicle,East_Approach,97.54,22,/snapshots/20260626_0900_East_Approach_emergency.jpg,/clips/20260626_0900_East_Approach_emergency.mp4
+2026-06-26 09:00:00,Emergency Vehicle,West_Approach,93.11,22,/snapshots/20260626_0900_West_Approach_emergency.jpg,/clips/20260626_0900_West_Approach_emergency.mp4
+2026-06-26 22:30:00,Emergency Vehicle,North_Arar_St,91.72,84,/snapshots/20260626_2230_North_Arar_St_emergency.jpg,/clips/20260626_2230_North_Arar_St_emergency.mp4
+2026-06-26 22:30:00,Emergency Vehicle,South_Arar_St,92.21,84,/snapshots/20260626_2230_South_Arar_St_emergency.jpg,/clips/20260626_2230_South_Arar_St_emergency.mp4
+2026-06-26 22:30:00,Emergency Vehicle,East_Approach,96.29,67,/snapshots/20260626_2230_East_Approach_emergency.jpg,/clips/20260626_2230_East_Approach_emergency.mp4
+2026-06-26 22:30:00,Emergency Vehicle,West_Approach,95.24,67,/snapshots/20260626_2230_West_Approach_emergency.jpg,/clips/20260626_2230_West_Approach_emergency.mp4
+2026-06-27 19:45:00,Emergency Vehicle,North_Arar_St,93.78,93,/snapshots/20260627_1945_North_Arar_St_emergency.jpg,/clips/20260627_1945_North_Arar_St_emergency.mp4
+2026-06-27 19:45:00,Emergency Vehicle,South_Arar_St,97.89,93,/snapshots/20260627_1945_South_Arar_St_emergency.jpg,/clips/20260627_1945_South_Arar_St_emergency.mp4
+2026-06-27 19:45:00,Emergency Vehicle,East_Approach,93.2,75,/snapshots/20260627_1945_East_Approach_emergency.jpg,/clips/20260627_1945_East_Approach_emergency.mp4
+2026-06-27 19:45:00,Emergency Vehicle,West_Approach,94.56,75,/snapshots/20260627_1945_West_Approach_emergency.jpg,/clips/20260627_1945_West_Approach_emergency.mp4
+2026-06-28 08:30:00,Emergency Vehicle,North_Arar_St,99.33,131,/snapshots/20260628_0830_North_Arar_St_emergency.jpg,/clips/20260628_0830_North_Arar_St_emergency.mp4
+2026-06-28 08:30:00,Emergency Vehicle,South_Arar_St,97.45,131,/snapshots/20260628_0830_South_Arar_St_emergency.jpg,/clips/20260628_0830_South_Arar_St_emergency.mp4
+2026-06-28 08:30:00,Emergency Vehicle,East_Approach,98.9,105,/snapshots/20260628_0830_East_Approach_emergency.jpg,/clips/20260628_0830_East_Approach_emergency.mp4
+2026-06-28 08:30:00,Emergency Vehicle,West_Approach,97.26,105,/snapshots/20260628_0830_West_Approach_emergency.jpg,/clips/20260628_0830_West_Approach_emergency.mp4
+2026-06-28 16:00:00,Emergency Vehicle,North_Arar_St,90.96,112,/snapshots/20260628_1600_North_Arar_St_emergency.jpg,/clips/20260628_1600_North_Arar_St_emergency.mp4
+2026-06-28 16:00:00,Emergency Vehicle,South_Arar_St,94.33,112,/snapshots/20260628_1600_South_Arar_St_emergency.jpg,/clips/20260628_1600_South_Arar_St_emergency.mp4
+2026-06-28 16:00:00,Emergency Vehicle,East_Approach,92.46,90,/snapshots/20260628_1600_East_Approach_emergency.jpg,/clips/20260628_1600_East_Approach_emergency.mp4
+2026-06-28 16:00:00,Emergency Vehicle,West_Approach,99.58,90,/snapshots/20260628_1600_West_Approach_emergency.jpg,/clips/20260628_1600_West_Approach_emergency.mp4
+2026-06-29 00:15:00,Accident,North_Arar_St,99.16,46,/snapshots/20260629_0015_North_Arar_St_accident.jpg,/clips/20260629_0015_North_Arar_St_accident.mp4
+2026-06-29 00:15:00,Accident,South_Arar_St,88.95,46,/snapshots/20260629_0015_South_Arar_St_accident.jpg,/clips/20260629_0015_South_Arar_St_accident.mp4
+2026-06-29 12:00:00,Emergency Vehicle,North_Arar_St,91.96,28,/snapshots/20260629_1200_North_Arar_St_emergency.jpg,/clips/20260629_1200_North_Arar_St_emergency.mp4
+2026-06-29 12:00:00,Emergency Vehicle,South_Arar_St,96.64,28,/snapshots/20260629_1200_South_Arar_St_emergency.jpg,/clips/20260629_1200_South_Arar_St_emergency.mp4
+2026-06-29 12:00:00,Emergency Vehicle,East_Approach,97.23,22,/snapshots/20260629_1200_East_Approach_emergency.jpg,/clips/20260629_1200_East_Approach_emergency.mp4
+2026-06-29 12:00:00,Emergency Vehicle,West_Approach,90.56,22,/snapshots/20260629_1200_West_Approach_emergency.jpg,/clips/20260629_1200_West_Approach_emergency.mp4
+2026-06-29 21:15:00,Emergency Vehicle,North_Arar_St,95.35,131,/snapshots/20260629_2115_North_Arar_St_emergency.jpg,/clips/20260629_2115_North_Arar_St_emergency.mp4
+2026-06-29 21:15:00,Emergency Vehicle,South_Arar_St,95.03,131,/snapshots/20260629_2115_South_Arar_St_emergency.jpg,/clips/20260629_2115_South_Arar_St_emergency.mp4
+2026-06-29 21:15:00,Emergency Vehicle,East_Approach,92.42,105,/snapshots/20260629_2115_East_Approach_emergency.jpg,/clips/20260629_2115_East_Approach_emergency.mp4
+2026-06-29 21:15:00,Emergency Vehicle,West_Approach,91.97,105,/snapshots/20260629_2115_West_Approach_emergency.jpg,/clips/20260629_2115_West_Approach_emergency.mp4
+2026-06-30 09:00:00,Emergency Vehicle,North_Arar_St,95.05,131,/snapshots/20260630_0900_North_Arar_St_emergency.jpg,/clips/20260630_0900_North_Arar_St_emergency.mp4
+2026-06-30 09:00:00,Emergency Vehicle,South_Arar_St,90.69,131,/snapshots/20260630_0900_South_Arar_St_emergency.jpg,/clips/20260630_0900_South_Arar_St_emergency.mp4
+2026-06-30 09:00:00,Emergency Vehicle,East_Approach,93.43,105,/snapshots/20260630_0900_East_Approach_emergency.jpg,/clips/20260630_0900_East_Approach_emergency.mp4
+2026-06-30 09:00:00,Emergency Vehicle,West_Approach,96.31,105,/snapshots/20260630_0900_West_Approach_emergency.jpg,/clips/20260630_0900_West_Approach_emergency.mp4
+2026-06-30 13:45:00,Accident,North_Arar_St,93.15,46,/snapshots/20260630_1345_North_Arar_St_accident.jpg,/clips/20260630_1345_North_Arar_St_accident.mp4
+2026-06-30 13:45:00,Accident,South_Arar_St,94.84,46,/snapshots/20260630_1345_South_Arar_St_accident.jpg,/clips/20260630_1345_South_Arar_St_accident.mp4
+2026-06-30 17:30:00,Emergency Vehicle,North_Arar_St,94.44,225,/snapshots/20260630_1730_North_Arar_St_emergency.jpg,/clips/20260630_1730_North_Arar_St_emergency.mp4
+2026-06-30 17:30:00,Emergency Vehicle,South_Arar_St,93.62,225,/snapshots/20260630_1730_South_Arar_St_emergency.jpg,/clips/20260630_1730_South_Arar_St_emergency.mp4
+2026-06-30 17:30:00,Emergency Vehicle,East_Approach,90.42,180,/snapshots/20260630_1730_East_Approach_emergency.jpg,/clips/20260630_1730_East_Approach_emergency.mp4
+2026-06-30 17:30:00,Emergency Vehicle,West_Approach,91.69,180,/snapshots/20260630_1730_West_Approach_emergency.jpg,/clips/20260630_1730_West_Approach_emergency.mp4
+2026-07-02 15:15:00,Accident,North_Arar_St,88.91,375,/snapshots/20260702_1515_North_Arar_St_accident.jpg,/clips/20260702_1515_North_Arar_St_accident.mp4
+2026-07-02 15:15:00,Accident,South_Arar_St,97.84,375,/snapshots/20260702_1515_South_Arar_St_accident.jpg,/clips/20260702_1515_South_Arar_St_accident.mp4
+2026-07-02 23:00:00,Emergency Vehicle,North_Arar_St,98.79,28,/snapshots/20260702_2300_North_Arar_St_emergency.jpg,/clips/20260702_2300_North_Arar_St_emergency.mp4
+2026-07-02 23:00:00,Emergency Vehicle,South_Arar_St,94.37,28,/snapshots/20260702_2300_South_Arar_St_emergency.jpg,/clips/20260702_2300_South_Arar_St_emergency.mp4
+2026-07-02 23:00:00,Emergency Vehicle,East_Approach,98.56,22,/snapshots/20260702_2300_East_Approach_emergency.jpg,/clips/20260702_2300_East_Approach_emergency.mp4
+2026-07-02 23:00:00,Emergency Vehicle,West_Approach,96.86,22,/snapshots/20260702_2300_West_Approach_emergency.jpg,/clips/20260702_2300_West_Approach_emergency.mp4
+2026-07-03 10:00:00,Accident,North_Arar_St,89.68,23,/snapshots/20260703_1000_North_Arar_St_accident.jpg,/clips/20260703_1000_North_Arar_St_accident.mp4
+2026-07-03 10:00:00,Accident,South_Arar_St,91.55,23,/snapshots/20260703_1000_South_Arar_St_accident.jpg,/clips/20260703_1000_South_Arar_St_accident.mp4
+2026-07-03 10:15:00,Emergency Vehicle,North_Arar_St,94.6,28,/snapshots/20260703_1015_North_Arar_St_emergency.jpg,/clips/20260703_1015_North_Arar_St_emergency.mp4
+2026-07-03 10:15:00,Emergency Vehicle,South_Arar_St,90.94,28,/snapshots/20260703_1015_South_Arar_St_emergency.jpg,/clips/20260703_1015_South_Arar_St_emergency.mp4
+2026-07-03 10:15:00,Emergency Vehicle,East_Approach,92.47,22,/snapshots/20260703_1015_East_Approach_emergency.jpg,/clips/20260703_1015_East_Approach_emergency.mp4
+2026-07-03 10:15:00,Emergency Vehicle,West_Approach,97.19,22,/snapshots/20260703_1015_West_Approach_emergency.jpg,/clips/20260703_1015_West_Approach_emergency.mp4
+2026-07-04 00:45:00,Emergency Vehicle,North_Arar_St,90.42,37,/snapshots/20260704_0045_North_Arar_St_emergency.jpg,/clips/20260704_0045_North_Arar_St_emergency.mp4
+2026-07-04 00:45:00,Emergency Vehicle,South_Arar_St,97.67,37,/snapshots/20260704_0045_South_Arar_St_emergency.jpg,/clips/20260704_0045_South_Arar_St_emergency.mp4
+2026-07-04 00:45:00,Emergency Vehicle,East_Approach,95.94,30,/snapshots/20260704_0045_East_Approach_emergency.jpg,/clips/20260704_0045_East_Approach_emergency.mp4
+2026-07-04 00:45:00,Emergency Vehicle,West_Approach,95.48,30,/snapshots/20260704_0045_West_Approach_emergency.jpg,/clips/20260704_0045_West_Approach_emergency.mp4
+2026-07-04 09:15:00,Emergency Vehicle,North_Arar_St,91.33,37,/snapshots/20260704_0915_North_Arar_St_emergency.jpg,/clips/20260704_0915_North_Arar_St_emergency.mp4
+2026-07-04 09:15:00,Emergency Vehicle,South_Arar_St,91.1,37,/snapshots/20260704_0915_South_Arar_St_emergency.jpg,/clips/20260704_0915_South_Arar_St_emergency.mp4
+2026-07-04 09:15:00,Emergency Vehicle,East_Approach,95.31,30,/snapshots/20260704_0915_East_Approach_emergency.jpg,/clips/20260704_0915_East_Approach_emergency.mp4
+2026-07-04 09:15:00,Emergency Vehicle,West_Approach,95.33,30,/snapshots/20260704_0915_West_Approach_emergency.jpg,/clips/20260704_0915_West_Approach_emergency.mp4
+2026-07-05 02:45:00,Emergency Vehicle,North_Arar_St,90.92,28,/snapshots/20260705_0245_North_Arar_St_emergency.jpg,/clips/20260705_0245_North_Arar_St_emergency.mp4
+2026-07-05 02:45:00,Emergency Vehicle,South_Arar_St,93.2,28,/snapshots/20260705_0245_South_Arar_St_emergency.jpg,/clips/20260705_0245_South_Arar_St_emergency.mp4
+2026-07-05 02:45:00,Emergency Vehicle,East_Approach,99.0,22,/snapshots/20260705_0245_East_Approach_emergency.jpg,/clips/20260705_0245_East_Approach_emergency.mp4
+2026-07-05 02:45:00,Emergency Vehicle,West_Approach,98.0,22,/snapshots/20260705_0245_West_Approach_emergency.jpg,/clips/20260705_0245_West_Approach_emergency.mp4
+2026-07-05 03:15:00,Emergency Vehicle,North_Arar_St,95.03,28,/snapshots/20260705_0315_North_Arar_St_emergency.jpg,/clips/20260705_0315_North_Arar_St_emergency.mp4
+2026-07-05 03:15:00,Emergency Vehicle,South_Arar_St,96.45,28,/snapshots/20260705_0315_South_Arar_St_emergency.jpg,/clips/20260705_0315_South_Arar_St_emergency.mp4
+2026-07-05 03:15:00,Emergency Vehicle,East_Approach,96.97,22,/snapshots/20260705_0315_East_Approach_emergency.jpg,/clips/20260705_0315_East_Approach_emergency.mp4
+2026-07-05 03:15:00,Emergency Vehicle,West_Approach,99.24,22,/snapshots/20260705_0315_West_Approach_emergency.jpg,/clips/20260705_0315_West_Approach_emergency.mp4
+2026-07-05 04:45:00,Emergency Vehicle,North_Arar_St,99.9,28,/snapshots/20260705_0445_North_Arar_St_emergency.jpg,/clips/20260705_0445_North_Arar_St_emergency.mp4
+2026-07-05 04:45:00,Emergency Vehicle,South_Arar_St,95.21,28,/snapshots/20260705_0445_South_Arar_St_emergency.jpg,/clips/20260705_0445_South_Arar_St_emergency.mp4
+2026-07-05 04:45:00,Emergency Vehicle,East_Approach,91.49,22,/snapshots/20260705_0445_East_Approach_emergency.jpg,/clips/20260705_0445_East_Approach_emergency.mp4
+2026-07-05 04:45:00,Emergency Vehicle,West_Approach,93.33,22,/snapshots/20260705_0445_West_Approach_emergency.jpg,/clips/20260705_0445_West_Approach_emergency.mp4
+2026-07-07 08:00:00,Emergency Vehicle,North_Arar_St,95.6,131,/snapshots/20260707_0800_North_Arar_St_emergency.jpg,/clips/20260707_0800_North_Arar_St_emergency.mp4
+2026-07-07 08:00:00,Emergency Vehicle,South_Arar_St,90.96,131,/snapshots/20260707_0800_South_Arar_St_emergency.jpg,/clips/20260707_0800_South_Arar_St_emergency.mp4
+2026-07-07 08:00:00,Emergency Vehicle,East_Approach,91.49,105,/snapshots/20260707_0800_East_Approach_emergency.jpg,/clips/20260707_0800_East_Approach_emergency.mp4
+2026-07-07 08:00:00,Emergency Vehicle,West_Approach,97.74,105,/snapshots/20260707_0800_West_Approach_emergency.jpg,/clips/20260707_0800_West_Approach_emergency.mp4
+2026-07-07 16:15:00,Emergency Vehicle,North_Arar_St,97.26,225,/snapshots/20260707_1615_North_Arar_St_emergency.jpg,/clips/20260707_1615_North_Arar_St_emergency.mp4
+2026-07-07 16:15:00,Emergency Vehicle,South_Arar_St,92.47,225,/snapshots/20260707_1615_South_Arar_St_emergency.jpg,/clips/20260707_1615_South_Arar_St_emergency.mp4
+2026-07-07 16:15:00,Emergency Vehicle,East_Approach,91.08,180,/snapshots/20260707_1615_East_Approach_emergency.jpg,/clips/20260707_1615_East_Approach_emergency.mp4
+2026-07-07 16:15:00,Emergency Vehicle,West_Approach,96.41,180,/snapshots/20260707_1615_West_Approach_emergency.jpg,/clips/20260707_1615_West_Approach_emergency.mp4
+2026-07-08 19:15:00,Emergency Vehicle,North_Arar_St,98.76,131,/snapshots/20260708_1915_North_Arar_St_emergency.jpg,/clips/20260708_1915_North_Arar_St_emergency.mp4
+2026-07-08 19:15:00,Emergency Vehicle,South_Arar_St,91.89,131,/snapshots/20260708_1915_South_Arar_St_emergency.jpg,/clips/20260708_1915_South_Arar_St_emergency.mp4
+2026-07-08 19:15:00,Emergency Vehicle,East_Approach,96.02,105,/snapshots/20260708_1915_East_Approach_emergency.jpg,/clips/20260708_1915_East_Approach_emergency.mp4
+2026-07-08 19:15:00,Emergency Vehicle,West_Approach,90.3,105,/snapshots/20260708_1915_West_Approach_emergency.jpg,/clips/20260708_1915_West_Approach_emergency.mp4
+2026-07-09 00:30:00,Accident,North_Arar_St,89.61,46,/snapshots/20260709_0030_North_Arar_St_accident.jpg,/clips/20260709_0030_North_Arar_St_accident.mp4
+2026-07-09 00:30:00,Accident,South_Arar_St,91.61,46,/snapshots/20260709_0030_South_Arar_St_accident.jpg,/clips/20260709_0030_South_Arar_St_accident.mp4
+2026-07-09 02:30:00,Emergency Vehicle,North_Arar_St,96.31,28,/snapshots/20260709_0230_North_Arar_St_emergency.jpg,/clips/20260709_0230_North_Arar_St_emergency.mp4
+2026-07-09 02:30:00,Emergency Vehicle,South_Arar_St,97.94,28,/snapshots/20260709_0230_South_Arar_St_emergency.jpg,/clips/20260709_0230_South_Arar_St_emergency.mp4
+2026-07-09 02:30:00,Emergency Vehicle,East_Approach,90.53,22,/snapshots/20260709_0230_East_Approach_emergency.jpg,/clips/20260709_0230_East_Approach_emergency.mp4
+2026-07-09 02:30:00,Emergency Vehicle,West_Approach,92.76,22,/snapshots/20260709_0230_West_Approach_emergency.jpg,/clips/20260709_0230_West_Approach_emergency.mp4
+2026-07-09 07:15:00,Emergency Vehicle,North_Arar_St,94.89,131,/snapshots/20260709_0715_North_Arar_St_emergency.jpg,/clips/20260709_0715_North_Arar_St_emergency.mp4
+2026-07-09 07:15:00,Emergency Vehicle,South_Arar_St,91.88,131,/snapshots/20260709_0715_South_Arar_St_emergency.jpg,/clips/20260709_0715_South_Arar_St_emergency.mp4
+2026-07-09 07:15:00,Emergency Vehicle,East_Approach,97.54,105,/snapshots/20260709_0715_East_Approach_emergency.jpg,/clips/20260709_0715_East_Approach_emergency.mp4
+2026-07-09 07:15:00,Emergency Vehicle,West_Approach,95.73,105,/snapshots/20260709_0715_West_Approach_emergency.jpg,/clips/20260709_0715_West_Approach_emergency.mp4
+2026-07-10 01:00:00,Emergency Vehicle,North_Arar_St,90.36,28,/snapshots/20260710_0100_North_Arar_St_emergency.jpg,/clips/20260710_0100_North_Arar_St_emergency.mp4
+2026-07-10 01:00:00,Emergency Vehicle,South_Arar_St,92.47,28,/snapshots/20260710_0100_South_Arar_St_emergency.jpg,/clips/20260710_0100_South_Arar_St_emergency.mp4
+2026-07-10 01:00:00,Emergency Vehicle,East_Approach,96.07,22,/snapshots/20260710_0100_East_Approach_emergency.jpg,/clips/20260710_0100_East_Approach_emergency.mp4
+2026-07-10 01:00:00,Emergency Vehicle,West_Approach,98.83,22,/snapshots/20260710_0100_West_Approach_emergency.jpg,/clips/20260710_0100_West_Approach_emergency.mp4
+2026-07-10 10:00:00,Emergency Vehicle,North_Arar_St,94.44,28,/snapshots/20260710_1000_North_Arar_St_emergency.jpg,/clips/20260710_1000_North_Arar_St_emergency.mp4
+2026-07-10 10:00:00,Emergency Vehicle,South_Arar_St,94.7,28,/snapshots/20260710_1000_South_Arar_St_emergency.jpg,/clips/20260710_1000_South_Arar_St_emergency.mp4
+2026-07-10 10:00:00,Emergency Vehicle,East_Approach,98.65,22,/snapshots/20260710_1000_East_Approach_emergency.jpg,/clips/20260710_1000_East_Approach_emergency.mp4
+2026-07-10 10:00:00,Emergency Vehicle,West_Approach,90.54,22,/snapshots/20260710_1000_West_Approach_emergency.jpg,/clips/20260710_1000_West_Approach_emergency.mp4
+2026-07-13 10:30:00,Emergency Vehicle,North_Arar_St,94.11,28,/snapshots/20260713_1030_North_Arar_St_emergency.jpg,/clips/20260713_1030_North_Arar_St_emergency.mp4
+2026-07-13 10:30:00,Emergency Vehicle,South_Arar_St,99.83,28,/snapshots/20260713_1030_South_Arar_St_emergency.jpg,/clips/20260713_1030_South_Arar_St_emergency.mp4
+2026-07-13 10:30:00,Emergency Vehicle,East_Approach,99.6,22,/snapshots/20260713_1030_East_Approach_emergency.jpg,/clips/20260713_1030_East_Approach_emergency.mp4
+2026-07-13 10:30:00,Emergency Vehicle,West_Approach,94.61,22,/snapshots/20260713_1030_West_Approach_emergency.jpg,/clips/20260713_1030_West_Approach_emergency.mp4
+2026-07-13 11:30:00,Emergency Vehicle,North_Arar_St,90.03,28,/snapshots/20260713_1130_North_Arar_St_emergency.jpg,/clips/20260713_1130_North_Arar_St_emergency.mp4
+2026-07-13 11:30:00,Emergency Vehicle,South_Arar_St,93.3,28,/snapshots/20260713_1130_South_Arar_St_emergency.jpg,/clips/20260713_1130_South_Arar_St_emergency.mp4
+2026-07-13 11:30:00,Emergency Vehicle,East_Approach,92.06,22,/snapshots/20260713_1130_East_Approach_emergency.jpg,/clips/20260713_1130_East_Approach_emergency.mp4
+2026-07-13 11:30:00,Emergency Vehicle,West_Approach,94.92,22,/snapshots/20260713_1130_West_Approach_emergency.jpg,/clips/20260713_1130_West_Approach_emergency.mp4
