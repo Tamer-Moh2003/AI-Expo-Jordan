@@ -7,6 +7,7 @@ import csv
 import json
 import math
 from collections import defaultdict, deque
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import cv2
@@ -19,6 +20,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", default="day2_config.json")
     parser.add_argument("--video", help="Privacy-safe annotated video for evidence")
     parser.add_argument("--output-dir", default="outputs/day2")
+    parser.add_argument(
+        "--start-time-utc",
+        help="ISO UTC time corresponding to video second zero; defaults to current UTC",
+    )
     return parser.parse_args()
 
 
@@ -276,6 +281,39 @@ def write_evidence(events: list[dict], video_path: str, output_dir: Path, cfg: d
     capture.release()
 
 
+def api_events(events: list[dict], start_time_utc: str | None) -> list[dict]:
+    """Convert internal detections to the frozen GET /incidents contract."""
+    if start_time_utc:
+        origin = datetime.fromisoformat(start_time_utc.replace("Z", "+00:00"))
+        if origin.tzinfo is None:
+            origin = origin.replace(tzinfo=timezone.utc)
+        origin = origin.astimezone(timezone.utc)
+    else:
+        origin = datetime.now(timezone.utc)
+
+    names = {
+        "stalled_vehicle": "Stalled Vehicle",
+        "queue_spillback": "Queue Spillback",
+        "sudden_congestion": "Sudden Congestion",
+        "wrong_way_or_abnormal_trajectory": "Wrong Way or Abnormal Trajectory",
+    }
+    contracted = []
+    for event in events:
+        occurred_at = origin + timedelta(seconds=event["timestamp"])
+        contracted.append(
+            {
+                "timestamp": occurred_at.isoformat(timespec="milliseconds").replace("+00:00", "Z"),
+                "event_type": names[event["type"]],
+                "approach": event["approach"],
+                "confidence": event["confidence"],
+                "queue_estimate": event["queue_estimate"],
+                "snapshot_path": event["snapshot_path"],
+                "clip_path": event["short_clip_path"],
+            }
+        )
+    return contracted
+
+
 def main() -> None:
     args = parse_args()
     zones = json.loads(Path(args.zones).read_text(encoding="utf-8"))
@@ -293,7 +331,10 @@ def main() -> None:
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
         writer.writerows(summaries)
-    (output_dir / "events.json").write_text(json.dumps(events, indent=2), encoding="utf-8")
+    contracted_events = api_events(events, args.start_time_utc)
+    (output_dir / "events.json").write_text(
+        json.dumps(contracted_events, indent=2), encoding="utf-8"
+    )
     with (output_dir / "enriched_tracks.csv").open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()) if rows else [])
         if rows:
