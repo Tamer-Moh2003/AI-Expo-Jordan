@@ -3,6 +3,10 @@ import numpy as np
 import random
 from datetime import datetime, timedelta
 
+# Reproducible demo data: every full pipeline run produces the same evaluation.
+random.seed(42)
+np.random.seed(42)
+
 start_date = pd.to_datetime('2026-04-15')
 days = 90
 timestamps = pd.date_range(start=start_date, periods=days * 24 * 4, freq='15min')
