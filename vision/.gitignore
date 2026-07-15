@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+outputs/
+videos/raw/
+.venv/
+models/.cache/
