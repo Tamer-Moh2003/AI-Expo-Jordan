@@ -1,4 +1,6 @@
 import base64
+import html
+import json
 import os
 from pathlib import Path
 
@@ -7,6 +9,11 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 import requests
+
+try:
+    import websocket
+except ImportError:  # Installed by frontend/requirements.txt in the container.
+    websocket = None
 
 # ============================================================
 # 0. DATA SOURCE LAYER
@@ -17,6 +24,9 @@ import requests
 # ============================================================
 MOCK_MODE = os.getenv("MOCK_MODE", "true").lower() in {"1", "true", "yes"}
 API_BASE = os.getenv("API_BASE", "http://localhost:8000")
+EVENTS_WS_URL = os.getenv("EVENTS_WS_URL", "ws://localhost:8000/events")
+VIDEO_STREAM_URL = os.getenv("VIDEO_STREAM_URL", "")
+MEDIA_BASE_URL = os.getenv("MEDIA_BASE_URL", API_BASE).rstrip("/")
 LOGO_PATH = Path(__file__).parent / "assets" / "stms-logo.png"
 LOGO_DATA_URI = (
     "data:image/png;base64," + base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
@@ -25,17 +35,48 @@ LOGO_DATA_URI = (
 )
 
 
+def request_json(path, fallback):
+    """Fetch one API resource without allowing a missing service to crash VISTA."""
+    try:
+        response = requests.get(f"{API_BASE}{path}", timeout=2)
+        response.raise_for_status()
+        return response.json()
+    except (requests.RequestException, ValueError) as exc:
+        st.session_state.setdefault("connection_errors", {})[path] = str(exc)
+        return fallback
+
+
+def media_url(path):
+    """Turn a backend media path into a browser-loadable absolute URL."""
+    if not path or path.startswith(("http://", "https://")):
+        return path
+    return f"{MEDIA_BASE_URL}/{path.lstrip('/')}"
+
+
+def poll_websocket_event():
+    """Read one event when the backend WebSocket becomes available."""
+    if MOCK_MODE or websocket is None:
+        return None
+    connection = None
+    try:
+        connection = websocket.create_connection(EVENTS_WS_URL, timeout=0.15)
+        payload = connection.recv()
+        return json.loads(payload)
+    except (OSError, ValueError, websocket.WebSocketException):
+        return None
+    finally:
+        if connection is not None:
+            connection.close()
+
+
 def fetch_health():
     # Matches api_contract.json "GET /health" exactly. Frozen contract.
     if MOCK_MODE:
         return {"ingestion_rate_fps": 30, "dropped_frames": 2, "stream_uptime_seconds": 3600}
-    try:
-        r = requests.get(f"{API_BASE}/health", timeout=2)
-        r.raise_for_status()
-        return r.json()
-    except requests.RequestException:
-        st.error("⚠️ Could not reach /health — falling back to last known values.")
-        return {"ingestion_rate_fps": 0, "dropped_frames": 0, "stream_uptime_seconds": 0}
+    return request_json(
+        "/health",
+        {"ingestion_rate_fps": 0, "dropped_frames": 0, "stream_uptime_seconds": 0},
+    )
 
 
 def fetch_recommendation():
@@ -53,9 +94,18 @@ def fetch_recommendation():
             "advisory_only": True,
             "not_transmitted_to_controller": True,
         }
-    r = requests.get(f"{API_BASE}/recommendation", timeout=2)
-    r.raise_for_status()
-    return r.json()
+    return request_json(
+        "/recommendation",
+        {
+            "timestamp": "",
+            "recommended_phase": 0,
+            "recommended_green_duration_seconds": 0,
+            "reason": "Recommendation service unavailable",
+            "estimated_saving_vehicle_minutes": 0,
+            "advisory_only": True,
+            "not_transmitted_to_controller": True,
+        },
+    )
 
 
 def fetch_incidents():
@@ -72,9 +122,7 @@ def fetch_incidents():
              "confidence": 0.87, "queue_estimate": 22,
              "snapshot_path": "/media/snapshots/inc_002.jpg", "clip_path": "/media/clips/inc_002.mp4"},
         ]
-    r = requests.get(f"{API_BASE}/incidents", timeout=2)
-    r.raise_for_status()
-    return r.json()
+    return request_json("/incidents", [])
 
 
 def fetch_forecast():
@@ -91,11 +139,18 @@ def fetch_forecast():
             {"timestamp": "08:20", "approach": "North", "predicted_count": 55, "observed_count": None, "lower": 50, "upper": 60},
             {"timestamp": "08:25", "approach": "North", "predicted_count": 52, "observed_count": None, "lower": 47, "upper": 57},
             {"timestamp": "08:30", "approach": "North", "predicted_count": 46, "observed_count": None, "lower": 41, "upper": 51},
+            {"timestamp": "08:35", "approach": "North", "predicted_count": 49, "observed_count": None, "lower": 44, "upper": 54},
+            {"timestamp": "08:40", "approach": "North", "predicted_count": 53, "observed_count": None, "lower": 48, "upper": 59},
+            {"timestamp": "08:45", "approach": "North", "predicted_count": 57, "observed_count": None, "lower": 51, "upper": 63},
+            {"timestamp": "08:50", "approach": "North", "predicted_count": 61, "observed_count": None, "lower": 55, "upper": 68},
+            {"timestamp": "08:55", "approach": "North", "predicted_count": 58, "observed_count": None, "lower": 52, "upper": 65},
+            {"timestamp": "09:00", "approach": "North", "predicted_count": 54, "observed_count": None, "lower": 48, "upper": 60},
         ]
     else:
-        r = requests.get(f"{API_BASE}/forecast", timeout=2)
-        r.raise_for_status()
-        raw = r.json()
+        raw = request_json("/forecast", [])
+
+    if not raw:
+        return np.array([]), np.array([]), np.array([]), np.array([]), np.array([])
 
     minutes = np.arange(0, len(raw) * 5, 5)
     forecast_vals = np.array([row["predicted_count"] for row in raw], dtype=object)
@@ -316,12 +371,15 @@ st.markdown("""
 mock_health = fetch_health()
 mock_recommendation = fetch_recommendation()
 mock_alerts = fetch_incidents()
+live_event = poll_websocket_event()
+if live_event:
+    mock_alerts = [live_event, *mock_alerts]
 mock_system_msgs = [
     {"time": "16:30", "text": "Connected to synthetic SCATS database successfully."},
 ]
 
 minutes, observed, forecast, forecast_upper, forecast_lower = fetch_forecast()
-NOW_MINUTE = 25  # vertical "now" marker — later derive this from the live clock/API
+NOW_MINUTE = 15  # last observed interval; derive from live timestamps after integration
 
 # ============================================================
 # 4. HEADER
@@ -348,6 +406,8 @@ if "playback" not in st.session_state:
 with st.sidebar:
     st.markdown("### VISTA Operations")
     st.caption("Visual Intelligent Smart Traffic Advisor")
+    mode_label = "DEMO / MOCK" if MOCK_MODE else "LIVE SERVICES"
+    st.caption(f"Data mode: **{mode_label}**")
     st.selectbox("Select Lane Camera / Traffic Video:", ["Intersection 806 — Wadi Saqra (Live Demo)"])
 
     st.markdown("---")
@@ -361,6 +421,12 @@ with st.sidebar:
         st.session_state.playback = "jumped_to_incident"
 
     st.caption(f"Status: **{st.session_state.playback}**")
+    if not MOCK_MODE:
+        with st.expander("Connection status"):
+            st.caption(f"API: `{API_BASE}`")
+            st.caption(f"Events: `{EVENTS_WS_URL}`")
+            if st.session_state.get("connection_errors"):
+                st.warning("One or more live services are unavailable.")
 
 # ============================================================
 # 6. MAIN LAYOUT — 5 regions
@@ -371,16 +437,25 @@ with main_col:
     # --- Region 1: Live video ---
     st.markdown("<div class='dashboard-card'>", unsafe_allow_html=True)
     st.markdown("<div class='card-title'>📹 Live Feed & AI Vision Analysis</div>", unsafe_allow_html=True)
-    st.markdown(
-        "<div class='video-shell'>"
-        "<span class='rec-dot'>● REC</span>"
-        "<div class='video-stats'><span class='video-stat'>30 FPS</span><span class='video-stat'>18 VEHICLES</span><span class='video-stat'>AI ACTIVE</span></div>"
-        "<div class='tracking-reticle'></div>"
-        "<span style='font-size:0.72rem; margin-top:14px; color:#8fa3bb;'>Annotated stream awaiting vision engine</span>"
-        "<span class='cam-label'>Intersection 806 · Wadi Saqra</span>"
-        "</div>",
-        unsafe_allow_html=True,
-    )
+    if not MOCK_MODE and VIDEO_STREAM_URL:
+        safe_stream_url = html.escape(VIDEO_STREAM_URL, quote=True)
+        st.markdown(
+            "<div class='video-shell'>"
+            f"<img src='{safe_stream_url}' alt='Annotated traffic stream' style='width:100%;height:100%;object-fit:cover;border-radius:13px;'>"
+            "<span class='rec-dot'>● LIVE</span>"
+            "<span class='cam-label'>Intersection 806 · Wadi Saqra</span>"
+            "</div>", unsafe_allow_html=True,
+        )
+    else:
+        st.markdown(
+            "<div class='video-shell'>"
+            "<span class='rec-dot'>● REC</span>"
+            "<div class='video-stats'><span class='video-stat'>30 FPS</span><span class='video-stat'>18 VEHICLES</span><span class='video-stat'>AI ACTIVE</span></div>"
+            "<div class='tracking-reticle'></div>"
+            "<span style='font-size:0.72rem; margin-top:14px; color:#8fa3bb;'>Annotated stream awaiting vision engine</span>"
+            "<span class='cam-label'>Intersection 806 · Wadi Saqra</span>"
+            "</div>", unsafe_allow_html=True,
+        )
     st.markdown("</div>", unsafe_allow_html=True)
 
     bottom_left, bottom_right = st.columns([1.5, 1])
@@ -494,13 +569,19 @@ with alert_col:
             unsafe_allow_html=True,
         )
         with st.expander(f"View evidence clip — {time_short}", expanded=False):
-            st.markdown(
-                "<div class='video-shell' style='height:140px;'>"
-                "<span style='font-size:1.4rem;'>🎬</span>"
-                f"<span style='font-size:0.72rem; margin-top:4px;'>{a['clip_path']}</span>"
-                "</div>",
-                unsafe_allow_html=True,
-            )
+            snapshot_path = a.get("snapshot_path")
+            clip_path = a.get("clip_path")
+            if not MOCK_MODE and snapshot_path:
+                st.image(media_url(snapshot_path), caption="Incident snapshot", use_container_width=True)
+            if not MOCK_MODE and clip_path:
+                st.video(media_url(clip_path))
+            else:
+                st.markdown(
+                    "<div class='video-shell' style='height:140px;'>"
+                    "<span style='font-size:1.4rem;'>🎬</span>"
+                    f"<span style='font-size:0.72rem; margin-top:4px;'>{clip_path or 'Evidence unavailable'}</span>"
+                    "</div>", unsafe_allow_html=True,
+                )
             b1, b2 = st.columns(2)
             b1.button("✅ Confirm", key=f"confirm_{a['timestamp']}_{a['event_type']}")
             b2.button("❌ Dismiss", key=f"dismiss_{a['timestamp']}_{a['event_type']}")
