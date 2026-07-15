@@ -7,16 +7,24 @@
         "vehicle_count": 28 
       }
     ],
-    "GET /forecast": [
-      { 
-        "timestamp": "08:15", 
-        "approach": "North", 
-        "predicted_count": 60,
-        "observed_count": 58,
-        "lower": 55,
-        "upper": 65
-      }
-    ],
+    "GET /forecast": {
+      "status": "success",
+      "accuracy": {
+        "15m": {"ai_mape": 9.84, "baseline_mape": 13.2}
+      },
+      "forecasts": [
+        {
+          "timestamp": "2026-07-14 08:15:00",
+          "horizon": "15m",
+          "approach": "North_Arar_St",
+          "predicted_count": 60,
+          "observed_count": 58,
+          "lower": 48,
+          "upper": 72,
+          "confidence_level": 0.9
+        }
+      ]
+    },
     "GET /recommendation": {
       "timestamp": "2026-07-14T08:12:00Z",
       "recommended_phase": 3,
