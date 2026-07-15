@@ -177,8 +177,13 @@ def fetch_incidents():
 
 def fetch_forecast():
     """Support both the frozen API list and M2's 15/30/60-minute payload."""
-    baseline_mape = None
+    accuracy_metrics = None
     if MOCK_MODE:
+        accuracy_metrics = {
+            "ai_forecast_error_1h": "18.98%",
+            "naive_baseline_error": "25.42%",
+            "status": "AI Outperforming Baseline",
+        }
         raw = [
             {"timestamp": "08:00", "approach": "North", "predicted_count": 33, "observed_count": 32, "lower": 30, "upper": 36},
             {"timestamp": "08:05", "approach": "North", "predicted_count": 38, "observed_count": 36, "lower": 34, "upper": 41},
@@ -197,17 +202,22 @@ def fetch_forecast():
     else:
         payload = request_json("/forecast", [], base_url=FORECAST_API_BASE)
         if isinstance(payload, dict):
-            baseline_mape = payload.get("baseline_mape")
+            accuracy_metrics = payload.get("accuracy_chip")
+            if not accuracy_metrics and payload.get("baseline_mape"):
+                accuracy_metrics = {"naive_baseline_error": payload["baseline_mape"]}
             raw = payload.get("forecasts", [])
         else:
             raw = payload
 
     if not raw:
-        return (np.array([]),) * 5 + (baseline_mape,)
+        return (np.array([]),) * 5 + (accuracy_metrics,)
 
     is_horizon_payload = "horizon" in raw[0]
     if is_horizon_payload:
         minutes = np.array([int(str(row["horizon"]).rstrip("m")) for row in raw])
+    elif len(raw) == 3 and all(row.get("timestamp") for row in raw):
+        # M2's current response is explicitly ordered at 15, 30, and 60 minutes.
+        minutes = np.array([15, 30, 60])
     else:
         minutes = np.arange(0, len(raw) * 5, 5)
     forecast_vals = np.array([row["predicted_count"] for row in raw], dtype=object)
@@ -215,7 +225,7 @@ def fetch_forecast():
     upper = np.array([row.get("upper", row.get("upper_bound")) for row in raw], dtype=object)
     lower = np.array([row.get("lower", row.get("lower_bound")) for row in raw], dtype=object)
 
-    return minutes, observed, forecast_vals, upper, lower, baseline_mape
+    return minutes, observed, forecast_vals, upper, lower, accuracy_metrics
 
 
 # ============================================================
@@ -474,7 +484,7 @@ mock_system_msgs = [
     {"time": "16:30", "text": "Connected to synthetic SCATS database successfully."},
 ]
 
-minutes, observed, forecast, forecast_upper, forecast_lower, baseline_mape = fetch_forecast()
+minutes, observed, forecast, forecast_upper, forecast_lower, accuracy_metrics = fetch_forecast()
 observed_minutes = [minutes[i] for i, value in enumerate(observed) if value is not None]
 NOW_MINUTE = max(observed_minutes, default=0)
 
@@ -622,8 +632,14 @@ with main_col:
         )
         st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
 
-        if baseline_mape:
-            accuracy_text = f"Naive baseline MAPE: <b>{baseline_mape}</b> · model error pending from M2"
+        if accuracy_metrics:
+            ai_error = accuracy_metrics.get("ai_forecast_error_1h", "Pending")
+            baseline_error = accuracy_metrics.get("naive_baseline_error", "Pending")
+            accuracy_status = accuracy_metrics.get("status", "Evaluation available")
+            accuracy_text = (
+                f"AI error (last hour): <b>{ai_error}</b> · Naive baseline: "
+                f"<b>{baseline_error}</b> · {accuracy_status}"
+            )
         elif MOCK_MODE:
             accuracy_text = "Demo model improvement vs naive baseline: <b>18%</b>"
         else:
