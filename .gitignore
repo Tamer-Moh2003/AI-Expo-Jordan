@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+models/.cache/
+outputs/run/
+outputs/day1/
+outputs/live/
+outputs/day1_test*/
+outputs/track-*/
+outputs/tracks.csv
+videos/raw/
