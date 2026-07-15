@@ -1,0 +1,13 @@
+horizon,approach,mape,baseline_mape,rmse,baseline_rmse
+15m,East_Approach,10.793,14.412,32.822,40.264
+15m,North_Arar_St,9.133,12.413,51.295,63.936
+15m,South_Arar_St,9.177,12.32,51.873,62.289
+15m,West_Approach,10.249,13.643,32.09,39.005
+30m,East_Approach,11.26,14.406,32.743,40.259
+30m,North_Arar_St,9.417,12.413,51.18,63.936
+30m,South_Arar_St,9.449,12.332,52.313,62.292
+30m,West_Approach,10.808,13.646,33.1,39.006
+60m,East_Approach,10.833,14.424,33.091,40.267
+60m,North_Arar_St,9.413,12.404,53.605,63.934
+60m,South_Arar_St,9.384,12.319,53.281,62.289
+60m,West_Approach,10.574,13.649,33.33,39.007
