@@ -1,145 +1,20 @@
 [
   {
-    "event_id": "sudden_congestion_east_outbound_34_800",
-    "timestamp": 34.8,
-    "type": "sudden_congestion",
-    "approach": "east_outbound",
-    "confidence": 0.746,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_east_outbound_34_800.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_east_outbound_34_800.mp4",
-    "queue_estimate": 0,
-    "track_id": null
-  },
-  {
-    "event_id": "sudden_congestion_west_inbound_46_000",
-    "timestamp": 46.0,
-    "type": "sudden_congestion",
+    "timestamp": "2026-07-15T12:01:13.900Z",
+    "event_type": "Sudden Congestion",
     "approach": "west_inbound",
-    "confidence": 0.591,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_46_000.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_46_000.mp4",
-    "queue_estimate": 0,
-    "track_id": null
+    "confidence": 0.589,
+    "queue_estimate": 3,
+    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_73_900.jpg",
+    "clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_73_900.mp4"
   },
   {
-    "event_id": "sudden_congestion_west_inbound_62_100",
-    "timestamp": 62.1,
-    "type": "sudden_congestion",
+    "timestamp": "2026-07-15T12:03:11.000Z",
+    "event_type": "Sudden Congestion",
     "approach": "west_inbound",
-    "confidence": 0.58,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_62_100.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_62_100.mp4",
-    "queue_estimate": 0,
-    "track_id": null
-  },
-  {
-    "event_id": "sudden_congestion_west_inbound_77_200",
-    "timestamp": 77.2,
-    "type": "sudden_congestion",
-    "approach": "west_inbound",
-    "confidence": 0.99,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_77_200.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_77_200.mp4",
-    "queue_estimate": 2,
-    "track_id": null
-  },
-  {
-    "event_id": "sudden_congestion_west_inbound_92_200",
-    "timestamp": 92.2,
-    "type": "sudden_congestion",
-    "approach": "west_inbound",
-    "confidence": 0.99,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_92_200.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_92_200.mp4",
-    "queue_estimate": 4,
-    "track_id": null
-  },
-  {
-    "event_id": "sudden_congestion_west_inbound_107_200",
-    "timestamp": 107.2,
-    "type": "sudden_congestion",
-    "approach": "west_inbound",
-    "confidence": 0.697,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_107_200.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_107_200.mp4",
-    "queue_estimate": 2,
-    "track_id": null
-  },
-  {
-    "event_id": "sudden_congestion_east_outbound_107_500",
-    "timestamp": 107.5,
-    "type": "sudden_congestion",
-    "approach": "east_outbound",
-    "confidence": 0.591,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_east_outbound_107_500.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_east_outbound_107_500.mp4",
-    "queue_estimate": 0,
-    "track_id": null
-  },
-  {
-    "event_id": "sudden_congestion_east_outbound_127_000",
-    "timestamp": 127.0,
-    "type": "sudden_congestion",
-    "approach": "east_outbound",
-    "confidence": 0.952,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_east_outbound_127_000.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_east_outbound_127_000.mp4",
-    "queue_estimate": 0,
-    "track_id": null
-  },
-  {
-    "event_id": "sudden_congestion_east_outbound_148_700",
-    "timestamp": 148.7,
-    "type": "sudden_congestion",
-    "approach": "east_outbound",
-    "confidence": 0.514,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_east_outbound_148_700.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_east_outbound_148_700.mp4",
-    "queue_estimate": 0,
-    "track_id": null
-  },
-  {
-    "event_id": "sudden_congestion_west_inbound_177_300",
-    "timestamp": 177.3,
-    "type": "sudden_congestion",
-    "approach": "west_inbound",
-    "confidence": 0.505,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_177_300.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_177_300.mp4",
-    "queue_estimate": 0,
-    "track_id": null
-  },
-  {
-    "event_id": "stalled_vehicle_west_inbound_190_000",
-    "timestamp": 190.0,
-    "type": "stalled_vehicle",
-    "approach": "west_inbound",
-    "confidence": 0.5,
-    "snapshot_path": "outputs/day2_dataset1/evidence/stalled_vehicle_west_inbound_190_000.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/stalled_vehicle_west_inbound_190_000.mp4",
-    "queue_estimate": 1,
-    "track_id": 1250
-  },
-  {
-    "event_id": "sudden_congestion_west_inbound_192_300",
-    "timestamp": 192.3,
-    "type": "sudden_congestion",
-    "approach": "west_inbound",
-    "confidence": 0.99,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_192_300.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_192_300.mp4",
-    "queue_estimate": 1,
-    "track_id": null
-  },
-  {
-    "event_id": "sudden_congestion_west_inbound_207_300",
-    "timestamp": 207.3,
-    "type": "sudden_congestion",
-    "approach": "west_inbound",
-    "confidence": 0.99,
-    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_207_300.jpg",
-    "short_clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_207_300.mp4",
-    "queue_estimate": 4,
-    "track_id": null
+    "confidence": 0.682,
+    "queue_estimate": 3,
+    "snapshot_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_191_000.jpg",
+    "clip_path": "outputs/day2_dataset1/evidence/sudden_congestion_west_inbound_191_000.mp4"
   }
 ]

@@ -53,6 +53,7 @@
     },
     "GET /incidents": [
       { 
+        "event_id": "sudden_congestion_west_inbound_73_900",
         "timestamp": "2026-07-14T08:10:00Z", 
         "event_type": "Stalled Vehicle", 
         "approach": "North",

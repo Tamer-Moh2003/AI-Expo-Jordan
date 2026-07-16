@@ -3,7 +3,7 @@ import json
 import unittest
 from pathlib import Path
 
-from incident_engine import analyse
+from incident_engine import analyse, api_events
 
 
 class IncidentRuleTests(unittest.TestCase):
@@ -46,6 +46,13 @@ class IncidentRuleTests(unittest.TestCase):
         self.assertIn("sudden_congestion", event_types)
         self.assertIn("wrong_way_or_abnormal_trajectory", event_types)
         self.assertTrue(summaries)
+
+        contracted = api_events(events, "2026-07-15T12:00:00Z")
+        required = {
+            "timestamp", "event_type", "approach", "confidence",
+            "queue_estimate", "snapshot_path", "clip_path",
+        }
+        self.assertTrue(all(set(event) == required for event in contracted))
 
     @staticmethod
     def row(timestamp, track_id, x, y, speed):

@@ -5,6 +5,11 @@ services:
     restart: unless-stopped
     volumes:
       - ./data:/app/data
+    environment:
+      VISION_SHARED_DIR: /app/data/vision
+      VISION_SOURCE: ""
+      VISION_RECONNECT_DELAY: "7"
+      VISION_IMAGE_SIZE: "320"
 
   database:
     image: postgres:14
@@ -17,12 +22,20 @@ services:
       - "5432:5432"
 
   api_service:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     container_name: m2_api
     ports:
       - "8000:8000"
+    volumes:
+      - ./data:/app/data:ro
+    environment:
+      VISION_HEALTH_PATH: /app/data/vision/health.json
+      VISION_EVENTS_PATH: /app/data/vision/events.json
     depends_on:
       - database
+      - vision_engine
 
   frontend_app:
     build: ./frontend
@@ -31,12 +44,12 @@ services:
       - "8501:8501"
     environment:
       API_BASE: http://api_service:8000
-      FORECAST_API_BASE: http://host.docker.internal:5000
+      FORECAST_API_BASE: http://api_service:8000
       EVENTS_WS_URL: ws://api_service:8000/events
       MEDIA_BASE_URL: http://localhost:8000
       REVIEW_API_BASE: http://api_service:8000
       VIDEO_STREAM_URL: ""
       LOCAL_DEMO_VIDEO_PATH: /app/assets/demo/annotated_demo.mp4
-      MOCK_MODE: "true"
+      MOCK_MODE: "false"
     depends_on:
       - api_service

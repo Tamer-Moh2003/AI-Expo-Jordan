@@ -1,6 +1,10 @@
 __pycache__/
 *.py[cod]
 outputs/
+!outputs/
+outputs/*
+!outputs/day3_evidence_test/
+!outputs/day3_evidence_test/**
 videos/raw/
 .venv/
 models/.cache/
