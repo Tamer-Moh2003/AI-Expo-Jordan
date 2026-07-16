@@ -38,6 +38,7 @@
       "forecast_horizon_minutes": 30,
       "reason": "Predicted demand ...",
       "current_cycle_length_seconds": 72,
+      "raw_webster_cycle_length_seconds": 27.7,
       "recommended_cycle_length_seconds": 60,
       "current_green_seconds": {"1": 32, "2": 28},
       "recommended_green_seconds": {"1": 25, "2": 23},

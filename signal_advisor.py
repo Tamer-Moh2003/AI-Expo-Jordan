@@ -116,9 +116,11 @@ def make_recommendation(predicted_counts, observed_counts, timestamp, phase_log_
     when = pd.Timestamp(timestamp)
     reason = (
         f"Predicted demand on {lead_approach} {direction} {abs(growth)} percent by "
-        f"{when.strftime('%H:%M')}. Recommend changing phase {phase} green from "
-        f"{current[phase]} to {recommended[phase]} seconds. Estimated reduction in "
-        f"total intersection delay: approximately {saving:.2f} vehicle-minutes per cycle."
+        f"{when.strftime('%H:%M')}. Recommend changing the cycle from {current_cycle} "
+        f"to {cycle} seconds, phase 1 green from {current[1]} to {recommended[1]} "
+        f"seconds, and phase 2 green from {current[2]} to {recommended[2]} seconds. "
+        f"Estimated reduction in total intersection delay: approximately {saving:.2f} "
+        f"vehicle-minutes per cycle."
     )
 
     timestamp_iso = when.isoformat()
@@ -132,6 +134,7 @@ def make_recommendation(predicted_counts, observed_counts, timestamp, phase_log_
         "recommended_phase": phase,
         "reason": reason,
         "current_cycle_length_seconds": current_cycle,
+        "raw_webster_cycle_length_seconds": round(webster_cycle, 2),
         "recommended_cycle_length_seconds": cycle,
         "current_green_seconds": {str(k): v for k, v in current.items()},
         "recommended_green_seconds": {str(k): v for k, v in recommended.items()},

@@ -26,6 +26,13 @@ class SignalAdvisorTest(unittest.TestCase):
         self.assertEqual(payload["forecast_horizon_minutes"], 30)
         self.assertTrue(payload["advisory_only"])
         self.assertIn("recommended_green_seconds", payload)
+        self.assertLess(
+            payload["raw_webster_cycle_length_seconds"],
+            payload["recommended_cycle_length_seconds"],
+        )
+        self.assertIn("phase 1 green", payload["reason"].lower())
+        self.assertIn("phase 2 green", payload["reason"].lower())
+        self.assertIn("cycle", payload["reason"].lower())
         self.assertEqual(
             payload["recommended_green_duration_seconds"],
             payload["recommended_green_seconds"][str(payload["recommended_phase"])],
