@@ -10,6 +10,7 @@ FEATURE_COLUMNS = [
     "lag_96", "lag_192", "lag_288", "lag_672", "lag_671", "lag_673",
     "lag_1344", "rolling_mean_4", "rolling_mean_8", "rolling_mean_16",
     "rolling_mean_96", "quarter_hour", "day_of_week", "is_weekend",
+    "is_holiday",
 ]
 
 
@@ -56,5 +57,9 @@ def build_approach_features(counts_file="counts.csv"):
     df["quarter_hour"] = df["timestamp"].dt.hour * 4 + df["timestamp"].dt.minute // 15
     df["day_of_week"] = df["timestamp"].dt.dayofweek
     df["is_weekend"] = df["day_of_week"].isin([4, 5]).astype("int8")
+    # Synthetic data currently contains no labelled public holidays. Keep the
+    # required feature explicit so real GAM data can populate it later without
+    # changing the training/serving contract.
+    df["is_holiday"] = 0
     df["approach"] = df["approach"].astype("category")
     return df.dropna(subset=FEATURE_COLUMNS).reset_index(drop=True)
