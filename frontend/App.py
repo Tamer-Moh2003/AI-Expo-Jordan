@@ -202,7 +202,7 @@ def fetch_forecast():
     else:
         payload = request_json("/forecast", [], base_url=FORECAST_API_BASE)
         if isinstance(payload, dict):
-            accuracy_metrics = payload.get("accuracy_chip")
+            accuracy_metrics = payload.get("accuracy") or payload.get("accuracy_chip")
             if not accuracy_metrics and payload.get("baseline_mape"):
                 accuracy_metrics = {"naive_baseline_error": payload["baseline_mape"]}
             raw = payload.get("forecasts", [])
@@ -213,8 +213,33 @@ def fetch_forecast():
         return (np.array([]),) * 5 + (accuracy_metrics,)
 
     is_horizon_payload = "horizon" in raw[0]
+    if is_horizon_payload and len({row.get("approach") for row in raw}) > 1:
+        # The API returns one row per approach and horizon. The main chart shows
+        # intersection-wide flow, so aggregate approaches before plotting.
+        grouped = {}
+        for row in raw:
+            horizon = str(row["horizon"])
+            item = grouped.setdefault(horizon, {
+                "horizon": horizon,
+                "timestamp": row.get("timestamp"),
+                "predicted_count": 0,
+                "observed_count": 0,
+                "lower": 0,
+                "upper": 0,
+            })
+            for field in ("predicted_count", "observed_count", "lower", "upper"):
+                item[field] += int(row.get(field) or 0)
+        raw = sorted(grouped.values(), key=lambda row: int(row["horizon"].rstrip("m")))
+
     if is_horizon_payload:
-        minutes = np.array([int(str(row["horizon"]).rstrip("m")) for row in raw])
+        horizon_minutes = [int(str(row["horizon"]).rstrip("m")) for row in raw]
+        minutes = np.array([0, *horizon_minutes])
+        current_observed = raw[0].get("observed_count")
+        observed = np.array([current_observed, *([None] * len(raw))], dtype=object)
+        forecast_vals = np.array([None, *[row["predicted_count"] for row in raw]], dtype=object)
+        upper = np.array([None, *[row.get("upper", row.get("upper_bound")) for row in raw]], dtype=object)
+        lower = np.array([None, *[row.get("lower", row.get("lower_bound")) for row in raw]], dtype=object)
+        return minutes, observed, forecast_vals, upper, lower, accuracy_metrics
     elif len(raw) == 3 and all(row.get("timestamp") for row in raw):
         # M2's current response is explicitly ordered at 15, 30, and 60 minutes.
         minutes = np.array([15, 30, 60])
@@ -587,9 +612,16 @@ with main_col:
         fig = go.Figure()
 
         # confidence band (shaded)
+        band_mask = np.array([
+            upper is not None and lower is not None
+            for upper, lower in zip(forecast_upper, forecast_lower)
+        ])
+        band_minutes = minutes[band_mask]
+        band_upper = forecast_upper[band_mask]
+        band_lower = forecast_lower[band_mask]
         fig.add_trace(go.Scatter(
-            x=np.concatenate([minutes, minutes[::-1]]),
-            y=np.concatenate([forecast_upper, forecast_lower[::-1]]),
+            x=np.concatenate([band_minutes, band_minutes[::-1]]),
+            y=np.concatenate([band_upper, band_lower[::-1]]),
             fill="toself",
             fillcolor="rgba(63,176,255,0.15)",
             line=dict(color="rgba(0,0,0,0)"),
@@ -632,14 +664,21 @@ with main_col:
         )
         st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
 
-        if accuracy_metrics:
+        if accuracy_metrics and any(key in accuracy_metrics for key in ("15m", "30m", "60m")):
+            parts = []
+            for horizon in ("15m", "30m", "60m"):
+                metrics = accuracy_metrics.get(horizon)
+                if metrics:
+                    parts.append(
+                        f"{horizon}: AI <b>{metrics['ai_mape']:.2f}%</b> vs "
+                        f"baseline {metrics['baseline_mape']:.2f}%"
+                    )
+            accuracy_text = " &nbsp;·&nbsp; ".join(parts)
+        elif accuracy_metrics:
             ai_error = accuracy_metrics.get("ai_forecast_error_1h", "Pending")
             baseline_error = accuracy_metrics.get("naive_baseline_error", "Pending")
             accuracy_status = accuracy_metrics.get("status", "Evaluation available")
-            accuracy_text = (
-                f"AI error (last hour): <b>{ai_error}</b> · Naive baseline: "
-                f"<b>{baseline_error}</b> · {accuracy_status}"
-            )
+            accuracy_text = f"AI error: <b>{ai_error}</b> · Baseline: <b>{baseline_error}</b> · {accuracy_status}"
         elif MOCK_MODE:
             accuracy_text = "Demo model improvement vs naive baseline: <b>18%</b>"
         else:
