@@ -8,7 +8,7 @@ import sys
 STEPS = (
     ("Generate synthetic data", "synthetic_generator.py"),
     ("Build approach forecasting feature table", "feature_engineering.py"),
-    ("Evaluate naive baseline", "baseline_model.py"),
+    ("Evaluate naive baseline", "naive_baseline.py"),
     ("Train and evaluate LightGBM", "train_model.py"),
     ("Generate feature-importance charts", "feature_importance.py"),
 )

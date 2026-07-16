@@ -39,17 +39,19 @@ def main():
     for label in HORIZONS:
         target = f"target_{label}"
         model = lgb.LGBMRegressor(
-            objective="poisson",
-            n_estimators=700,
-            learning_rate=0.035,
-            num_leaves=63,
-            min_child_samples=30,
-            colsample_bytree=0.9,
-            reg_lambda=1.0,
-            random_state=42,
-            n_jobs=-1,
-            verbosity=-1,
-        )
+    objective="poisson",
+    n_estimators=1200,
+    learning_rate=0.02,
+    num_leaves=40,
+min_child_samples=40,
+    colsample_bytree=0.9,
+    subsample=0.9,
+    reg_lambda=5.0,
+    reg_alpha=0.5,
+    random_state=42,
+    n_jobs=-1,
+    verbosity=-1,
+)
         model.fit(
             train[features], train[target], categorical_feature=["approach"]
         )

@@ -19,12 +19,13 @@
     "rolling_mean_96",
     "quarter_hour",
     "day_of_week",
-    "is_weekend"
+    "is_weekend",
+    "is_holiday"
   ],
   "split_date": "2026-06-29 22:45:00",
   "confidence_level": 0.9,
   "residual_quantiles": {
-    "lower": -34.743741091981434,
-    "upper": 41.24515966666389
+    "lower": -34.67900048870809,
+    "upper": 39.3645034594675
   }
 }
