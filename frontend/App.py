@@ -38,8 +38,13 @@ LOCAL_DEMO_VIDEO_PATH = Path(
         str(Path(__file__).parent / "assets" / "demo" / "annotated_demo.mp4"),
     )
 )
-VISION_EVENTS_PATH = PROJECT_ROOT / "vision" / "sample_outputs" / "day2_dataset1" / "events.json"
-VISION_PREVIEW_PATH = PROJECT_ROOT / "vision" / "sample_outputs" / "day2_dataset1" / "zones_preview.jpg"
+DAY3_EVIDENCE_ROOT = PROJECT_ROOT / "vision" / "outputs" / "day3_evidence_test"
+DAY3_EVENTS_PATH = DAY3_EVIDENCE_ROOT / "events.json"
+DAY2_EVENTS_PATH = PROJECT_ROOT / "vision" / "sample_outputs" / "day2_dataset1" / "events.json"
+VISION_EVENTS_PATH = DAY3_EVENTS_PATH if DAY3_EVENTS_PATH.exists() else DAY2_EVENTS_PATH
+DAY3_PREVIEW_PATH = DAY3_EVIDENCE_ROOT / "PREVIEW_ZONE_POLYGONS.jpg"
+DAY2_PREVIEW_PATH = PROJECT_ROOT / "vision" / "sample_outputs" / "day2_dataset1" / "zones_preview.jpg"
+VISION_PREVIEW_PATH = DAY3_PREVIEW_PATH if DAY3_PREVIEW_PATH.exists() else DAY2_PREVIEW_PATH
 LOGO_DATA_URI = (
     "data:image/png;base64," + base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
     if LOGO_PATH.exists()
@@ -90,12 +95,17 @@ def normalize_incident(event):
 
 
 def load_vision_sample_events():
-    """Use M1's committed Day 2 output until the live event service is ready."""
+    """Load M1's newest file-based delivery until the live service is ready."""
     if not VISION_EVENTS_PATH.exists():
         return []
     try:
         events = json.loads(VISION_EVENTS_PATH.read_text(encoding="utf-8"))
-        return [normalize_incident(event) for event in events[-3:]][::-1]
+        normalized = []
+        for event in events[-3:]:
+            incident = normalize_incident(event)
+            incident["evidence_root"] = str(VISION_EVENTS_PATH.parent)
+            normalized.append(incident)
+        return normalized[::-1]
     except (OSError, ValueError, TypeError):
         return []
 
@@ -105,6 +115,30 @@ def media_url(path):
     if not path or path.startswith(("http://", "https://")):
         return path
     return f"{MEDIA_BASE_URL}/{path.lstrip('/')}"
+
+
+def incident_media_source(incident, field):
+    """Resolve local Day 3 evidence first, then fall back to a served media URL."""
+    path = incident.get(field)
+    if not path:
+        return None
+    if str(path).startswith(("http://", "https://")):
+        return path
+
+    candidate = Path(path)
+    if candidate.is_absolute() and candidate.exists():
+        return str(candidate)
+
+    evidence_root = incident.get("evidence_root")
+    if evidence_root:
+        candidate = Path(evidence_root) / path
+        if candidate.exists():
+            return str(candidate)
+
+    candidate = PROJECT_ROOT / path
+    if candidate.exists():
+        return str(candidate)
+    return media_url(path)
 
 
 def poll_websocket_event():
@@ -799,10 +833,12 @@ with alert_col:
             )
             snapshot_path = a.get("snapshot_path")
             clip_path = a.get("clip_path")
-            if not MOCK_MODE and snapshot_path:
-                st.image(media_url(snapshot_path), caption="Incident snapshot", width="stretch")
-            if not MOCK_MODE and clip_path:
-                st.video(media_url(clip_path))
+            snapshot_source = incident_media_source(a, "snapshot_path")
+            clip_source = incident_media_source(a, "clip_path")
+            if snapshot_source:
+                st.image(snapshot_source, caption="Incident snapshot", width="stretch")
+            if clip_source:
+                st.video(clip_source)
             else:
                 st.markdown(
                     "<div class='video-shell' style='height:140px;'>"
