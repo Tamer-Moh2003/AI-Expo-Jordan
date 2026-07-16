@@ -28,6 +28,7 @@ FORECAST_API_BASE = os.getenv("FORECAST_API_BASE", "http://127.0.0.1:5000")
 EVENTS_WS_URL = os.getenv("EVENTS_WS_URL", "ws://localhost:8000/events")
 VIDEO_STREAM_URL = os.getenv("VIDEO_STREAM_URL", "")
 MEDIA_BASE_URL = os.getenv("MEDIA_BASE_URL", API_BASE).rstrip("/")
+REVIEW_API_BASE = os.getenv("REVIEW_API_BASE", API_BASE).rstrip("/")
 LOGO_PATH = Path(__file__).parent / "assets" / "stms-logo.png"
 FAVICON_PATH = Path(__file__).parent / "assets" / "vista-favicon.png"
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -73,9 +74,12 @@ def normalize_incident(event):
     """Accept both the frozen API event and M1's Day 2 event shape."""
     event_type = event.get("event_type") or event.get("type") or "Unknown Event"
     approach = str(event.get("approach", "Unknown")).replace("_", " ").title()
+    timestamp = format_video_timestamp(event.get("timestamp", ""))
+    event_id = event.get("event_id") or f"{timestamp}-{event_type}-{approach}".replace(" ", "-").lower()
     return {
         **event,
-        "timestamp": format_video_timestamp(event.get("timestamp", "")),
+        "event_id": event_id,
+        "timestamp": timestamp,
         "event_type": str(event_type).replace("_", " ").title(),
         "approach": approach,
         "confidence": float(event.get("confidence", 0)),
@@ -119,6 +123,24 @@ def poll_websocket_event():
             connection.close()
 
 
+def submit_incident_review(event_id, decision):
+    """Persist an operator decision locally now and through the API when ready."""
+    if MOCK_MODE:
+        st.session_state.setdefault("incident_reviews", {})[event_id] = decision
+        return True, "Saved in demo session"
+    try:
+        response = requests.post(
+            f"{REVIEW_API_BASE}/incidents/{event_id}/review",
+            json={"decision": decision},
+            timeout=3,
+        )
+        response.raise_for_status()
+        st.session_state.setdefault("incident_reviews", {})[event_id] = decision
+        return True, "Saved to backend"
+    except requests.RequestException as exc:
+        return False, f"Review service unavailable: {exc}"
+
+
 def fetch_health():
     # Matches api_contract.json "GET /health" exactly. Frozen contract.
     if MOCK_MODE:
@@ -137,14 +159,21 @@ def fetch_recommendation():
     if MOCK_MODE:
         return {
             "timestamp": "2026-07-14T08:12:00Z",
+            "current_phase": 3,
+            "current_green_duration_seconds": 32,
             "recommended_phase": 3,
             "recommended_green_duration_seconds": 45,
             "reason": "High queue volume detected",
             "estimated_saving_vehicle_minutes": 12.5,
             "advisory_only": True,
             "not_transmitted_to_controller": True,
+            "assumptions": [
+                "Green split is proportional to predicted approach demand.",
+                "Saturation flow is assumed at 1,800 vehicles/hour/lane.",
+                "Estimate is advisory and isolated from the traffic controller.",
+            ],
         }
-    return request_json(
+    recommendation = request_json(
         "/recommendation",
         {
             "timestamp": "",
@@ -155,7 +184,14 @@ def fetch_recommendation():
             "advisory_only": True,
             "not_transmitted_to_controller": True,
         },
+        base_url=FORECAST_API_BASE,
     )
+    recommendation.setdefault("assumptions", [
+        "Green split is proportional to predicted approach demand.",
+        "Saturation flow and delay parameters require GAM validation.",
+        "Recommendation is advisory only and is not transmitted to the controller.",
+    ])
+    return recommendation
 
 
 def fetch_incidents():
@@ -693,6 +729,12 @@ with main_col:
         st.markdown("<div class='card-title'>🤖 Smart Signal Advisor</div>", unsafe_allow_html=True)
 
         r = mock_recommendation
+        recommendation_available = bool(r.get("recommended_green_duration_seconds"))
+        if not recommendation_available:
+            st.warning(
+                "Signal recommendation is temporarily unavailable.",
+                icon=":material/warning:",
+            )
         st.markdown(
             f"<div style='font-size:0.8rem; color:#8b949e;'>"
             f"<span style='color:#3fb0ff;'>Recommended: Phase {r['recommended_phase']}, "
@@ -717,9 +759,25 @@ with main_col:
                 unsafe_allow_html=True,
             )
 
+        assumptions = r.get("assumptions", [])
+        if assumptions:
+            assumptions_html = "<br>".join(
+                f"• {html.escape(str(assumption))}" for assumption in assumptions
+            )
+            st.markdown(
+                f"<div class='assumption-note'><b>Model assumptions</b><br>{assumptions_html}</div>",
+                unsafe_allow_html=True,
+            )
+
 with alert_col:
     # --- Region 4: Alert feed ---
     st.markdown("<div class='card-title'>🔔 Alert Feed</div>", unsafe_allow_html=True)
+
+    if not mock_alerts:
+        st.info(
+            "No incidents are available for operator review.",
+            icon=":material/info:",
+        )
 
     for a in mock_alerts:
         time_short = a["timestamp"][11:16] if "T" in a["timestamp"] else a["timestamp"]
@@ -734,6 +792,11 @@ with alert_col:
             unsafe_allow_html=True,
         )
         with st.expander(f"View evidence clip — {time_short}", expanded=False):
+            event_id = a["event_id"]
+            st.caption(
+                f"Event ID: `{event_id}` · Approach: **{a['approach']}** · "
+                f"Confidence: **{confidence_txt}** · Queue: **~{a['queue_estimate']} m**"
+            )
             snapshot_path = a.get("snapshot_path")
             clip_path = a.get("clip_path")
             if not MOCK_MODE and snapshot_path:
@@ -748,8 +811,32 @@ with alert_col:
                     "</div>", unsafe_allow_html=True,
                 )
             b1, b2 = st.columns(2)
-            b1.button("✅ Confirm", key=f"confirm_{a['timestamp']}_{a['event_type']}")
-            b2.button("❌ Dismiss", key=f"dismiss_{a['timestamp']}_{a['event_type']}")
+            if b1.button(
+                "Confirm",
+                icon=":material/check_circle:",
+                key=f"confirm_{event_id}",
+                width="stretch",
+            ):
+                success, message = submit_incident_review(event_id, "confirmed")
+                if success:
+                    st.success(message, icon=":material/check_circle:")
+                else:
+                    st.error(message, icon=":material/error:")
+            if b2.button(
+                "Dismiss",
+                icon=":material/cancel:",
+                key=f"dismiss_{event_id}",
+                width="stretch",
+            ):
+                success, message = submit_incident_review(event_id, "dismissed")
+                if success:
+                    st.success(message, icon=":material/check_circle:")
+                else:
+                    st.error(message, icon=":material/error:")
+
+            saved_decision = st.session_state.get("incident_reviews", {}).get(event_id)
+            if saved_decision:
+                st.caption(f"Operator decision: **{saved_decision.title()}**")
 
     for m in mock_system_msgs:
         st.markdown(

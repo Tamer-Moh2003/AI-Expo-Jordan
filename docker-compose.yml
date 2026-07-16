@@ -34,6 +34,7 @@ services:
       FORECAST_API_BASE: http://host.docker.internal:5000
       EVENTS_WS_URL: ws://api_service:8000/events
       MEDIA_BASE_URL: http://localhost:8000
+      REVIEW_API_BASE: http://api_service:8000
       VIDEO_STREAM_URL: ""
       LOCAL_DEMO_VIDEO_PATH: /app/assets/demo/annotated_demo.mp4
       MOCK_MODE: "true"
