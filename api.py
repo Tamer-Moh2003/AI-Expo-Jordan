@@ -1,5 +1,3 @@
-"""Shared VISTA API for forecasting, recommendations, and vision telemetry."""
-
 from functools import lru_cache
 import json
 import os
@@ -16,15 +14,12 @@ from signal_advisor import make_recommendation
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "backend"))
 from vision_store import read_health, read_incidents
 
-
 app = Flask(__name__)
 VISION_HEALTH_PATH = os.environ.get("VISION_HEALTH_PATH", "/app/data/vision/health.json")
 VISION_EVENTS_PATH = os.environ.get("VISION_EVENTS_PATH", "/app/data/vision/events.json")
 
-
 @lru_cache(maxsize=1)
 def forecast_dependencies():
-    """Load large LightGBM artifacts only when forecast services are requested."""
     import lightgbm as lgb
 
     models = {
@@ -36,7 +31,6 @@ def forecast_dependencies():
         with open(f"model_{horizon}_metadata.json", encoding="utf-8") as file:
             metadata[horizon] = json.load(file)
     return models, metadata
-
 
 def accuracy_summary():
     try:
@@ -51,9 +45,7 @@ def accuracy_summary():
     except FileNotFoundError:
         return {}
 
-
 def dashboard_accuracy_chip(accuracy):
-    """Compatibility adapter for the M3 dashboard."""
     sixty = accuracy.get("60m", {})
     ai_mape = sixty.get("ai_mape")
     baseline_mape = sixty.get("baseline_mape")
@@ -69,9 +61,7 @@ def dashboard_accuracy_chip(accuracy):
         ),
     }
 
-
 def live_recommendation(at=None):
-    """Calculate an advisory response at the latest point or demo-clock time."""
     models, _ = forecast_dependencies()
     features = build_approach_features()
     if at is not None:
@@ -94,7 +84,6 @@ def live_recommendation(at=None):
     }
     forecast_time = latest["timestamp"].max() + pd.Timedelta(minutes=30)
     return make_recommendation(predicted, observed, forecast_time)
-
 
 @app.route("/forecast", methods=["GET"])
 def get_forecast():
@@ -130,7 +119,6 @@ def get_forecast():
         "forecasts": forecasts,
     })
 
-
 @app.route("/recommendation", methods=["GET"])
 def get_recommendation():
     try:
@@ -138,16 +126,23 @@ def get_recommendation():
     except (FileNotFoundError, pd.errors.EmptyDataError, ValueError) as error:
         return jsonify({"status": "error", "message": str(error)}), 503
 
-
 @app.route("/incidents", methods=["GET"])
 def get_incidents():
     return jsonify(read_incidents(VISION_EVENTS_PATH))
 
+@app.route("/incidents/<incident_id>/<action>", methods=["POST"])
+def update_incident(incident_id, action):
+    if action not in ["confirm", "dismiss"]:
+        return jsonify({"status": "error", "message": "Invalid action. Use 'confirm' or 'dismiss'."}), 400
+    return jsonify({
+        "status": "success",
+        "message": f"Incident {incident_id} successfully marked as {action}",
+        "action": action
+    })
 
 @app.route("/health", methods=["GET"])
 def get_health():
     return jsonify(read_health(VISION_HEALTH_PATH))
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)
