@@ -7,22 +7,47 @@
         "vehicle_count": 28 
       }
     ],
-    "GET /forecast": [
-      { 
-        "timestamp": "08:15", 
-        "approach": "North", 
-        "predicted_count": 60,
-        "observed_count": 58,
-        "lower": 55,
-        "upper": 65
-      }
-    ],
+    "GET /forecast": {
+      "status": "success",
+      "accuracy": {
+        "15m": {"ai_mape": 9.84, "baseline_mape": 13.2}
+      },
+      "accuracy_chip": {
+        "ai_forecast_error_1h": "9.53%",
+        "naive_baseline_error": "12.57%",
+        "status": "AI Outperforming Baseline"
+      },
+      "forecasts": [
+        {
+          "timestamp": "2026-07-14 08:15:00",
+          "horizon": "15m",
+          "approach": "North_Arar_St",
+          "predicted_count": 60,
+          "observed_count": 58,
+          "lower": 48,
+          "upper": 72,
+          "confidence_level": 0.9
+        }
+      ]
+    },
     "GET /recommendation": {
       "timestamp": "2026-07-14T08:12:00Z",
       "recommended_phase": 3,
-      "recommended_green_duration_seconds": 45,
-      "reason": "High queue volume detected",
-      "estimated_saving_vehicle_minutes": 12.5,
+      "recommended_green_duration_seconds": 25,
+      "current_green_duration_seconds": 32,
+      "forecast_horizon_minutes": 30,
+      "reason": "Predicted demand ...",
+      "current_cycle_length_seconds": 72,
+      "raw_webster_cycle_length_seconds": 27.7,
+      "recommended_cycle_length_seconds": 60,
+      "current_green_seconds": {"1": 32, "2": 28},
+      "recommended_green_seconds": {"1": 25, "2": 23},
+      "green_delta_seconds": {"1": -7, "2": -5},
+      "critical_flow_ratios": {"1": 0.1, "2": 0.08},
+      "estimated_saving_vehicle_minutes_per_cycle": 1.25,
+      "estimated_saving_vehicle_minutes": 1.25,
+      "delay_formula": "sum[Webster uniform delay (s/veh) * vehicles per cycle] / 60; saving = current - recommended",
+      "assumptions": {},
       "advisory_only": true,
       "not_transmitted_to_controller": true
     },

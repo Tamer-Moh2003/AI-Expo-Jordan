@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="720" viewBox="0 0 1100 720">
+<rect width="100%" height="100%" fill="#101820"/>
+<text x="550.0" y="42" text-anchor="middle" fill="white" font-family="Arial" font-size="24" font-weight="bold">What drives the 30m traffic forecast?</text>
+<text x="245" y="110" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">lag_96</text>
+<rect x="260" y="90" width="1.1" height="28" rx="4" fill="#ffb703"/>
+<text x="271.1" y="110" fill="white" font-family="Arial" font-size="15">0.1%</text>
+<text x="245" y="156" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">day_of_week</text>
+<rect x="260" y="136" width="2.0" height="28" rx="4" fill="#ffb703"/>
+<text x="272.0" y="156" fill="white" font-family="Arial" font-size="15">0.2%</text>
+<text x="245" y="202" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">rolling_mean_8</text>
+<rect x="260" y="182" width="2.3" height="28" rx="4" fill="#ffb703"/>
+<text x="272.3" y="202" fill="white" font-family="Arial" font-size="15">0.2%</text>
+<text x="245" y="248" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">is_weekend</text>
+<rect x="260" y="228" width="2.4" height="28" rx="4" fill="#ffb703"/>
+<text x="272.4" y="248" fill="white" font-family="Arial" font-size="15">0.3%</text>
+<text x="245" y="294" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">lag_672</text>
+<rect x="260" y="274" width="6.0" height="28" rx="4" fill="#ffb703"/>
+<text x="276.0" y="294" fill="white" font-family="Arial" font-size="15">0.6%</text>
+<text x="245" y="340" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">rolling_mean_96</text>
+<rect x="260" y="320" width="7.0" height="28" rx="4" fill="#ffb703"/>
+<text x="277.0" y="340" fill="white" font-family="Arial" font-size="15">0.8%</text>
+<text x="245" y="386" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">vehicle_count</text>
+<rect x="260" y="366" width="8.1" height="28" rx="4" fill="#ffb703"/>
+<text x="278.1" y="386" fill="white" font-family="Arial" font-size="15">0.9%</text>
+<text x="245" y="432" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">approach</text>
+<rect x="260" y="412" width="9.8" height="28" rx="4" fill="#ffb703"/>
+<text x="279.8" y="432" fill="white" font-family="Arial" font-size="15">1.1%</text>
+<text x="245" y="478" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">rolling_mean_16</text>
+<rect x="260" y="458" width="33.4" height="28" rx="4" fill="#ffb703"/>
+<text x="303.4" y="478" fill="white" font-family="Arial" font-size="15">3.6%</text>
+<text x="245" y="524" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">lag_1344</text>
+<rect x="260" y="504" width="36.4" height="28" rx="4" fill="#ffb703"/>
+<text x="306.4" y="524" fill="white" font-family="Arial" font-size="15">3.9%</text>
+<text x="245" y="570" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">quarter_hour</text>
+<rect x="260" y="550" width="94.3" height="28" rx="4" fill="#ffb703"/>
+<text x="364.3" y="570" fill="white" font-family="Arial" font-size="15">10.1%</text>
+<text x="245" y="616" text-anchor="end" fill="#dbe7ef" font-family="Arial" font-size="16">lag_671</text>
+<rect x="260" y="596" width="720.0" height="28" rx="4" fill="#ffb703"/>
+<text x="990.0" y="616" fill="white" font-family="Arial" font-size="15">77.4%</text>
+</svg>

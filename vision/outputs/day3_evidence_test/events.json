@@ -1,0 +1,22 @@
+[
+  {
+    "event_id": "sudden_congestion_west_inbound_73_900",
+    "timestamp": "2026-07-16T09:01:13.900Z",
+    "event_type": "Sudden Congestion",
+    "approach": "west_inbound",
+    "confidence": 0.589,
+    "queue_estimate": 3,
+    "snapshot_path": "evidence/sudden_congestion_west_inbound_73_900.jpg",
+    "clip_path": "evidence/sudden_congestion_west_inbound_73_900.mp4"
+  },
+  {
+    "event_id": "sudden_congestion_west_inbound_191_000",
+    "timestamp": "2026-07-16T09:03:11.000Z",
+    "event_type": "Sudden Congestion",
+    "approach": "west_inbound",
+    "confidence": 0.682,
+    "queue_estimate": 3,
+    "snapshot_path": "evidence/sudden_congestion_west_inbound_191_000.jpg",
+    "clip_path": "evidence/sudden_congestion_west_inbound_191_000.mp4"
+  }
+]
