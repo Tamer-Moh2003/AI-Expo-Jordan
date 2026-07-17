@@ -2,6 +2,7 @@ import base64
 import html
 import json
 import os
+import re
 from pathlib import Path
 
 import streamlit as st
@@ -45,6 +46,8 @@ VISION_EVENTS_PATH = DAY3_EVENTS_PATH if DAY3_EVENTS_PATH.exists() else DAY2_EVE
 DAY3_PREVIEW_PATH = DAY3_EVIDENCE_ROOT / "PREVIEW_ZONE_POLYGONS.jpg"
 DAY2_PREVIEW_PATH = PROJECT_ROOT / "vision" / "sample_outputs" / "day2_dataset1" / "zones_preview.jpg"
 VISION_PREVIEW_PATH = DAY3_PREVIEW_PATH if DAY3_PREVIEW_PATH.exists() else DAY2_PREVIEW_PATH
+FORECAST_EVALUATION_PATH = PROJECT_ROOT / "forecast_evaluation_summary.csv"
+RECOMMENDATION_SANITY_PATH = PROJECT_ROOT / "recommendation_sanity_details.json"
 LOGO_DATA_URI = (
     "data:image/png;base64," + base64.b64encode(LOGO_PATH.read_bytes()).decode("ascii")
     if LOGO_PATH.exists()
@@ -73,6 +76,54 @@ def format_video_timestamp(value):
         total_seconds = int(value)
         return f"00:{total_seconds // 60:02d}:{total_seconds % 60:02d}"
     return str(value)
+
+
+def incident_video_offset(event):
+    """Return an incident cue point in seconds for the recorded demo video."""
+    for field in ("video_timestamp_seconds", "offset_seconds", "clip_timestamp_seconds"):
+        value = event.get(field)
+        if isinstance(value, (int, float)):
+            return max(0, int(value))
+
+    # M1's event IDs end in _seconds_milliseconds, for example _73_900.
+    match = re.search(r"_(\d+)_(\d{3})$", str(event.get("event_id", "")))
+    return int(match.group(1)) if match else 0
+
+
+def load_validated_forecast_metrics():
+    """Use M2's checked evaluation results in offline/demo mode."""
+    if not FORECAST_EVALUATION_PATH.exists():
+        return None
+    try:
+        frame = pd.read_csv(FORECAST_EVALUATION_PATH)
+        return {
+            str(row["horizon"]): {
+                "ai_mape": float(row["lightgbm_mape"]),
+                "baseline_mape": float(row["baseline_mape"]),
+                "ai_rmse": float(row["lightgbm_rmse"]),
+                "baseline_rmse": float(row["baseline_rmse"]),
+            }
+            for _, row in frame.iterrows()
+        }
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
+def load_validated_recommendation():
+    """Load one scenario already validated by M2 for a credible offline demo."""
+    if not RECOMMENDATION_SANITY_PATH.exists():
+        return None
+    try:
+        scenarios = json.loads(RECOMMENDATION_SANITY_PATH.read_text(encoding="utf-8"))
+        recommendation = scenarios.get("weekday_am_peak") or next(iter(scenarios.values()))
+        return {
+            **recommendation,
+            "current_phase": recommendation.get(
+                "current_phase", recommendation.get("recommended_phase", 0)
+            ),
+        }
+    except (OSError, ValueError, TypeError, StopIteration):
+        return None
 
 
 def normalize_incident(event):
@@ -191,7 +242,7 @@ def fetch_recommendation():
     # the backend (always true for this prototype); estimated_saving_vehicle_minutes
     # is also computed on the fly. All three are guaranteed present now.
     if MOCK_MODE:
-        return {
+        return load_validated_recommendation() or {
             "timestamp": "2026-07-14T08:12:00Z",
             "current_phase": 3,
             "current_green_duration_seconds": 32,
@@ -249,7 +300,7 @@ def fetch_forecast():
     """Support both the frozen API list and M2's 15/30/60-minute payload."""
     accuracy_metrics = None
     if MOCK_MODE:
-        accuracy_metrics = {
+        accuracy_metrics = load_validated_forecast_metrics() or {
             "ai_forecast_error_1h": "18.98%",
             "naive_baseline_error": "25.42%",
             "status": "AI Outperforming Baseline",
@@ -556,9 +607,19 @@ st.markdown("""
         .health-strip { grid-template-columns:1fr; }
     }
     .assumption-note {
-        font-size: 0.7rem;
-        color: var(--text-muted);
+        font-size: 0.78rem;
+        line-height: 1.5;
+        color: #a9b8cc;
         margin-top: 6px;
+    }
+    .card-title { font-size:.82rem; color:#aebbd0; letter-spacing:.08em; }
+    .alert-text { font-size:.88rem; line-height:1.45; }
+    .alert-meta { color:#9cacc1; font-size:.78rem; }
+    .timing-label, .health-label { font-size:.72rem; }
+    .advisory-badge { font-size:.76rem; line-height:1.35; }
+    section[data-testid="stSidebar"] .stButton button { min-height:2.65rem; }
+    section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] {
+        color:#9eacc0;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -604,6 +665,10 @@ st.markdown(
 # ============================================================
 if "playback" not in st.session_state:
     st.session_state.playback = "paused"
+if "video_start_seconds" not in st.session_state:
+    st.session_state.video_start_seconds = 0
+if "video_cue_label" not in st.session_state:
+    st.session_state.video_cue_label = "Start of recording"
 
 with st.sidebar:
     st.markdown("### VISTA Operations")
@@ -613,16 +678,26 @@ with st.sidebar:
     st.selectbox("Select Lane Camera / Traffic Video:", ["Intersection 806 — Wadi Saqra (Live Demo)"])
 
     st.markdown("---")
-    st.markdown("### 🎮 Demo Control")
+    st.markdown("### Demo Control")
     c1, c2, c3 = st.columns(3)
-    if c1.button("▶️ Play"):
+    if c1.button("Play", icon=":material/play_arrow:", width="stretch"):
         st.session_state.playback = "playing"
-    if c2.button("⏸️ Pause"):
+    if c2.button("Pause", icon=":material/pause:", width="stretch"):
         st.session_state.playback = "paused"
-    if c3.button("🚨 Jump"):
+    if c3.button("Jump", icon=":material/emergency:", width="stretch"):
         st.session_state.playback = "jumped_to_incident"
+        if mock_alerts:
+            target_incident = mock_alerts[0]
+            st.session_state.video_start_seconds = incident_video_offset(target_incident)
+            st.session_state.video_cue_label = (
+                f"{target_incident['event_type']} · {target_incident['approach']}"
+            )
 
-    st.caption(f"Status: **{st.session_state.playback}**")
+    st.caption(
+        f"Status: **{st.session_state.playback.replace('_', ' ').title()}**  \n"
+        f"Cue: **{st.session_state.video_cue_label}** "
+        f"({format_video_timestamp(st.session_state.video_start_seconds)})"
+    )
     if not MOCK_MODE:
         with st.expander("Connection status"):
             st.caption(f"API: `{API_BASE}`")
@@ -650,6 +725,7 @@ with main_col:
     elif LOCAL_DEMO_VIDEO_PATH.exists():
         st.video(
             str(LOCAL_DEMO_VIDEO_PATH),
+            start_time=st.session_state.video_start_seconds,
             autoplay=st.session_state.playback in {"playing", "jumped_to_incident"},
             loop=True,
             muted=True,
@@ -741,7 +817,8 @@ with main_col:
                 if metrics:
                     parts.append(
                         f"{horizon}: AI <b>{metrics['ai_mape']:.2f}%</b> vs "
-                        f"baseline {metrics['baseline_mape']:.2f}%"
+                        f"baseline {metrics['baseline_mape']:.2f}% "
+                        f"<span style='color:#8ea0b8'>(RMSE {metrics['ai_rmse']:.2f})</span>"
                     )
             accuracy_text = " &nbsp;·&nbsp; ".join(parts)
         elif accuracy_metrics:
@@ -795,8 +872,13 @@ with main_col:
 
         assumptions = r.get("assumptions", [])
         if assumptions:
+            assumption_items = (
+                [f"{key.replace('_', ' ').title()}: {value}" for key, value in assumptions.items()]
+                if isinstance(assumptions, dict)
+                else assumptions
+            )
             assumptions_html = "<br>".join(
-                f"• {html.escape(str(assumption))}" for assumption in assumptions
+                f"• {html.escape(str(assumption))}" for assumption in assumption_items
             )
             st.markdown(
                 f"<div class='assumption-note'><b>Model assumptions</b><br>{assumptions_html}</div>",
