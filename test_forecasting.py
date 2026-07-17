@@ -32,7 +32,7 @@ class ForecastingDay2Test(unittest.TestCase):
         pipeline = Path("run_forecasting_pipeline.py").read_text(encoding="utf-8")
         for script in (
             "synthetic_generator.py", "feature_engineering.py",
-            "naive_baseline.py", "train_model.py", "feature_importance.py",
+            "baseline_model.py", "train_model.py", "feature_importance.py",
         ):
             self.assertIn(script, pipeline)
             self.assertTrue(Path(script).exists())
