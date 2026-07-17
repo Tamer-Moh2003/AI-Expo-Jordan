@@ -1,0 +1,47 @@
+{
+  "endpoints": {
+    "GET /counts": [
+      { 
+        "detector_id": "D1", 
+        "approach": "North", 
+        "vehicle_count": 28 
+      }
+    ],
+    "GET /forecast": [
+      { 
+        "timestamp": "08:15", 
+        "approach": "North", 
+        "predicted_count": 60,
+        "observed_count": 58,
+        "lower": 55,
+        "upper": 65
+      }
+    ],
+    "GET /recommendation": {
+      "timestamp": "2026-07-14T08:12:00Z",
+      "recommended_phase": 3,
+      "recommended_green_duration_seconds": 45,
+      "reason": "High queue volume detected",
+      "estimated_saving_vehicle_minutes": 12.5,
+      "advisory_only": true,
+      "not_transmitted_to_controller": true
+    },
+    "GET /incidents": [
+      { 
+        "event_id": "inc_001",
+        "timestamp": "2026-07-14T08:10:00Z", 
+        "event_type": "Stalled Vehicle", 
+        "approach": "North",
+        "confidence": 0.95,
+        "queue_estimate": 15,
+        "snapshot_path": "/media/snapshots/inc_001.jpg",
+        "clip_path": "/media/clips/inc_001.mp4"
+      }
+    ],
+    "GET /health": {
+      "ingestion_rate_fps": 30,
+      "dropped_frames": 2,
+      "stream_uptime_seconds": 3600
+    }
+  }
+}
