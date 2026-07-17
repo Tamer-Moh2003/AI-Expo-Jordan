@@ -1,0 +1,4 @@
+horizon,lightgbm_mape,baseline_mape,lightgbm_rmse,baseline_rmse,mape_improvement_percent,rmse_improvement_percent
+15m,8.781,11.995,37.68,49.249,26.796,23.49
+30m,9.44,12.006,38.67,49.254,21.369,21.487
+60m,8.988,12.009,37.845,49.254,25.158,23.164
