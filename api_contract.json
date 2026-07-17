@@ -28,6 +28,7 @@
     },
     "GET /incidents": [
       { 
+        "event_id": "inc_001",
         "timestamp": "2026-07-14T08:10:00Z", 
         "event_type": "Stalled Vehicle", 
         "approach": "North",

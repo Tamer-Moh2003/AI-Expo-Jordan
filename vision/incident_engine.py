@@ -11,6 +11,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import cv2
+import numpy as np
 
 
 def parse_args() -> argparse.Namespace:
@@ -247,7 +248,43 @@ def analyse(rows: list[dict], zones: dict, cfg: dict) -> tuple[list[dict], list[
     return events, summaries
 
 
-def write_evidence(events: list[dict], video_path: str, output_dir: Path, cfg: dict) -> None:
+def draw_zone_polygons(frame, zones: dict):
+    """Draw configured traffic zones on privacy-safe evidence frames."""
+    overlay = frame.copy()
+    for approach, config in zones.get("approaches", {}).items():
+        lanes = config.get("lanes", [])
+        for lane in lanes:
+            if len(lane) >= 3:
+                points = np.asarray(lane, dtype=np.int32)
+                cv2.fillPoly(overlay, [points], (70, 170, 70))
+                cv2.polylines(frame, [points], True, (80, 255, 80), 3)
+
+        spillback = config.get("spillback_zone", [])
+        if len(spillback) >= 3:
+            points = np.asarray(spillback, dtype=np.int32)
+            cv2.fillPoly(overlay, [points], (0, 165, 255))
+            cv2.polylines(frame, [points], True, (0, 215, 255), 4)
+
+        stop_line = config.get("stop_line", [])
+        if len(stop_line) >= 2:
+            points = np.asarray(stop_line, dtype=np.int32)
+            cv2.polylines(frame, [points], False, (0, 0, 255), 5)
+
+        label_points = lanes[0] if lanes else spillback
+        if label_points:
+            x, y = map(int, label_points[0])
+            cv2.putText(
+                frame, approach, (x + 8, max(30, y - 10)),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2, cv2.LINE_AA,
+            )
+
+    cv2.addWeighted(overlay, 0.20, frame, 0.80, 0, frame)
+    return frame
+
+
+def write_evidence(
+    events: list[dict], video_path: str, output_dir: Path, cfg: dict, zones: dict
+) -> None:
     capture = cv2.VideoCapture(video_path)
     if not capture.isOpened():
         raise RuntimeError(f"Could not open evidence video: {video_path}")
@@ -262,9 +299,10 @@ def write_evidence(events: list[dict], video_path: str, output_dir: Path, cfg: d
         capture.set(cv2.CAP_PROP_POS_MSEC, timestamp * 1000)
         ok, frame = capture.read()
         if ok:
+            frame = draw_zone_polygons(frame, zones)
             snapshot = evidence_dir / f"{event['event_id']}.jpg"
             cv2.imwrite(str(snapshot), frame)
-            event["snapshot_path"] = str(snapshot).replace("\\", "/")
+            event["snapshot_path"] = f"evidence/{snapshot.name}"
 
         start = max(0.0, timestamp - cfg["evidence_clip_before_seconds"])
         end = timestamp + cfg["evidence_clip_after_seconds"]
@@ -275,9 +313,10 @@ def write_evidence(events: list[dict], video_path: str, output_dir: Path, cfg: d
             ok, frame = capture.read()
             if not ok:
                 break
+            frame = draw_zone_polygons(frame, zones)
             writer.write(frame)
         writer.release()
-        event["short_clip_path"] = str(clip).replace("\\", "/")
+        event["short_clip_path"] = f"evidence/{clip.name}"
     capture.release()
 
 
@@ -302,6 +341,7 @@ def api_events(events: list[dict], start_time_utc: str | None) -> list[dict]:
         occurred_at = origin + timedelta(seconds=event["timestamp"])
         contracted.append(
             {
+                "event_id": event["event_id"],
                 "timestamp": occurred_at.isoformat(timespec="milliseconds").replace("+00:00", "Z"),
                 "event_type": names[event["type"]],
                 "approach": event["approach"],
@@ -324,7 +364,7 @@ def main() -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     if args.video and events:
-        write_evidence(events, args.video, output_dir, cfg)
+        write_evidence(events, args.video, output_dir, cfg, zones)
 
     with (output_dir / "approach_metrics.csv").open("w", newline="", encoding="utf-8") as handle:
         fields = ["minute", "minute_start_seconds", "approach", "vehicle_count", "queue_length_estimate"]
