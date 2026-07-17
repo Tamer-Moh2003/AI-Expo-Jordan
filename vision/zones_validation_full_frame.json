@@ -1,0 +1,15 @@
+{
+  "reference_source": "data/incidents/*.mp4",
+  "frame_width": 1366,
+  "frame_height": 720,
+  "approaches": {
+    "validation_scene": {
+      "lanes": [
+        [[0, 0], [1366, 0], [1366, 720], [0, 720]]
+      ],
+      "stop_line": [[0, 650], [1366, 650]],
+      "spillback_zone": [[0, 0], [1366, 0], [1366, 720], [0, 720]],
+      "expected_direction": [[683, 0], [683, 720]]
+    }
+  }
+}
