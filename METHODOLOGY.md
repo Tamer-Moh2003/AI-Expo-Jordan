@@ -30,10 +30,10 @@ To calculate the exact number of vehicles that can clear the intersection during
 * **Throughput per Lane:** During a 60-second green phase on the main approach, the maximum throughput is:
   $$ \text{Capacity per lane} = \frac{60 \text{ seconds}}{2 \text{ seconds/vehicle}} = 30 \text{ vehicles/lane} $$
 * **Physical Bottleneck Modeling (Arar Street):** 
-  While most approaches at this intersection feature 4 lanes, **Arar Street is restricted to only 3 lanes**. This creates a severe structural bottleneck that our model explicitly accounts for. 
-  * Total capacity for 4-lane approaches: $30 \times 4 = 120 \text{ vehicles per green phase}$
+  The North, East, and West approaches at this intersection feature 5 lanes, while **the South Arar Street approach is restricted to 3 lanes**. This creates a severe structural bottleneck that our model explicitly accounts for.
+  * Total capacity for 5-lane approaches: $30 \times 5 = 150 \text{ vehicles per green phase}$
   * Total capacity for Arar Street (3 lanes): $30 \times 3 = 90 \text{ vehicles per green phase}$
-* This explicit geometric constraint (a 25% reduction in total throughput compared to other approaches) is heavily factored into our synthetic data generation, accurately modeling why Arar Street experiences rapid queue buildup and severe congestion during peak hours.
+* This explicit geometric constraint (a 40% reduction in total throughput compared to the 5-lane approaches) is factored into the signal-advisor capacity calculation and explains why Arar Street can experience rapid queue buildup during peak hours.
 
 ## 4. Probabilistic Arrival Generation
 While the maximum capacity is fixed, actual vehicle arrivals are randomized using the **Poisson Distribution Model**, a standard approach in traffic flow theory for uncongested to moderately congested states.

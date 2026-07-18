@@ -3,160 +3,36 @@
     "timestamp": "2026-06-15T08:00:00Z",
     "forecast_horizon_minutes": 30,
     "recommended_phase": 1,
-    "reason": "Predicted demand on North_Arar_St falls 4 percent by 08:00. Recommend changing the cycle from 74 to 104 seconds, phase 1 green from 32 to 46 seconds, and phase 2 green from 30 to 46 seconds. Estimated reduction in total intersection delay: approximately 0.00 vehicle-minutes per cycle.",
+    "reason": "Predicted demand on North_Arar_St falls 4 percent by 08:00. Recommend changing the cycle from 74 to 60 seconds, phase 1 green from 32 to 33 seconds, and phase 2 green from 30 to 15 seconds. Estimated reduction in total intersection delay: approximately 14.27 vehicle-minutes per cycle.",
     "current_cycle_length_seconds": 74,
-    "raw_webster_cycle_length_seconds": 103.73,
-    "recommended_cycle_length_seconds": 104,
-    "current_green_seconds": {
-      "1": 32,
-      "2": 30
-    },
-    "recommended_green_seconds": {
-      "1": 46,
-      "2": 46
-    },
-    "green_delta_seconds": {
-      "1": 14,
-      "2": 16
-    },
-    "critical_flow_ratios": {
-      "1": 0.3933,
-      "2": 0.385
-    },
-    "estimated_saving_vehicle_minutes_per_cycle": 0.0,
-    "delay_formula": "sum[Webster uniform delay (s/veh) * vehicles per cycle] / 60; saving = current - recommended",
-    "assumptions": {
-      "forecast_count_interval_minutes": 15,
-      "saturation_flow_vehicle_per_hour_per_lane": 1800,
-      "lanes_per_approach": {
-        "North_Arar_St": 3,
-        "South_Arar_St": 3,
-        "East_Approach": 2,
-        "West_Approach": 2
-      },
-      "lost_time_seconds_per_phase": 6,
-      "phase_approach_mapping": {
-        "1": [
-          "North_Arar_St",
-          "South_Arar_St"
-        ],
-        "2": [
-          "East_Approach",
-          "West_Approach"
-        ]
-      },
-      "current_timing_source": {
-        "1": "default (phase absent from log)",
-        "2": "latest complete interval in phase log"
-      },
-      "cycle_length_clamp_seconds": [
-        60,
-        120
-      ],
-      "minimum_green_seconds": 15
-    },
-    "advisory_only": true,
-    "not_transmitted_to_controller": true,
-    "current_green_duration_seconds": 32,
-    "recommended_green_duration_seconds": 46,
-    "estimated_saving_vehicle_minutes": 0.0
-  },
-  "weekday_am_peak": {
-    "timestamp": "2026-06-15T09:00:00Z",
-    "forecast_horizon_minutes": 30,
-    "recommended_phase": 1,
-    "reason": "Predicted demand on South_Arar_St rises 2 percent by 09:00. Recommend changing the cycle from 74 to 105 seconds, phase 1 green from 32 to 47 seconds, and phase 2 green from 30 to 46 seconds. Estimated reduction in total intersection delay: approximately 0.00 vehicle-minutes per cycle.",
-    "current_cycle_length_seconds": 74,
-    "raw_webster_cycle_length_seconds": 104.71,
-    "recommended_cycle_length_seconds": 105,
-    "current_green_seconds": {
-      "1": 32,
-      "2": 30
-    },
-    "recommended_green_seconds": {
-      "1": 47,
-      "2": 46
-    },
-    "green_delta_seconds": {
-      "1": 15,
-      "2": 16
-    },
-    "critical_flow_ratios": {
-      "1": 0.3932,
-      "2": 0.3871
-    },
-    "estimated_saving_vehicle_minutes_per_cycle": 0.0,
-    "delay_formula": "sum[Webster uniform delay (s/veh) * vehicles per cycle] / 60; saving = current - recommended",
-    "assumptions": {
-      "forecast_count_interval_minutes": 15,
-      "saturation_flow_vehicle_per_hour_per_lane": 1800,
-      "lanes_per_approach": {
-        "North_Arar_St": 3,
-        "South_Arar_St": 3,
-        "East_Approach": 2,
-        "West_Approach": 2
-      },
-      "lost_time_seconds_per_phase": 6,
-      "phase_approach_mapping": {
-        "1": [
-          "North_Arar_St",
-          "South_Arar_St"
-        ],
-        "2": [
-          "East_Approach",
-          "West_Approach"
-        ]
-      },
-      "current_timing_source": {
-        "1": "default (phase absent from log)",
-        "2": "latest complete interval in phase log"
-      },
-      "cycle_length_clamp_seconds": [
-        60,
-        120
-      ],
-      "minimum_green_seconds": 15
-    },
-    "advisory_only": true,
-    "not_transmitted_to_controller": true,
-    "current_green_duration_seconds": 32,
-    "recommended_green_duration_seconds": 47,
-    "estimated_saving_vehicle_minutes": 0.0
-  },
-  "weekday_midday": {
-    "timestamp": "2026-06-15T13:00:00Z",
-    "forecast_horizon_minutes": 30,
-    "recommended_phase": 2,
-    "reason": "Predicted demand on East_Approach rises 25 percent by 13:00. Recommend changing the cycle from 74 to 60 seconds, phase 1 green from 32 to 24 seconds, and phase 2 green from 30 to 24 seconds. Estimated reduction in total intersection delay: approximately 2.01 vehicle-minutes per cycle.",
-    "current_cycle_length_seconds": 74,
-    "raw_webster_cycle_length_seconds": 27.58,
+    "raw_webster_cycle_length_seconds": 50.47,
     "recommended_cycle_length_seconds": 60,
     "current_green_seconds": {
       "1": 32,
       "2": 30
     },
     "recommended_green_seconds": {
-      "1": 24,
-      "2": 24
+      "1": 33,
+      "2": 15
     },
     "green_delta_seconds": {
-      "1": -8,
-      "2": -6
+      "1": 1,
+      "2": -15
     },
     "critical_flow_ratios": {
-      "1": 0.0825,
-      "2": 0.0835
+      "1": 0.3903,
+      "2": 0.154
     },
-    "estimated_saving_vehicle_minutes_per_cycle": 2.01,
+    "estimated_saving_vehicle_minutes_per_cycle": 14.27,
     "delay_formula": "sum[Webster uniform delay (s/veh) * vehicles per cycle] / 60; saving = current - recommended",
     "assumptions": {
       "forecast_count_interval_minutes": 15,
       "saturation_flow_vehicle_per_hour_per_lane": 1800,
       "lanes_per_approach": {
-        "North_Arar_St": 3,
+        "North_Arar_St": 5,
         "South_Arar_St": 3,
-        "East_Approach": 2,
-        "West_Approach": 2
+        "East_Approach": 5,
+        "West_Approach": 5
       },
       "lost_time_seconds_per_phase": 6,
       "phase_approach_mapping": {
@@ -181,15 +57,139 @@
     },
     "advisory_only": true,
     "not_transmitted_to_controller": true,
-    "current_green_duration_seconds": 30,
-    "recommended_green_duration_seconds": 24,
-    "estimated_saving_vehicle_minutes": 2.01
+    "current_green_duration_seconds": 32,
+    "recommended_green_duration_seconds": 33,
+    "estimated_saving_vehicle_minutes": 14.27
+  },
+  "weekday_am_peak": {
+    "timestamp": "2026-06-15T09:00:00Z",
+    "forecast_horizon_minutes": 30,
+    "recommended_phase": 1,
+    "reason": "Predicted demand on South_Arar_St rises 2 percent by 09:00. Recommend changing the cycle from 74 to 60 seconds, phase 1 green from 32 to 33 seconds, and phase 2 green from 30 to 15 seconds. Estimated reduction in total intersection delay: approximately 14.31 vehicle-minutes per cycle.",
+    "current_cycle_length_seconds": 74,
+    "raw_webster_cycle_length_seconds": 50.89,
+    "recommended_cycle_length_seconds": 60,
+    "current_green_seconds": {
+      "1": 32,
+      "2": 30
+    },
+    "recommended_green_seconds": {
+      "1": 33,
+      "2": 15
+    },
+    "green_delta_seconds": {
+      "1": 1,
+      "2": -15
+    },
+    "critical_flow_ratios": {
+      "1": 0.3932,
+      "2": 0.1548
+    },
+    "estimated_saving_vehicle_minutes_per_cycle": 14.31,
+    "delay_formula": "sum[Webster uniform delay (s/veh) * vehicles per cycle] / 60; saving = current - recommended",
+    "assumptions": {
+      "forecast_count_interval_minutes": 15,
+      "saturation_flow_vehicle_per_hour_per_lane": 1800,
+      "lanes_per_approach": {
+        "North_Arar_St": 5,
+        "South_Arar_St": 3,
+        "East_Approach": 5,
+        "West_Approach": 5
+      },
+      "lost_time_seconds_per_phase": 6,
+      "phase_approach_mapping": {
+        "1": [
+          "North_Arar_St",
+          "South_Arar_St"
+        ],
+        "2": [
+          "East_Approach",
+          "West_Approach"
+        ]
+      },
+      "current_timing_source": {
+        "1": "default (phase absent from log)",
+        "2": "latest complete interval in phase log"
+      },
+      "cycle_length_clamp_seconds": [
+        60,
+        120
+      ],
+      "minimum_green_seconds": 15
+    },
+    "advisory_only": true,
+    "not_transmitted_to_controller": true,
+    "current_green_duration_seconds": 32,
+    "recommended_green_duration_seconds": 33,
+    "estimated_saving_vehicle_minutes": 14.31
+  },
+  "weekday_midday": {
+    "timestamp": "2026-06-15T13:00:00Z",
+    "forecast_horizon_minutes": 30,
+    "recommended_phase": 1,
+    "reason": "Predicted demand on South_Arar_St falls 4 percent by 13:00. Recommend changing the cycle from 74 to 60 seconds, phase 1 green from 32 to 33 seconds, and phase 2 green from 30 to 15 seconds. Estimated reduction in total intersection delay: approximately 2.14 vehicle-minutes per cycle.",
+    "current_cycle_length_seconds": 74,
+    "raw_webster_cycle_length_seconds": 26.01,
+    "recommended_cycle_length_seconds": 60,
+    "current_green_seconds": {
+      "1": 32,
+      "2": 30
+    },
+    "recommended_green_seconds": {
+      "1": 33,
+      "2": 15
+    },
+    "green_delta_seconds": {
+      "1": 1,
+      "2": -15
+    },
+    "critical_flow_ratios": {
+      "1": 0.0825,
+      "2": 0.0334
+    },
+    "estimated_saving_vehicle_minutes_per_cycle": 2.14,
+    "delay_formula": "sum[Webster uniform delay (s/veh) * vehicles per cycle] / 60; saving = current - recommended",
+    "assumptions": {
+      "forecast_count_interval_minutes": 15,
+      "saturation_flow_vehicle_per_hour_per_lane": 1800,
+      "lanes_per_approach": {
+        "North_Arar_St": 5,
+        "South_Arar_St": 3,
+        "East_Approach": 5,
+        "West_Approach": 5
+      },
+      "lost_time_seconds_per_phase": 6,
+      "phase_approach_mapping": {
+        "1": [
+          "North_Arar_St",
+          "South_Arar_St"
+        ],
+        "2": [
+          "East_Approach",
+          "West_Approach"
+        ]
+      },
+      "current_timing_source": {
+        "1": "default (phase absent from log)",
+        "2": "latest complete interval in phase log"
+      },
+      "cycle_length_clamp_seconds": [
+        60,
+        120
+      ],
+      "minimum_green_seconds": 15
+    },
+    "advisory_only": true,
+    "not_transmitted_to_controller": true,
+    "current_green_duration_seconds": 32,
+    "recommended_green_duration_seconds": 33,
+    "estimated_saving_vehicle_minutes": 2.14
   },
   "weekday_pm_peak": {
     "timestamp": "2026-06-15T18:00:00Z",
     "forecast_horizon_minutes": 30,
-    "recommended_phase": 2,
-    "reason": "Predicted demand on West_Approach rises 4 percent by 18:00. Recommend changing the cycle from 74 to 120 seconds, phase 1 green from 32 to 54 seconds, and phase 2 green from 30 to 54 seconds. Estimated reduction in total intersection delay: approximately 0.00 vehicle-minutes per cycle.",
+    "recommended_phase": 1,
+    "reason": "Predicted demand on North_Arar_St falls 4 percent by 18:00. Recommend changing the cycle from 74 to 120 seconds, phase 1 green from 32 to 77 seconds, and phase 2 green from 30 to 31 seconds. Estimated reduction in total intersection delay: approximately 0.00 vehicle-minutes per cycle.",
     "current_cycle_length_seconds": 74,
     "raw_webster_cycle_length_seconds": 230.0,
     "recommended_cycle_length_seconds": 120,
@@ -198,16 +198,16 @@
       "2": 30
     },
     "recommended_green_seconds": {
-      "1": 54,
-      "2": 54
+      "1": 77,
+      "2": 31
     },
     "green_delta_seconds": {
-      "1": 22,
-      "2": 24
+      "1": 45,
+      "2": 1
     },
     "critical_flow_ratios": {
-      "1": 0.6627,
-      "2": 0.6656
+      "1": 0.662,
+      "2": 0.2663
     },
     "estimated_saving_vehicle_minutes_per_cycle": 0.0,
     "delay_formula": "sum[Webster uniform delay (s/veh) * vehicles per cycle] / 60; saving = current - recommended",
@@ -215,10 +215,10 @@
       "forecast_count_interval_minutes": 15,
       "saturation_flow_vehicle_per_hour_per_lane": 1800,
       "lanes_per_approach": {
-        "North_Arar_St": 3,
+        "North_Arar_St": 5,
         "South_Arar_St": 3,
-        "East_Approach": 2,
-        "West_Approach": 2
+        "East_Approach": 5,
+        "West_Approach": 5
       },
       "lost_time_seconds_per_phase": 6,
       "phase_approach_mapping": {
@@ -243,44 +243,44 @@
     },
     "advisory_only": true,
     "not_transmitted_to_controller": true,
-    "current_green_duration_seconds": 30,
-    "recommended_green_duration_seconds": 54,
+    "current_green_duration_seconds": 32,
+    "recommended_green_duration_seconds": 77,
     "estimated_saving_vehicle_minutes": 0.0
   },
   "weekday_evening": {
     "timestamp": "2026-06-15T21:30:00Z",
     "forecast_horizon_minutes": 30,
     "recommended_phase": 1,
-    "reason": "Predicted demand on South_Arar_St rises 3 percent by 21:30. Recommend changing the cycle from 74 to 98 seconds, phase 1 green from 32 to 43 seconds, and phase 2 green from 30 to 43 seconds. Estimated reduction in total intersection delay: approximately 0.00 vehicle-minutes per cycle.",
+    "reason": "Predicted demand on South_Arar_St rises 3 percent by 21:30. Recommend changing the cycle from 74 to 60 seconds, phase 1 green from 32 to 33 seconds, and phase 2 green from 30 to 15 seconds. Estimated reduction in total intersection delay: approximately 13.81 vehicle-minutes per cycle.",
     "current_cycle_length_seconds": 74,
-    "raw_webster_cycle_length_seconds": 97.55,
-    "recommended_cycle_length_seconds": 98,
+    "raw_webster_cycle_length_seconds": 49.54,
+    "recommended_cycle_length_seconds": 60,
     "current_green_seconds": {
       "1": 32,
       "2": 30
     },
     "recommended_green_seconds": {
-      "1": 43,
-      "2": 43
+      "1": 33,
+      "2": 15
     },
     "green_delta_seconds": {
-      "1": 11,
-      "2": 13
+      "1": 1,
+      "2": -15
     },
     "critical_flow_ratios": {
       "1": 0.3834,
-      "2": 0.3808
+      "2": 0.1523
     },
-    "estimated_saving_vehicle_minutes_per_cycle": 0.0,
+    "estimated_saving_vehicle_minutes_per_cycle": 13.81,
     "delay_formula": "sum[Webster uniform delay (s/veh) * vehicles per cycle] / 60; saving = current - recommended",
     "assumptions": {
       "forecast_count_interval_minutes": 15,
       "saturation_flow_vehicle_per_hour_per_lane": 1800,
       "lanes_per_approach": {
-        "North_Arar_St": 3,
+        "North_Arar_St": 5,
         "South_Arar_St": 3,
-        "East_Approach": 2,
-        "West_Approach": 2
+        "East_Approach": 5,
+        "West_Approach": 5
       },
       "lost_time_seconds_per_phase": 6,
       "phase_approach_mapping": {
@@ -306,43 +306,43 @@
     "advisory_only": true,
     "not_transmitted_to_controller": true,
     "current_green_duration_seconds": 32,
-    "recommended_green_duration_seconds": 43,
-    "estimated_saving_vehicle_minutes": 0.0
+    "recommended_green_duration_seconds": 33,
+    "estimated_saving_vehicle_minutes": 13.81
   },
   "friday_midday": {
     "timestamp": "2026-06-19T13:00:00Z",
     "forecast_horizon_minutes": 30,
-    "recommended_phase": 2,
-    "reason": "Predicted demand on East_Approach rises 9 percent by 13:00. Recommend changing the cycle from 74 to 60 seconds, phase 1 green from 32 to 23 seconds, and phase 2 green from 30 to 25 seconds. Estimated reduction in total intersection delay: approximately 1.97 vehicle-minutes per cycle.",
+    "recommended_phase": 1,
+    "reason": "Predicted demand on South_Arar_St falls 1 percent by 13:00. Recommend changing the cycle from 74 to 60 seconds, phase 1 green from 32 to 33 seconds, and phase 2 green from 30 to 15 seconds. Estimated reduction in total intersection delay: approximately 2.13 vehicle-minutes per cycle.",
     "current_cycle_length_seconds": 74,
-    "raw_webster_cycle_length_seconds": 27.65,
+    "raw_webster_cycle_length_seconds": 26.03,
     "recommended_cycle_length_seconds": 60,
     "current_green_seconds": {
       "1": 32,
       "2": 30
     },
     "recommended_green_seconds": {
-      "1": 23,
-      "2": 25
+      "1": 33,
+      "2": 15
     },
     "green_delta_seconds": {
-      "1": -9,
-      "2": -5
+      "1": 1,
+      "2": -15
     },
     "critical_flow_ratios": {
       "1": 0.0822,
-      "2": 0.0858
+      "2": 0.0343
     },
-    "estimated_saving_vehicle_minutes_per_cycle": 1.97,
+    "estimated_saving_vehicle_minutes_per_cycle": 2.13,
     "delay_formula": "sum[Webster uniform delay (s/veh) * vehicles per cycle] / 60; saving = current - recommended",
     "assumptions": {
       "forecast_count_interval_minutes": 15,
       "saturation_flow_vehicle_per_hour_per_lane": 1800,
       "lanes_per_approach": {
-        "North_Arar_St": 3,
+        "North_Arar_St": 5,
         "South_Arar_St": 3,
-        "East_Approach": 2,
-        "West_Approach": 2
+        "East_Approach": 5,
+        "West_Approach": 5
       },
       "lost_time_seconds_per_phase": 6,
       "phase_approach_mapping": {
@@ -367,44 +367,44 @@
     },
     "advisory_only": true,
     "not_transmitted_to_controller": true,
-    "current_green_duration_seconds": 30,
-    "recommended_green_duration_seconds": 25,
-    "estimated_saving_vehicle_minutes": 1.97
+    "current_green_duration_seconds": 32,
+    "recommended_green_duration_seconds": 33,
+    "estimated_saving_vehicle_minutes": 2.13
   },
   "weekend_evening": {
     "timestamp": "2026-06-20T18:30:00Z",
     "forecast_horizon_minutes": 30,
     "recommended_phase": 1,
-    "reason": "Predicted demand on South_Arar_St falls 3 percent by 18:30. Recommend changing the cycle from 74 to 60 seconds, phase 1 green from 32 to 24 seconds, and phase 2 green from 30 to 24 seconds. Estimated reduction in total intersection delay: approximately 8.55 vehicle-minutes per cycle.",
+    "reason": "Predicted demand on South_Arar_St falls 3 percent by 18:30. Recommend changing the cycle from 74 to 60 seconds, phase 1 green from 32 to 33 seconds, and phase 2 green from 30 to 15 seconds. Estimated reduction in total intersection delay: approximately 8.87 vehicle-minutes per cycle.",
     "current_cycle_length_seconds": 74,
-    "raw_webster_cycle_length_seconds": 52.22,
+    "raw_webster_cycle_length_seconds": 37.83,
     "recommended_cycle_length_seconds": 60,
     "current_green_seconds": {
       "1": 32,
       "2": 30
     },
     "recommended_green_seconds": {
-      "1": 24,
-      "2": 24
+      "1": 33,
+      "2": 15
     },
     "green_delta_seconds": {
-      "1": -8,
-      "2": -6
+      "1": 1,
+      "2": -15
     },
     "critical_flow_ratios": {
       "1": 0.2802,
-      "2": 0.2794
+      "2": 0.1117
     },
-    "estimated_saving_vehicle_minutes_per_cycle": 8.55,
+    "estimated_saving_vehicle_minutes_per_cycle": 8.87,
     "delay_formula": "sum[Webster uniform delay (s/veh) * vehicles per cycle] / 60; saving = current - recommended",
     "assumptions": {
       "forecast_count_interval_minutes": 15,
       "saturation_flow_vehicle_per_hour_per_lane": 1800,
       "lanes_per_approach": {
-        "North_Arar_St": 3,
+        "North_Arar_St": 5,
         "South_Arar_St": 3,
-        "East_Approach": 2,
-        "West_Approach": 2
+        "East_Approach": 5,
+        "West_Approach": 5
       },
       "lost_time_seconds_per_phase": 6,
       "phase_approach_mapping": {
@@ -430,7 +430,7 @@
     "advisory_only": true,
     "not_transmitted_to_controller": true,
     "current_green_duration_seconds": 32,
-    "recommended_green_duration_seconds": 24,
-    "estimated_saving_vehicle_minutes": 8.55
+    "recommended_green_duration_seconds": 33,
+    "estimated_saving_vehicle_minutes": 8.87
   }
 }

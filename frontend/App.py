@@ -758,10 +758,13 @@ with main_col:
         fig = go.Figure()
 
         # confidence band (shaded)
-        band_mask = np.array([
-            upper is not None and lower is not None
-            for upper, lower in zip(forecast_upper, forecast_lower)
-        ])
+        band_mask = np.array(
+            [
+                upper is not None and lower is not None
+                for upper, lower in zip(forecast_upper, forecast_lower)
+            ],
+            dtype=bool,
+        )
         band_minutes = minutes[band_mask]
         band_upper = forecast_upper[band_mask]
         band_lower = forecast_lower[band_mask]
