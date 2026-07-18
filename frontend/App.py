@@ -10,29 +10,56 @@ import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
 
-from frontend.config import (
-    API_BASE,
-    EVENTS_WS_URL,
-    FAVICON_PATH,
-    LOCAL_DEMO_VIDEO_PATH,
-    LOGO_DATA_URI,
-    MOCK_MODE,
-    VIDEO_STREAM_URL,
-    VISION_PREVIEW_DATA_URI,
-)
-from frontend.data_service import (
-    fetch_forecast,
-    fetch_health,
-    fetch_incidents,
-    fetch_recommendation,
-    format_video_timestamp,
-    incident_media_source,
-    incident_video_offset,
-    normalize_incident,
-    poll_websocket_event,
-    submit_incident_review,
-)
-from frontend.styles import load_css
+try:
+    from frontend.config import (
+        API_BASE,
+        EVENTS_WS_URL,
+        FAVICON_PATH,
+        LOCAL_DEMO_VIDEO_PATH,
+        LOGO_DATA_URI,
+        MOCK_MODE,
+        VIDEO_STREAM_URL,
+        VISION_PREVIEW_DATA_URI,
+    )
+    from frontend.data_service import (
+        fetch_forecast,
+        fetch_health,
+        fetch_incidents,
+        fetch_recommendation,
+        format_video_timestamp,
+        incident_media_source,
+        incident_video_offset,
+        normalize_incident,
+        poll_websocket_event,
+        submit_incident_review,
+    )
+    from frontend.styles import load_css
+except ModuleNotFoundError as exc:
+    if exc.name != "frontend":
+        raise
+    from config import (
+        API_BASE,
+        EVENTS_WS_URL,
+        FAVICON_PATH,
+        LOCAL_DEMO_VIDEO_PATH,
+        LOGO_DATA_URI,
+        MOCK_MODE,
+        VIDEO_STREAM_URL,
+        VISION_PREVIEW_DATA_URI,
+    )
+    from data_service import (
+        fetch_forecast,
+        fetch_health,
+        fetch_incidents,
+        fetch_recommendation,
+        format_video_timestamp,
+        incident_media_source,
+        incident_video_offset,
+        normalize_incident,
+        poll_websocket_event,
+        submit_incident_review,
+    )
+    from styles import load_css
 
 
 # ============================================================

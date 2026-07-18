@@ -17,18 +17,34 @@ import pandas as pd
 import requests
 import streamlit as st
 
-from frontend.config import (
-    API_BASE,
-    EVENTS_WS_URL,
-    FORECAST_API_BASE,
-    FORECAST_EVALUATION_PATH,
-    MEDIA_BASE_URL,
-    MOCK_MODE,
-    PROJECT_ROOT,
-    RECOMMENDATION_SANITY_PATH,
-    REVIEW_API_BASE,
-    VISION_EVENTS_PATH,
-)
+try:
+    from frontend.config import (
+        API_BASE,
+        EVENTS_WS_URL,
+        FORECAST_API_BASE,
+        FORECAST_EVALUATION_PATH,
+        MEDIA_BASE_URL,
+        MOCK_MODE,
+        PROJECT_ROOT,
+        RECOMMENDATION_SANITY_PATH,
+        REVIEW_API_BASE,
+        VISION_EVENTS_PATH,
+    )
+except ModuleNotFoundError as exc:
+    if exc.name != "frontend":
+        raise
+    from config import (
+        API_BASE,
+        EVENTS_WS_URL,
+        FORECAST_API_BASE,
+        FORECAST_EVALUATION_PATH,
+        MEDIA_BASE_URL,
+        MOCK_MODE,
+        PROJECT_ROOT,
+        RECOMMENDATION_SANITY_PATH,
+        REVIEW_API_BASE,
+        VISION_EVENTS_PATH,
+    )
 
 try:
     import websocket
