@@ -49,7 +49,7 @@ class IncidentRuleTests(unittest.TestCase):
 
         contracted = api_events(events, "2026-07-15T12:00:00Z")
         required = {
-            "timestamp", "event_type", "approach", "confidence",
+            "event_id", "timestamp", "event_type", "approach", "confidence",
             "queue_estimate", "snapshot_path", "clip_path",
         }
         self.assertTrue(all(set(event) == required for event in contracted))
