@@ -12,10 +12,10 @@ PHASE_APPROACHES = {
     2: ("East_Approach", "West_Approach"),
 }
 LANES = {
-    "North_Arar_St": 3,
-    "South_Arar_St": 3,
-    "East_Approach": 2,
-    "West_Approach": 2,
+    "North_Arar_St": 5,  # الشريف ناصر (مقابل عرار)
+    "South_Arar_St": 3,  # عرار
+    "East_Approach": 5,  # الأمير شاكر (يمين عرار)
+    "West_Approach": 5,  # الكندي (يسار عرار)
 }
 DEFAULT_GREENS = {1: 32, 2: 28}
 SATURATION_FLOW_PER_LANE = 1800
