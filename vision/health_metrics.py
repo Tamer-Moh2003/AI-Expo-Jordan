@@ -69,5 +69,12 @@ class HealthMonitor:
         self.output_path.parent.mkdir(parents=True, exist_ok=True)
         temporary = self.output_path.with_suffix(self.output_path.suffix + ".tmp")
         temporary.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-        os.replace(temporary, self.output_path)
+        for attempt in range(5):
+            try:
+                os.replace(temporary, self.output_path)
+                break
+            except PermissionError:
+                if attempt == 4:
+                    raise
+                time.sleep(0.05 * (attempt + 1))
         return payload
