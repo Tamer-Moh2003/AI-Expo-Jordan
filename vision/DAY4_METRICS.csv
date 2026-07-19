@@ -1,0 +1,4 @@
+incident_type,ground_truth_count,predicted_count,true_positives,false_positives,false_negatives,precision,recall,mean_detection_latency_seconds
+stalled_vehicle,4,0,0,0,4,N/A,0.000,N/A
+queue_spillback,1,0,0,0,1,N/A,0.000,N/A
+unsupported,0,42,0,42,0,0.000,N/A,N/A
