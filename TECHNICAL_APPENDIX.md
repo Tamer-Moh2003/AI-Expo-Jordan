@@ -117,8 +117,10 @@ This is not a claim about the deployed GAM controller plan. Real deployment requ
 |---|---:|
 | Forecast count interval | 15 minutes |
 | Saturation flow | 1,800 veh/h/lane |
-| North/South lanes | 3 per approach |
-| East/West lanes | 2 per approach |
+| North (Al-Sharif Nasser, opposite Arar) lanes | 5 |
+| South (Arar Street) lanes | 3 |
+| East (Prince Shaker, right of Arar) lanes | 5 |
+| West (Al-Kindi, left of Arar) lanes | 5 |
 | Lost time | 6 seconds/phase |
 | Minimum green | 15 seconds |
 | Cycle clamp | 60–120 seconds |
